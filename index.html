@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#eaf6ff" />
-    <meta name="description" content="独立、清晰、可交互的个人论文进展管理工作台。" />
-    <title>论文进展台 · Paperflow</title>
+    <meta name="theme-color" content="#f8fbfd" />
+    <meta name="description" content="SUN Huijie 的个人研究项目与论文进展工作台。" />
+    <title>Paperflow · Research Portfolio of SUN Huijie</title>
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -13,241 +13,116 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <div class="page-glow page-glow-one"></div>
-    <div class="page-glow page-glow-two"></div>
-
     <header class="site-header">
-      <a class="brand" href="#overview" aria-label="返回论文进展台顶部">
-        <span class="brand-mark" aria-hidden="true">
-          <svg viewBox="0 0 40 40" role="img">
-            <path d="M10 10.5h20v19H10z" fill="none" stroke="currentColor" stroke-width="2" />
-            <path d="M15 15h10M15 20h10M15 25h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-            <circle cx="30" cy="10" r="5" fill="#8fd0ff" />
-          </svg>
-        </span>
-        <span>
-          <strong>Paperflow</strong>
-          <small>论文进展台</small>
-        </span>
+      <a class="brand" href="#overview" aria-label="返回页面顶部">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M10 10.5h20v19H10z" fill="none" stroke="currentColor" stroke-width="2" /><path d="M15 15h10M15 20h10M15 25h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" /><circle cx="30" cy="10" r="5" fill="#8fd0ff" /></svg></span>
+        <strong>Paperflow</strong>
       </a>
-
-      <nav class="top-nav" aria-label="主要导航">
-        <a href="#overview">总览</a>
-        <a href="#roadmap">进展图</a>
-        <a href="#papers">论文</a>
-      </nav>
-
+      <nav class="top-nav" aria-label="主要导航"><a href="#overview">Overview</a><a href="#pipeline">Pipeline</a><a href="#projects">Projects</a></nav>
       <div class="header-actions">
-        <span class="view-pill"><span class="live-dot"></span>阅读视图</span>
-        <button class="button button-ghost" id="openToolsButton" type="button">数据工具</button>
-        <button class="button button-primary" id="toggleManageButton" type="button">进入管理模式</button>
+        <button class="button header-manage-only" id="headerAddPaperButton" type="button">＋ Add Paper</button>
+        <button class="button header-manage-only" id="openToolsButton" type="button">Data</button>
+        <button class="button header-manage-only" id="headerPublishButton" type="button">Publish</button>
+        <button class="button button-primary" id="toggleManageButton" type="button">Manage</button>
       </div>
     </header>
 
     <main>
       <section class="hero shell" id="overview">
-        <div class="hero-focus-column">
-          <div class="portfolio-identity">
-            <p class="eyebrow">RESEARCH PORTFOLIO OF SUN Huijie</p>
-            <div class="hero-meta">
-              <span id="lastUpdatedLabel">更新于 —</span>
-              <span class="meta-divider"></span>
-              <span>数据由 GitHub 版本管理</span>
-            </div>
-          </div>
-
-          <aside class="focus-card" aria-label="当前研究焦点">
-            <div class="focus-card-top">
-              <span class="section-kicker">当前焦点</span>
-              <span class="focus-index" id="focusIndex">01 / 09</span>
-            </div>
-            <div id="focusContent"></div>
-            <div class="focus-controls">
-              <button class="icon-button" id="focusPrev" type="button" aria-label="上一篇论文">←</button>
-              <div class="focus-dots" id="focusDots" aria-hidden="true"></div>
-              <button class="icon-button" id="focusNext" type="button" aria-label="下一篇论文">→</button>
-            </div>
+        <div class="portfolio-identity">
+          <p class="eyebrow">RESEARCH PORTFOLIO</p>
+          <h1>SUN Huijie</h1>
+          <p class="portfolio-subtitle">Research Pipeline <span aria-hidden="true">·</span> <span id="lastUpdatedLabel">Updated —</span></p>
+        </div>
+        <div class="hero-dashboard">
+          <aside class="focus-card" aria-labelledby="focusHeading">
+            <div class="focus-card-header"><span class="section-kicker" id="focusHeading">CURRENT FOCUS</span><span class="focus-priority" id="focusPriority"></span></div>
+            <div class="focus-card-body" id="focusContent"></div>
+          </aside>
+          <aside class="portfolio-summary" aria-labelledby="portfolioSummaryTitle">
+            <div class="summary-heading"><span class="section-kicker">PORTFOLIO OVERVIEW</span><h2 id="portfolioSummaryTitle">研究组合概览</h2></div>
+            <div class="metrics" id="metrics"></div>
+            <div class="distribution" id="pipelineDistribution"></div>
           </aside>
         </div>
-
-        <aside class="portfolio-summary" aria-labelledby="portfolioSummaryTitle">
-          <div class="summary-heading">
-            <span class="section-kicker">PORTFOLIO OVERVIEW</span>
-            <h1 id="portfolioSummaryTitle">研究组合概览</h1>
-            <p>工作论文与已发表成果，一眼掌握整体状态。</p>
-          </div>
-          <div class="metrics" id="metrics"></div>
-        </aside>
+        <section class="attention-section" aria-labelledby="attentionTitle">
+          <div class="section-label-row"><span class="section-kicker" id="attentionTitle">NEEDS ATTENTION</span><small>按截止日期、优先级、返修状态和等待时间自动排序</small></div>
+          <div class="attention-list" id="needsAttention"></div>
+        </section>
       </section>
 
-      <section class="section shell" id="roadmap">
-        <div class="section-heading split-heading">
-          <div>
-            <span class="section-kicker">PORTFOLIO MAP</span>
-            <h2>论文进展图</h2>
-          </div>
-          <div class="heading-side">
-            <p>横轴为阶段化参考进度，纵轴为论文简称。百分比可独立调整。</p>
-            <button class="button button-ghost compact" id="editCodesButton" type="button">管理进展图</button>
-          </div>
-        </div>
-
-        <div class="roadmap-card">
-          <div class="roadmap-legend" aria-label="阶段图例">
-            <span><i class="legend-dot writing"></i>撰写阶段 0–45%</span>
-            <span><i class="legend-dot submission"></i>投稿阶段（含返修）45–95%</span>
-            <span><i class="legend-dot accepted"></i>发表阶段 95–100%</span>
-          </div>
-          <div class="roadmap-scroll">
-            <div class="roadmap-chart" id="roadmapChart"></div>
-          </div>
-        </div>
+      <section class="section shell" id="pipeline">
+        <div class="section-heading"><span class="section-kicker">RESEARCH PIPELINE</span><h2>研究流程</h2><p>以五个阶段查看研究组合分布；返修轮次作为投稿流程的一部分保留。</p></div>
+        <div class="pipeline-card" id="pipelineChart"></div>
       </section>
 
-      <section class="section shell" id="papers">
-        <div class="section-heading split-heading papers-heading">
-          <div>
-            <span class="section-kicker">PROJECTS</span>
-            <h2>论文项目</h2>
-          </div>
-          <div class="paper-toolbar">
-            <button class="button button-primary compact" id="addPaperButton" type="button" hidden>＋ 新增论文</button>
-            <label class="search-box">
-              <span aria-hidden="true">⌕</span>
-              <input id="searchInput" type="search" placeholder="搜索题目、期刊或简称" aria-label="搜索论文" />
-            </label>
-            <label class="filter-select">
-              <span class="sr-only">按阶段筛选</span>
-              <select id="stageFilter">
-                <option value="all">全部阶段</option>
-                <option value="writing">撰写阶段</option>
-                <option value="submission">投稿阶段（含返修）</option>
-                <option value="publication">发表阶段</option>
-              </select>
-            </label>
-          </div>
+      <section class="section shell" id="projects">
+        <div class="section-heading project-heading">
+          <div><span class="section-kicker">PROJECTS</span><h2>论文项目</h2></div>
+          <button class="button button-primary project-add-button" id="addPaperButton" type="button">＋ Add Paper</button>
+        </div>
+        <div class="project-toolbar">
+          <label class="search-box"><span aria-hidden="true">⌕</span><input id="searchInput" type="search" placeholder="Search projects..." aria-label="搜索论文项目" /></label>
+          <label class="toolbar-select"><span>Stage</span><select id="stageFilter"><option value="all">All</option><option value="writing">Writing</option><option value="review">Under Review</option><option value="revision">Revision</option><option value="publication">Published</option></select></label>
+          <label class="toolbar-select"><span>Sort</span><select id="sortSelect"><option value="priority">Priority</option><option value="deadline">Deadline</option><option value="updated">Last Updated</option><option value="started">Start Date</option></select></label>
+          <button class="button" id="editCodesButton" type="button">View options</button>
         </div>
         <div class="paper-list" id="paperList" aria-live="polite"></div>
       </section>
     </main>
 
     <footer class="site-footer shell">
-      <div>
-        <strong>Paperflow</strong>
-        <span>一个独立于个人主页的研究进展空间</span>
-      </div>
-      <a href="https://github.com/shj0512" target="_blank" rel="noreferrer">GitHub · shj0512 ↗</a>
+      <div><strong>Paperflow · Research Portfolio of SUN Huijie</strong><span>Versioned with GitHub · <span id="footerUpdatedLabel">Last updated —</span></span></div>
+      <a href="https://github.com/shj0512/paperflow-hub" target="_blank" rel="noreferrer">GitHub · paperflow-hub ↗</a>
     </footer>
+
+    <dialog class="quick-dialog" id="quickDialog">
+      <form method="dialog" class="dialog-shell" id="quickForm">
+        <div class="dialog-header"><div><span class="section-kicker">QUICK UPDATE</span><h2 id="quickTitle">更新论文</h2></div><button class="close-button" value="cancel" aria-label="关闭">×</button></div>
+        <div class="dialog-body" id="quickBody"></div>
+        <div class="dialog-footer"><span>保存后自动更新时间；状态变更会归档上一段时间线。</span><div><button class="button" value="cancel">关闭</button><button class="button button-primary" type="submit">保存更新</button></div></div>
+      </form>
+    </dialog>
 
     <dialog class="paper-dialog" id="paperDialog">
       <form method="dialog" class="dialog-shell" id="paperForm">
-        <div class="dialog-header">
-          <div>
-            <span class="section-kicker" id="dialogKicker">PAPER DETAILS</span>
-            <h2 id="dialogTitle">论文详情</h2>
-          </div>
-          <button class="close-button" value="cancel" aria-label="关闭">×</button>
-        </div>
+        <div class="dialog-header"><div><span class="section-kicker" id="dialogKicker">PAPER DETAILS</span><h2 id="dialogTitle">论文详情</h2></div><button class="close-button" value="cancel" aria-label="关闭">×</button></div>
         <div id="dialogBody" class="dialog-body"></div>
-        <div class="dialog-footer" id="dialogFooter">
-          <div class="dialog-footer-left">
-            <button class="button button-danger" id="deletePaperButton" type="button" hidden>删除项目</button>
-            <span id="dialogHint">阅读视图</span>
-          </div>
-          <div>
-            <button class="button button-ghost" value="cancel">关闭</button>
-            <button class="button button-primary" id="savePaperButton" type="submit">保存修改</button>
-          </div>
-        </div>
+        <div class="dialog-footer" id="dialogFooter"><div class="dialog-footer-left"><button class="button button-danger" id="deletePaperButton" type="button">删除项目</button><span id="dialogHint">阅读模式</span></div><div><button class="button" value="cancel">关闭</button><button class="button button-primary" id="savePaperButton" type="submit">保存完整信息</button></div></div>
       </form>
     </dialog>
 
     <dialog class="codes-dialog" id="codesDialog">
-      <form method="dialog" class="dialog-shell small-dialog" id="codesForm">
-        <div class="dialog-header">
-          <div>
-            <span class="section-kicker">ROADMAP SETTINGS</span>
-            <h2>管理论文进展图</h2>
-          </div>
-          <button class="close-button" value="cancel" aria-label="关闭">×</button>
-        </div>
+      <form method="dialog" class="dialog-shell" id="codesForm">
+        <div class="dialog-header"><div><span class="section-kicker">VIEW OPTIONS</span><h2>项目显示设置</h2></div><button class="close-button" value="cancel" aria-label="关闭">×</button></div>
         <div class="codes-editor" id="codesEditor"></div>
-        <div class="dialog-footer">
-          <span>修改论文简称，并选择是否在进展图中显示。</span>
-          <div>
-            <button class="button button-ghost" value="cancel">关闭</button>
-            <button class="button button-primary" type="submit">保存进展图设置</button>
-          </div>
-        </div>
+        <div class="dialog-footer"><span>修改简称，并选择项目是否计入 Research Pipeline。</span><div><button class="button" value="cancel">关闭</button><button class="button button-primary" type="submit">保存显示设置</button></div></div>
       </form>
     </dialog>
 
     <dialog class="tools-dialog" id="toolsDialog">
-      <div class="dialog-shell small-dialog">
-        <div class="dialog-header">
-          <div>
-            <span class="section-kicker">DATA WORKBENCH</span>
-            <h2>数据工具</h2>
-          </div>
-          <button class="close-button" id="closeToolsButton" type="button" aria-label="关闭">×</button>
-        </div>
+      <div class="dialog-shell">
+        <div class="dialog-header"><div><span class="section-kicker">DATA</span><h2>数据与发布工具</h2></div><button class="close-button" id="closeToolsButton" type="button" aria-label="关闭">×</button></div>
         <div class="tools-grid">
-          <button class="tool-card" id="exportButton" type="button">
-            <span class="tool-icon">↓</span>
-            <strong>导出 JSON</strong>
-            <small>保存当前完整数据备份</small>
-          </button>
-          <label class="tool-card" for="importInput">
-            <span class="tool-icon">↑</span>
-            <strong>导入 JSON</strong>
-            <small>从备份恢复本机草稿</small>
-          </label>
-          <input id="importInput" type="file" accept="application/json,.json" hidden />
-          <button class="tool-card" id="publishButton" type="button">
-            <span class="tool-icon">↗</span>
-            <strong>发布到 GitHub</strong>
-            <small>复制数据并进入安全编辑页</small>
-          </button>
-          <button class="tool-card danger" id="resetButton" type="button">
-            <span class="tool-icon">↺</span>
-            <strong>恢复已发布版本</strong>
-            <small>清除这台设备上的草稿</small>
-          </button>
+          <button class="tool-card" id="exportButton" type="button"><span>↓</span><strong>导出 JSON</strong><small>保存完整数据备份</small></button>
+          <label class="tool-card" for="importInput"><span>↑</span><strong>导入 JSON</strong><small>从备份恢复本机草稿</small></label><input id="importInput" type="file" accept="application/json,.json" hidden />
+          <button class="tool-card" id="publishButton" type="button"><span>↗</span><strong>发布到 GitHub</strong><small>复制数据并打开安全编辑页</small></button>
+          <button class="tool-card danger" id="resetButton" type="button"><span>↺</span><strong>恢复已发布版本</strong><small>清除当前设备草稿</small></button>
         </div>
-        <div class="security-note">
-          <strong>访问与修改权限</strong>
-          <p>访客可查看页面，但管理模式的修改只保存在当前设备。只有拥有仓库写权限的你，才能把数据发布为全站的新版本。</p>
-        </div>
+        <div class="security-note"><strong>修改权限</strong><p>页面访客只能阅读；管理改动先保存在当前设备，只有拥有仓库写权限的账号才能正式发布。</p></div>
       </div>
     </dialog>
 
     <dialog class="publish-dialog" id="publishDialog">
-      <div class="dialog-shell small-dialog">
-        <div class="dialog-header">
-          <div>
-            <span class="section-kicker">PUBLISH</span>
-            <h2>发布更新</h2>
-          </div>
-          <button class="close-button" id="closePublishButton" type="button" aria-label="关闭">×</button>
-        </div>
-        <ol class="publish-steps">
-          <li><span>1</span><div><strong>复制当前数据</strong><p>将整理后的 JSON 放入剪贴板。</p></div></li>
-          <li><span>2</span><div><strong>打开 GitHub 安全编辑页</strong><p>登录账号后，替换文件内容并提交即可。</p></div></li>
-          <li><span>3</span><div><strong>等待页面自动更新</strong><p>提交后由 GitHub Pages 自动发布。</p></div></li>
-        </ol>
-        <div class="publish-actions">
-          <button class="button button-ghost" id="copyDataButton" type="button">复制数据</button>
-          <a class="button button-primary" id="githubEditLink" href="https://github.com/shj0512/paperflow-hub/edit/main/data/papers.json" target="_blank" rel="noreferrer">打开 GitHub 编辑页 ↗</a>
-        </div>
+      <div class="dialog-shell">
+        <div class="dialog-header"><div><span class="section-kicker">PUBLISH</span><h2>发布更新</h2></div><button class="close-button" id="closePublishButton" type="button" aria-label="关闭">×</button></div>
+        <ol class="publish-steps"><li><span>1</span><div><strong>复制当前数据</strong><p>将完整 JSON 放入剪贴板。</p></div></li><li><span>2</span><div><strong>打开 GitHub 编辑页</strong><p>登录后替换 data/papers.json 并提交。</p></div></li><li><span>3</span><div><strong>等待自动部署</strong><p>GitHub Pages 会发布最新版本。</p></div></li></ol>
+        <div class="publish-actions"><button class="button" id="copyDataButton" type="button">复制数据</button><a class="button button-primary" id="githubEditLink" href="https://github.com/shj0512/paperflow-hub/edit/main/data/papers.json" target="_blank" rel="noreferrer">打开 GitHub 编辑页 ↗</a></div>
       </div>
     </dialog>
 
-    <div class="draft-banner" id="draftBanner" hidden>
-      <span>当前显示这台设备上的未发布草稿</span>
-      <button id="draftPublishButton" type="button">发布更新</button>
-    </div>
+    <div class="draft-banner" id="draftBanner" hidden><span>当前显示这台设备上的未发布草稿</span><button id="draftPublishButton" type="button">发布更新</button></div>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
     <script type="module" src="./app.js"></script>
   </body>
 </html>
