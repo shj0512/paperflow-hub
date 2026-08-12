@@ -237,7 +237,7 @@ function renderMetrics() {
 
   const metricItems = [
     ["Working Papers", working, "工作论文", "working"],
-    ["Published", accepted, "已发表成果", "published"],
+    ["Published Papers", accepted, "已发表成果", "published"],
     ["撰写进行中", writing, "Writing", "writing"],
     ["投稿审稿中", submission, "Under Review", "submission"],
     ["返修进行中", revision, "Revision", "revision"],
