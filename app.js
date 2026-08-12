@@ -232,17 +232,25 @@ function renderMetrics() {
   const submission = data.papers.filter((paper) => paper.focusStage === "submission").length;
   const revision = data.papers.filter((paper) => paper.focusStage === "revision").length;
   const accepted = data.papers.filter((paper) => paper.focusStage === "accepted").length;
+  const working = total - accepted;
   const average = Math.round(data.papers.reduce((sum, paper) => sum + clamp(paper.progress, 0, 100), 0) / total);
 
   const metricItems = [
-    ["论文总数", total, "active projects"],
-    ["撰写进行中", writing, "writing"],
-    ["投稿审稿中", submission, "submission"],
-    ["返修进行中", revision, "revision"],
-    ["组合平均进度", `${average}%`, `${accepted} accepted`]
+    ["Working Papers", working, "工作论文", "working"],
+    ["Published", accepted, "已发表成果", "published"],
+    ["撰写进行中", writing, "Writing", "writing"],
+    ["投稿审稿中", submission, "Under Review", "submission"],
+    ["返修进行中", revision, "Revision", "revision"],
+    ["组合平均进度", `${average}%`, "Portfolio Progress", "progress"]
   ];
   els.metrics.innerHTML = metricItems
-    .map(([label, value, note]) => `<div class="metric"><span>${label}</span><strong>${value}</strong><small>${note}</small></div>`)
+    .map(([label, value, note, tone]) => `
+      <div class="metric metric-${tone}">
+        <span>${label}</span>
+        <strong>${value}</strong>
+        <small>${note}</small>
+      </div>
+    `)
     .join("");
 }
 
@@ -325,15 +333,15 @@ function renderPaperCard(paper) {
             </div>
             <h3>${escapeHTML(paper.title)}</h3>
             <div class="paper-meta">
-              <span>启动 ${formatMonth(paper.startedAt)}</span>
-              <span>${escapeHTML(paper.authors || "作者待补充")}</span>
-              <span>${escapeHTML(paper.venueSummary || "期刊信息待补充")}</span>
-              <span>${durationText(paper.startedAt, paper.manualUpdatedAt || paper.updatedAt)}</span>
-              <span>更新 ${formatDate(paper.manualUpdatedAt || paper.updatedAt)}</span>
+              <span><em>启动</em><strong>${formatMonth(paper.startedAt)}</strong></span>
+              <span><em>历时</em><strong>${durationText(paper.startedAt, paper.manualUpdatedAt || paper.updatedAt).replace(/^已历时\s*/, "")}</strong></span>
+              <span class="meta-wide"><em>作者</em><strong>${escapeHTML(paper.authors || "待补充")}</strong></span>
+              <span class="meta-wide"><em>状态</em><strong>${escapeHTML(paper.venueSummary || "期刊信息待补充")}</strong></span>
+              <span><em>更新</em><strong>${formatDate(paper.manualUpdatedAt || paper.updatedAt)}</strong></span>
             </div>
             <div class="paper-footer">
               <div class="paper-progress"><div class="progress-track"><span class="progress-fill" style="width:${progress}%"></span></div></div>
-              <span class="paper-next"><strong>下一步</strong> ${escapeHTML(paper.nextAction || "待设置")}</span>
+              <div class="paper-next"><span>下一行动</span><strong>${escapeHTML(paper.nextAction || "待设置")}</strong></div>
             </div>
           </div>
           <div class="paper-side">
