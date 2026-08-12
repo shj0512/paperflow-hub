@@ -3,13 +3,13 @@
     "version": 4,
     "owner": "shj0512",
     "title": "论文进展台",
-    "lastUpdated": "2026-08-12T00:00:00-07:00",
+    "lastUpdated": "2026-08-12T08:25:52.111Z",
     "manualUpdatedAt": "2026-08-12"
   },
   "papers": [
     {
       "id": "shadow-to-spotlight",
-      "shortCode": "S2S",
+      "shortCode": "From Shadow to Spotlight",
       "title": "From Shadow to Spotlight: How Technological, Geographical, and Market Overlaps with Leading Firms Influence Non-Leading Firms’ Innovation",
       "authors": "SUN Huijie",
       "language": "en",
@@ -39,7 +39,7 @@
     },
     {
       "id": "opportunity-capability-nexus",
-      "shortCode": "OCN",
+      "shortCode": "Opportunity-Capability",
       "title": "Decoding the Opportunity-Capability Nexus: Causal Recipes for Technological Innovation",
       "authors": "SUN Huijie; YANG Chong; LIU Zhiying",
       "language": "en",
@@ -69,12 +69,12 @@
     },
     {
       "id": "resource-reconstruction",
-      "shortCode": "RBI",
+      "shortCode": "Divestiture–Acquisition",
       "title": "Reconstructing Resources for Breakthrough Innovation: The Role of Divestiture–Acquisition Configurations Under Windows of Opportunity",
       "authors": "SUN Huijie; ZHOU Yang; LIU Zhiying",
       "language": "en",
       "focusStage": "accepted",
-      "stageLabel": "2026 年已发表",
+      "stageLabel": "已发表",
       "progress": 100,
       "startedAt": "2024-04-01",
       "updatedAt": "2026-08-12",
@@ -90,13 +90,13 @@
         { "key": "format", "label": "格式修改", "status": "done" }
       ],
       "submissions": [
-        { "journal": "IEEE Transactions on Engineering Management", "status": "accepted", "submittedAt": "", "decisionAt": "", "note": "2026 年发表；具体日期待补充" }
+        { "journal": "IEEE Transactions on Engineering Management", "status": "accepted", "submittedAt": "2026-04-03", "decisionAt": "", "note": "2026 年发表；具体日期待补充" }
       ],
       "revisions": []
     },
     {
       "id": "digital-resource-manufacturing",
-      "shortCode": "DMR",
+      "shortCode": "Digital resource construction",
       "title": "How to construct digital resource for traditional manufacturing incumbents: Revisiting the “buy or make” trade-off in the digital context",
       "authors": "SUN Huijie; ZHOU Yang",
       "language": "en",
@@ -123,7 +123,7 @@
     },
     {
       "id": "ai-transferability",
-      "shortCode": "AIT",
+      "shortCode": "Interdisciplinarity",
       "title": "Interdisciplinarity and Transferability in Markets for AI Technology",
       "authors": "HOU Tianyu; SUN Huijie; XIAO Fenglong",
       "language": "en",
@@ -150,7 +150,7 @@
     },
     {
       "id": "ai-quality-quantity",
-      "shortCode": "AIQ",
+      "shortCode": "Data Analytics",
       "title": "Data Analytics, AI-capable Employees, and the Innovation Quality–Quantity Paradox in Manufacturing Industries",
       "authors": "SUN Huijie; HOU Tianyu; CHEN Yubo",
       "language": "en",
@@ -175,7 +175,7 @@
     },
     {
       "id": "ai-human-capital",
-      "shortCode": "HCOI",
+      "shortCode": "Artificial Intelligence–Enabled Human Capital",
       "title": "Artificial Intelligence–Enabled Human Capital, Operational Efficiency, and Innovation Quality: Capability Gains and Operational Frictions",
       "authors": "SUN Huijie; HOU Tianyu; LI Juan",
       "language": "en",
@@ -204,7 +204,7 @@
     },
     {
       "id": "learning-pathways",
-      "shortCode": "LPN",
+      "shortCode": "Supply Networks Learning",
       "title": "Where Firms Learn and How They Learn: A Theory of Learning Pathways in Supply Networks",
       "authors": "SUN Huijie; HOU Tianyu; LI Juan",
       "language": "en",
@@ -229,7 +229,7 @@
     },
     {
       "id": "digital-contextual-abundance",
-      "shortCode": "IDCA",
+      "shortCode": "Digital Contextual Abundance",
       "title": "Indigenous Digital Contextual Abundance: Abundance Gap as a Driver of U.S. Digital Patent Learning from China",
       "authors": "SUN Huijie; HOU Tianyu; CHEN Yubo",
       "language": "en",
