@@ -46,32 +46,38 @@
 
     <main>
       <section class="hero shell" id="overview">
-        <div class="hero-copy">
-          <p class="eyebrow">RESEARCH PORTFOLIO OF SUN Huijie</p>
-          <h1>让每一篇论文的<br /><span>下一步，都清晰可见。</span></h1>
-          <div class="hero-meta">
-            <span id="lastUpdatedLabel">更新于 —</span>
-            <span class="meta-divider"></span>
-            <span>数据由 GitHub 版本管理</span>
+        <div class="hero-focus-column">
+          <div class="portfolio-identity">
+            <p class="eyebrow">RESEARCH PORTFOLIO OF SUN Huijie</p>
+            <div class="hero-meta">
+              <span id="lastUpdatedLabel">更新于 —</span>
+              <span class="meta-divider"></span>
+              <span>数据由 GitHub 版本管理</span>
+            </div>
           </div>
+
+          <aside class="focus-card" aria-label="当前研究焦点">
+            <div class="focus-card-top">
+              <span class="section-kicker">当前焦点</span>
+              <span class="focus-index" id="focusIndex">01 / 09</span>
+            </div>
+            <div id="focusContent"></div>
+            <div class="focus-controls">
+              <button class="icon-button" id="focusPrev" type="button" aria-label="上一篇论文">←</button>
+              <div class="focus-dots" id="focusDots" aria-hidden="true"></div>
+              <button class="icon-button" id="focusNext" type="button" aria-label="下一篇论文">→</button>
+            </div>
+          </aside>
         </div>
 
-        <aside class="focus-card" aria-label="当前研究焦点">
-          <div class="focus-card-top">
-            <span class="section-kicker">当前焦点</span>
-            <span class="focus-index" id="focusIndex">01 / 09</span>
+        <aside class="portfolio-summary" aria-labelledby="portfolioSummaryTitle">
+          <div class="summary-heading">
+            <span class="section-kicker">PORTFOLIO OVERVIEW</span>
+            <h1 id="portfolioSummaryTitle">研究组合概览</h1>
+            <p>工作论文与已发表成果，一眼掌握整体状态。</p>
           </div>
-          <div id="focusContent"></div>
-          <div class="focus-controls">
-            <button class="icon-button" id="focusPrev" type="button" aria-label="上一篇论文">←</button>
-            <div class="focus-dots" id="focusDots" aria-hidden="true"></div>
-            <button class="icon-button" id="focusNext" type="button" aria-label="下一篇论文">→</button>
-          </div>
+          <div class="metrics" id="metrics"></div>
         </aside>
-      </section>
-
-      <section class="metrics-band">
-        <div class="metrics shell" id="metrics"></div>
       </section>
 
       <section class="section shell" id="roadmap">
