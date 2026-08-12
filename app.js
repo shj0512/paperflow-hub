@@ -12,8 +12,40 @@ const defaultWritingSteps = [
 const stageNames = {
   writing: "撰写阶段",
   submission: "投稿阶段",
-  revision: "返修阶段",
-  accepted: "已接收 / 发表"
+  publication: "发表阶段"
+};
+
+const stageStatuses = {
+  writing: [
+    ["research_question", "问题框架构建中"],
+    ["theory_development", "理论框架构建中"],
+    ["data_collection", "数据收集中"],
+    ["data_processing", "数据处理中"],
+    ["analysis", "实证分析中"],
+    ["manuscript_writing", "文本撰写中"],
+    ["manuscript_rewriting", "正文重写中"],
+    ["polishing", "润色与格式修改中"],
+    ["submission_preparation", "投稿准备中"]
+  ],
+  submission: [
+    ["preparing", "Preparing Submission"],
+    ["under_review", "Under Review"],
+    ["revision_1", "1st Revision"],
+    ["revision_1_resubmitted", "1st Revision Resubmitted"],
+    ["revision_2", "2nd Revision"],
+    ["revision_2_resubmitted", "2nd Revision Resubmitted"],
+    ["revision_3", "3rd Revision"],
+    ["revision_3_resubmitted", "3rd Revision Resubmitted"],
+    ["decision_pending", "Decision Pending"],
+    ["rejected", "Rejected / 拒稿"],
+    ["accepted", "Accepted / 已接收"]
+  ],
+  publication: [
+    ["forthcoming", "Forthcoming / 待正式发表"],
+    ["online_first", "Online First"],
+    ["published", "Published / 已发表"],
+    ["archived", "Archived / 已归档"]
+  ]
 };
 
 const submissionStatusNames = {
@@ -142,8 +174,75 @@ function durationText(start, end) {
   return `已历时 ${days} 天`;
 }
 
+function daysBetween(start, end) {
+  if (!start || !end) return null;
+  const startDate = new Date(`${start}T12:00:00`);
+  const endDate = new Date(`${end}T12:00:00`);
+  if (Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime())) return null;
+  return Math.max(0, Math.round((endDate - startDate) / 86400000));
+}
+
+function statusPeriodText(start, end) {
+  const duration = daysBetween(start, end || todayISO());
+  const range = `${formatDate(start)} — ${end ? formatDate(end) : "至今"}`;
+  return duration === null ? range : `${range} · ${duration} 天`;
+}
+
 function deepClone(value) {
   return JSON.parse(JSON.stringify(value));
+}
+
+function statusLabel(stage, status) {
+  return stageStatuses[stage]?.find(([value]) => value === status)?.[1] || "状态待设置";
+}
+
+function defaultStatusForStage(stage) {
+  return stageStatuses[stage]?.[0]?.[0] || "";
+}
+
+function inferLegacyStatus(paper, normalizedStage) {
+  if (paper.statusCode && stageStatuses[normalizedStage]?.some(([value]) => value === paper.statusCode)) return paper.statusCode;
+  const source = `${paper.stageLabel || ""} ${paper.venueSummary || ""}`.toLocaleLowerCase();
+  if (normalizedStage === "publication") {
+    if (source.includes("online")) return "online_first";
+    return source.includes("发表") || source.includes("published") ? "published" : "forthcoming";
+  }
+  if (normalizedStage === "submission") {
+    if (source.includes("二轮") || source.includes("r2")) return source.includes("已修回") || source.includes("returned") ? "revision_2_resubmitted" : "revision_2";
+    if (source.includes("三轮") || source.includes("r3")) return source.includes("已修回") || source.includes("returned") ? "revision_3_resubmitted" : "revision_3";
+    if (source.includes("一轮") || source.includes("r1") || source.includes("major revision")) return source.includes("已修回") || source.includes("returned") ? "revision_1_resubmitted" : "revision_1";
+    if (source.includes("reject") || source.includes("拒稿")) return "rejected";
+    if (source.includes("accept") || source.includes("接收")) return "accepted";
+    if (source.includes("submitted") || source.includes("审稿") || source.includes("under review")) return "under_review";
+    return "preparing";
+  }
+  if (source.includes("polish") || source.includes("格式") || source.includes("润色")) return "polishing";
+  if (source.includes("rewrite") || source.includes("重写")) return "manuscript_rewriting";
+  if (source.includes("writing") || source.includes("撰写")) return "manuscript_writing";
+  if (source.includes("数据") || source.includes("data")) return "data_processing";
+  if (source.includes("theory") || source.includes("理论")) return "theory_development";
+  return "research_question";
+}
+
+function normalizePaper(paper) {
+  const normalizedStage = paper.focusStage === "revision" ? "submission" : paper.focusStage === "accepted" ? "publication" : paper.focusStage;
+  const focusStage = stageStatuses[normalizedStage] ? normalizedStage : "writing";
+  const statusCode = inferLegacyStatus(paper, focusStage);
+  const writingByKey = new Map((paper.writing || []).map((item) => [item.key, item]));
+  const writing = defaultWritingSteps.map((fallback) => ({ ...fallback, ...(writingByKey.get(fallback.key) || {}) }));
+  return {
+    ...paper,
+    focusStage,
+    statusCode,
+    stageLabel: statusLabel(focusStage, statusCode),
+    statusStartedAt: paper.statusStartedAt || paper.startedAt || todayISO(),
+    statusTimeline: Array.isArray(paper.statusTimeline) ? paper.statusTimeline : [],
+    writing
+  };
+}
+
+function normalizePortfolio(value) {
+  return { ...value, papers: (value.papers || []).map(normalizePaper) };
 }
 
 function isValidData(value) {
@@ -167,7 +266,10 @@ function createBlankPaper() {
     shortCode: "",
     authors: "",
     focusStage: "writing",
-    stageLabel: "问题提出",
+    statusCode: "research_question",
+    stageLabel: statusLabel("writing", "research_question"),
+    statusStartedAt: todayISO(),
+    statusTimeline: [],
     progress: 0,
     startedAt: todayISO(),
     updatedAt: todayISO(),
@@ -202,15 +304,16 @@ function saveLocalDraft() {
 async function loadData() {
   const response = await fetch(DATA_URL, { cache: "no-store" });
   if (!response.ok) throw new Error("无法读取论文数据");
-  publishedData = await response.json();
-  if (!isValidData(publishedData)) throw new Error("论文数据格式不正确");
+  const publishedSource = await response.json();
+  if (!isValidData(publishedSource)) throw new Error("论文数据格式不正确");
+  publishedData = normalizePortfolio(publishedSource);
 
   const localDraft = localStorage.getItem(STORAGE_KEY);
   if (localDraft) {
     try {
       const parsed = JSON.parse(localDraft);
       if (isValidData(parsed) && Number(parsed.meta.version || 0) >= Number(publishedData.meta.version || 0)) {
-        data = parsed;
+        data = normalizePortfolio(parsed);
         setDraftState(true);
       } else {
         localStorage.removeItem(STORAGE_KEY);
@@ -238,8 +341,8 @@ function paperStartTime(paper) {
 
 function getPortfolioPapers() {
   const byLatestStart = (a, b) => paperStartTime(b) - paperStartTime(a);
-  const ongoing = data.papers.filter((paper) => paper.focusStage !== "accepted").sort(byLatestStart);
-  const completed = data.papers.filter((paper) => paper.focusStage === "accepted").sort(byLatestStart);
+  const ongoing = data.papers.filter((paper) => paper.focusStage !== "publication").sort(byLatestStart);
+  const completed = data.papers.filter((paper) => paper.focusStage === "publication").sort(byLatestStart);
   return [...ongoing, ...completed];
 }
 
@@ -276,9 +379,9 @@ function renderHero() {
 function renderMetrics() {
   const total = data.papers.length;
   const writing = data.papers.filter((paper) => paper.focusStage === "writing").length;
-  const submission = data.papers.filter((paper) => paper.focusStage === "submission").length;
-  const revision = data.papers.filter((paper) => paper.focusStage === "revision").length;
-  const accepted = data.papers.filter((paper) => paper.focusStage === "accepted").length;
+  const submission = data.papers.filter((paper) => paper.focusStage === "submission" && ["under_review", "decision_pending"].includes(paper.statusCode)).length;
+  const revision = data.papers.filter((paper) => paper.focusStage === "submission" && paper.statusCode.startsWith("revision_")).length;
+  const accepted = data.papers.filter((paper) => paper.focusStage === "publication").length;
   const working = total - accepted;
   const average = total ? Math.round(data.papers.reduce((sum, paper) => sum + clamp(paper.progress, 0, 100), 0) / total) : 0;
 
@@ -316,7 +419,7 @@ function renderRoadmap() {
         <div class="roadmap-row" title="${escapeHTML(paper.title)} · ${progress}%">
           <div class="roadmap-code"><i></i><span>${escapeHTML(paper.shortCode)}</span></div>
           <div class="roadmap-lane">
-            <span class="roadmap-bar ${paper.focusStage === "accepted" ? "accepted" : ""}" style="width:${progress}%"></span>
+            <span class="roadmap-bar ${paper.focusStage === "publication" ? "accepted" : ""}" style="width:${progress}%"></span>
             <span class="roadmap-marker" style="left:${progress}%"></span>
           </div>
           <span class="roadmap-value">${progress}%</span>
@@ -331,7 +434,7 @@ function getFilteredPapers() {
   const query = els.searchInput.value.trim().toLocaleLowerCase();
   const stage = els.stageFilter.value;
   return getPortfolioPapers().filter((paper) => {
-    const haystack = [paper.title, paper.shortCode, paper.authors, paper.venueSummary, paper.nextAction, paper.notes]
+    const haystack = [paper.title, paper.shortCode, paper.authors, paper.venueSummary, paper.nextAction, paper.notes, stageNames[paper.focusStage], statusLabel(paper.focusStage, paper.statusCode)]
       .filter(Boolean)
       .join(" ")
       .toLocaleLowerCase();
@@ -346,8 +449,8 @@ function renderPaperList() {
     return;
   }
 
-  const ongoing = papers.filter((paper) => paper.focusStage !== "accepted");
-  const completed = papers.filter((paper) => paper.focusStage === "accepted");
+  const ongoing = papers.filter((paper) => paper.focusStage !== "publication");
+  const completed = papers.filter((paper) => paper.focusStage === "publication");
   els.paperList.innerHTML = [
     renderProjectGroup("正在进行", "ONGOING", ongoing),
     renderProjectGroup("已经完成", "COMPLETED", completed)
@@ -392,9 +495,9 @@ function renderPaperCard(paper) {
             </div>
           </div>
           <div class="paper-side">
-            <span class="paper-side-label">CURRENT THREAD</span>
+            <span class="paper-side-label">CURRENT STATUS</span>
             <strong>${escapeHTML(currentThread(paper))}</strong>
-            <small>${progress}% · ${escapeHTML(stageNames[paper.focusStage] || "未分类")}</small>
+            <small>${formatDate(paper.statusStartedAt)} 至今 · ${progress}% · ${escapeHTML(stageNames[paper.focusStage] || "未分类")}</small>
             <button class="card-action" type="button" data-edit-id="${escapeHTML(paper.id)}">编辑进展</button>
           </div>
         </article>
@@ -405,17 +508,12 @@ function stageColor(stage) {
   return {
     writing: "#8fcbed",
     submission: "#58a9dc",
-    revision: "#316f99",
-    accepted: "#45a887"
+    publication: "#45a887"
   }[stage] || "#8fcbed";
 }
 
 function currentThread(paper) {
-  const revision = [...(paper.revisions || [])].reverse().find((item) => item.status === "in_progress" || item.status === "returned");
-  if (revision) return `${revision.journal} · ${revision.type || "返修"}${revision.round ? ` R${revision.round}` : ""}`;
-  const submission = [...(paper.submissions || [])].reverse()[0];
-  if (submission) return `${submission.journal} · ${submissionStatusNames[submission.status] || submission.note || "跟踪中"}`;
-  return paper.stageLabel || stageNames[paper.focusStage] || "待补充";
+  return statusLabel(paper.focusStage, paper.statusCode);
 }
 
 function renderManageState() {
@@ -475,6 +573,28 @@ function openNewPaper() {
   window.setTimeout(() => els.dialogBody.querySelector("textarea[name='title']")?.focus(), 100);
 }
 
+function renderStatusTimeline(paper) {
+  const archived = (paper.statusTimeline || []).map((item) => ({ ...item, current: false }));
+  const current = {
+    stage: paper.focusStage,
+    status: paper.statusCode,
+    label: statusLabel(paper.focusStage, paper.statusCode),
+    startedAt: paper.statusStartedAt || paper.startedAt,
+    endedAt: "",
+    current: true
+  };
+  return [...archived, current].map((item, index) => `
+    <div class="status-timeline-item ${item.current ? "current" : ""}">
+      <span class="timeline-marker">${String(index + 1).padStart(2, "0")}</span>
+      <div>
+        <small>${escapeHTML(stageNames[item.stage] || "阶段记录")}${item.current ? " · 当前" : ""}</small>
+        <strong>${escapeHTML(item.label || statusLabel(item.stage, item.status))}</strong>
+        <p>${statusPeriodText(item.startedAt, item.endedAt)}</p>
+      </div>
+    </div>
+  `).join("");
+}
+
 function renderPaperDetails(paper) {
   const writing = (paper.writing || [])
     .map((item) => `
@@ -491,7 +611,9 @@ function renderPaperDetails(paper) {
     <section class="detail-section">
       <div class="detail-grid">
         <div class="detail-row"><span>论文简称</span><strong>${escapeHTML(paper.shortCode)}</strong></div>
-        <div class="detail-row"><span>当前阶段</span><strong>${escapeHTML(paper.stageLabel || stageNames[paper.focusStage])}</strong></div>
+        <div class="detail-row"><span>当前大阶段</span><strong>${escapeHTML(stageNames[paper.focusStage])}</strong></div>
+        <div class="detail-row"><span>当前状态</span><strong>${escapeHTML(statusLabel(paper.focusStage, paper.statusCode))}</strong></div>
+        <div class="detail-row"><span>当前状态开始日</span><strong>${formatDate(paper.statusStartedAt || paper.startedAt)}</strong></div>
         <div class="detail-row"><span>作者</span><strong>${escapeHTML(paper.authors || "待补充")}</strong></div>
         <div class="detail-row"><span>起始日</span><strong>${formatDate(paper.startedAt)}</strong></div>
         <div class="detail-row"><span>历时</span><strong>${durationText(paper.startedAt, paper.manualUpdatedAt || paper.updatedAt)}</strong></div>
@@ -504,11 +626,14 @@ function renderPaperDetails(paper) {
       <div class="writing-steps">${writing}</div>
     </section>
     <section class="detail-section">
-      <h3>投稿线程</h3>
-      <div class="history-list">${submissions || `<div class="empty-state">暂无投稿记录</div>`}</div>
+      <h3>阶段时间线</h3>
+      <div class="status-timeline">${renderStatusTimeline(paper)}</div>
     </section>
     <section class="detail-section">
-      <h3>返修轮次</h3>
+      <h3>投稿阶段记录</h3>
+      <h4 class="detail-subsection-title">投稿线程</h4>
+      <div class="history-list">${submissions || `<div class="empty-state">暂无投稿记录</div>`}</div>
+      <h4 class="detail-subsection-title">返修轮次</h4>
       <div class="history-list">${revisions || `<div class="empty-state">暂无返修记录</div>`}</div>
     </section>
     <section class="detail-section">
@@ -558,6 +683,26 @@ function optionsHtml(options, selected) {
     .join("");
 }
 
+function statusOptionsHtml(stage, selected) {
+  return (stageStatuses[stage] || [])
+    .map(([value, label]) => `<option value="${escapeHTML(value)}" ${value === selected ? "selected" : ""}>${escapeHTML(label)}</option>`)
+    .join("");
+}
+
+function renderTimelineEditRow(item = {}) {
+  return `
+    <div class="editable-item status-history-item" data-status-history-row data-history-id="${escapeHTML(item.id || "")}" data-history-stage="${escapeHTML(item.stage || "writing")}" data-history-status="${escapeHTML(item.status || defaultStatusForStage(item.stage || "writing"))}">
+      <div class="history-status-name">
+        <small>${escapeHTML(stageNames[item.stage] || "阶段记录")}</small>
+        <strong>${escapeHTML(item.label || statusLabel(item.stage, item.status))}</strong>
+      </div>
+      <label><span>开始日</span><input data-field="startedAt" type="date" value="${escapeHTML(item.startedAt || "")}" /></label>
+      <label><span>结束日</span><input data-field="endedAt" type="date" value="${escapeHTML(item.endedAt || "")}" /></label>
+      <button class="remove-item" type="button" aria-label="删除这条状态时间线">×</button>
+    </div>
+  `;
+}
+
 function getActiveWritingStep(items = []) {
   return items.find((item) => item.status === "in_progress") || items.find((item) => item.status === "pending") || null;
 }
@@ -586,6 +731,7 @@ function renderEditForm(paper) {
 
   const submissionRows = (paper.submissions || []).map(renderSubmissionRow).join("");
   const revisionRows = (paper.revisions || []).map(renderRevisionRow).join("");
+  const timelineRows = (paper.statusTimeline || []).map(renderTimelineEditRow).join("");
 
   return `
     <section class="detail-section">
@@ -594,8 +740,15 @@ function renderEditForm(paper) {
         <label class="form-field full"><span>论文标题</span><textarea name="title" required>${escapeHTML(paper.title)}</textarea></label>
         <label class="form-field full"><span>作者（用分号分隔）</span><input name="authors" value="${escapeHTML(paper.authors || "")}" /></label>
         <label class="form-field"><span>简称（最多 50 个字符）</span><input name="shortCode" value="${escapeHTML(paper.shortCode)}" maxlength="50" required /></label>
-        <label class="form-field"><span>当前大阶段</span><select name="focusStage">${optionsHtml(stageNames, paper.focusStage)}</select></label>
-        <label class="form-field"><span>阶段显示名称</span><input name="stageLabel" value="${escapeHTML(paper.stageLabel || "")}" /></label>
+        <div class="status-editor full" id="statusEditor" data-original-stage="${escapeHTML(paper.focusStage)}" data-original-status="${escapeHTML(paper.statusCode)}" data-original-started-at="${escapeHTML(paper.statusStartedAt || paper.startedAt)}">
+          <label class="form-field"><span>当前大阶段</span><select name="focusStage">${optionsHtml(stageNames, paper.focusStage)}</select></label>
+          <label class="form-field"><span>当前状态</span><select name="statusCode">${statusOptionsHtml(paper.focusStage, paper.statusCode)}</select></label>
+          <label class="form-field status-date-field">
+            <span id="statusDateLabel">当前状态开始日</span>
+            <input name="statusEffectiveAt" type="date" value="${escapeHTML(paper.statusStartedAt || paper.startedAt || todayISO())}" required />
+          </label>
+          <p class="status-change-hint" id="statusChangeHint">更改大阶段或状态后，这里会变为“新状态开始日”；保存时自动归档上一段时间线。</p>
+        </div>
         <label class="form-field"><span>起始日</span><input name="startedAt" type="date" value="${escapeHTML(paper.startedAt || "")}" /></label>
         <label class="form-field full">
           <span>参考进度</span>
@@ -619,6 +772,15 @@ function renderEditForm(paper) {
         <label class="form-field full"><span>备注</span><textarea name="notes">${escapeHTML(paper.notes || "")}</textarea></label>
       </div>
     </section>
+    ${timelineRows ? `
+      <section class="detail-section">
+        <div class="tracking-section-heading">
+          <h3>已归档阶段时间线</h3>
+          <p>自动记录的历史日期可在此校正；错误记录也可删除。</p>
+        </div>
+        <div class="editable-history" id="statusTimelineRows">${timelineRows}</div>
+      </section>
+    ` : ""}
     <section class="detail-section">
       <div class="tracking-section-heading">
         <h3>撰写阶段追踪</h3>
@@ -627,12 +789,11 @@ function renderEditForm(paper) {
       <div class="writing-editor-grid">${writingFields}</div>
     </section>
     <section class="detail-section">
-      <h3>投稿线程</h3>
+      <h3>投稿阶段记录</h3>
+      <h4 class="detail-subsection-title">投稿线程</h4>
       <div class="editable-history" id="submissionRows">${submissionRows}</div>
       <button class="add-row-button" id="addSubmissionButton" type="button">＋ 添加投稿线程</button>
-    </section>
-    <section class="detail-section">
-      <h3>返修轮次</h3>
+      <h4 class="detail-subsection-title">返修轮次</h4>
       <div class="editable-history" id="revisionRows">${revisionRows}</div>
       <button class="add-row-button" id="addRevisionButton" type="button">＋ 添加返修轮次</button>
     </section>
@@ -690,6 +851,17 @@ function collectWritingSteps() {
   }));
 }
 
+function collectStatusTimeline() {
+  return [...els.dialogBody.querySelectorAll("[data-status-history-row]")].map((row) => ({
+    id: row.dataset.historyId || `timeline-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`,
+    stage: row.dataset.historyStage,
+    status: row.dataset.historyStatus,
+    label: statusLabel(row.dataset.historyStage, row.dataset.historyStatus),
+    startedAt: row.querySelector("[data-field='startedAt']")?.value || "",
+    endedAt: row.querySelector("[data-field='endedAt']")?.value || ""
+  })).filter((item) => item.startedAt && item.endedAt);
+}
+
 function syncNextDueFromWriting() {
   const rows = [...els.dialogBody.querySelectorAll("[data-writing-row]")];
   const activeRow = rows.find((row) => row.querySelector("[data-writing-status]")?.value === "in_progress")
@@ -713,6 +885,32 @@ function syncNextDueFromWriting() {
   }
 }
 
+function updateStatusTransitionUI(resetDate = false) {
+  const editor = els.dialogBody.querySelector("#statusEditor");
+  if (!editor) return;
+  const stageSelect = editor.querySelector("select[name='focusStage']");
+  const statusSelect = editor.querySelector("select[name='statusCode']");
+  const dateInput = editor.querySelector("input[name='statusEffectiveAt']");
+  const dateLabel = editor.querySelector("#statusDateLabel");
+  const hint = editor.querySelector("#statusChangeHint");
+  const changed = stageSelect.value !== editor.dataset.originalStage || statusSelect.value !== editor.dataset.originalStatus;
+  if (resetDate) dateInput.value = changed ? todayISO() : editor.dataset.originalStartedAt;
+  dateLabel.textContent = changed ? "新状态开始日" : "当前状态开始日";
+  hint.textContent = changed
+    ? `保存后将归档“${statusLabel(editor.dataset.originalStage, editor.dataset.originalStatus)}”，并从所选日期开始“${statusLabel(stageSelect.value, statusSelect.value)}”。日期可手动修改。`
+    : "当前状态尚未切换；修改此日期只会校正当前状态的开始日。";
+}
+
+function handleBigStageChange() {
+  const editor = els.dialogBody.querySelector("#statusEditor");
+  if (!editor) return;
+  const stageSelect = editor.querySelector("select[name='focusStage']");
+  const statusSelect = editor.querySelector("select[name='statusCode']");
+  const selected = stageSelect.value === editor.dataset.originalStage ? editor.dataset.originalStatus : defaultStatusForStage(stageSelect.value);
+  statusSelect.innerHTML = statusOptionsHtml(stageSelect.value, selected);
+  updateStatusTransitionUI(true);
+}
+
 function saveActivePaper(event) {
   event.preventDefault();
   if (!isManageMode || !activePaperId) return;
@@ -730,11 +928,40 @@ function saveActivePaper(event) {
     showToast("论文简称不能与现有项目重复");
     return;
   }
+  const previousStage = paper.focusStage;
+  const previousStatus = paper.statusCode;
+  const previousStatusStartedAt = paper.statusStartedAt || paper.startedAt || formData.get("startedAt") || todayISO();
+  const nextStage = formData.get("focusStage");
+  const nextStatus = formData.get("statusCode");
+  const statusEffectiveAt = formData.get("statusEffectiveAt") || todayISO();
+  const statusChanged = !isCreatingPaper && (nextStage !== previousStage || nextStatus !== previousStatus);
+  if (statusChanged && daysBetween(previousStatusStartedAt, statusEffectiveAt) === null) {
+    showToast("请检查新状态开始日");
+    return;
+  }
+  if (statusChanged && new Date(`${statusEffectiveAt}T12:00:00`) < new Date(`${previousStatusStartedAt}T12:00:00`)) {
+    showToast("新状态开始日不能早于当前状态开始日");
+    return;
+  }
+  const statusTimeline = collectStatusTimeline();
+  if (statusChanged) {
+    statusTimeline.push({
+      id: `timeline-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`,
+      stage: previousStage,
+      status: previousStatus,
+      label: statusLabel(previousStage, previousStatus),
+      startedAt: previousStatusStartedAt,
+      endedAt: statusEffectiveAt
+    });
+  }
   paper.title = title;
   paper.authors = formData.get("authors").trim();
   paper.shortCode = shortCode;
-  paper.focusStage = formData.get("focusStage");
-  paper.stageLabel = formData.get("stageLabel").trim() || stageNames[paper.focusStage];
+  paper.focusStage = nextStage;
+  paper.statusCode = nextStatus;
+  paper.stageLabel = statusLabel(nextStage, nextStatus);
+  paper.statusStartedAt = statusEffectiveAt;
+  paper.statusTimeline = statusTimeline;
   paper.startedAt = formData.get("startedAt");
   paper.progress = clamp(formData.get("progress"), 0, 100);
   paper.manualUpdatedAt = formData.get("manualUpdatedAt");
@@ -829,7 +1056,7 @@ async function importData(file) {
   try {
     const parsed = JSON.parse(await file.text());
     if (!isValidData(parsed)) throw new Error("数据结构不完整");
-    data = parsed;
+    data = normalizePortfolio(parsed);
     saveLocalDraft();
     focusPosition = 0;
     renderAll();
@@ -921,6 +1148,12 @@ function bindEvents() {
   els.codesForm.addEventListener("submit", saveAllCodes);
   els.dialogBody.addEventListener("click", handleDialogClick);
   els.dialogBody.addEventListener("input", (event) => {
+    if (event.target.name === "focusStage") {
+      handleBigStageChange();
+    }
+    if (event.target.name === "statusCode") {
+      updateStatusTransitionUI(true);
+    }
     if (event.target.name === "progressRange") {
       els.dialogBody.querySelector("input[name='progress']").value = event.target.value;
     }
