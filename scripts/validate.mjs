@@ -32,7 +32,7 @@ const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
 const js = await readFile(new URL("../app.js", import.meta.url), "utf8");
 const css = await readFile(new URL("../styles.css", import.meta.url), "utf8");
 
-for (const expected of ["pipelineChart", "needsAttention", "paperList", "quickDialog", "paperDialog", "toolsDialog"]) {
+for (const expected of ["pipelineChart", "pipelineSelection", "overviewPipelineSelection", "needsAttention", "paperList", "quickDialog", "paperDialog", "toolsDialog"]) {
   if (!html.includes(`id=\"${expected}\"`)) throw new Error(`Missing interface mount: ${expected}`);
 }
 if (!js.includes("saveLocalDraft")) throw new Error("Management persistence is missing.");
@@ -43,6 +43,10 @@ for (const field of ["nextAction", "nextDue", "currentVenue", "priority", "pinne
 for (const label of ["NEXT ACTION", "REFERENCE PROGRESS", "NEEDS ATTENTION", "Research Pipeline"]) {
   if (!html.includes(label) && !js.includes(label)) throw new Error(`Missing required interface label: ${label}`);
 }
+for (const bucket of ["writing", "submitted", "revision", "published"]) {
+  if (!js.includes(`[\"${bucket}\"`)) throw new Error(`Missing interactive pipeline bucket: ${bucket}`);
+}
+if (js.includes('["accepted", "Accepted",')) throw new Error("Accepted must not be rendered as a standalone pipeline stage.");
 if (!css.includes("--blue-100")) throw new Error("Theme variables are missing.");
 
 console.log(`Validated ${data.papers.length} papers, ${ids.size} unique ids, and all interface mounts. Project count may change in management mode.`);
