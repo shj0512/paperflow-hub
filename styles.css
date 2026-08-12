@@ -310,7 +310,7 @@ button {
 .section-kicker {
   margin: 0 0 14px;
   color: var(--blue);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -318,7 +318,8 @@ button {
 
 .portfolio-identity .eyebrow {
   margin: 0;
-  font-size: 12px;
+  font-size: clamp(15px, 1.2vw, 18px);
+  letter-spacing: 0.13em;
 }
 
 .portfolio-summary {
@@ -417,6 +418,12 @@ button {
   position: relative;
   z-index: 1;
   justify-content: space-between;
+}
+
+.focus-card .section-kicker {
+  margin: 0;
+  font-size: 15px;
+  letter-spacing: 0.12em;
 }
 
 .focus-index {
@@ -657,7 +664,7 @@ button {
   padding: 21px 26px;
   border-bottom: 1px solid var(--line);
   color: #657f92;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .roadmap-legend span {
@@ -692,7 +699,7 @@ button {
 
 .roadmap-label-spacer,
 .roadmap-code {
-  flex: 0 0 220px;
+  flex: 0 0 270px;
 }
 
 .roadmap-scale {
@@ -701,7 +708,7 @@ button {
   flex: 1;
   grid-template-columns: repeat(5, 1fr);
   color: #9aadb9;
-  font-size: 9px;
+  font-size: 11px;
 }
 
 .roadmap-scale span:not(:first-child) {
@@ -710,7 +717,7 @@ button {
 
 .roadmap-row {
   gap: 18px;
-  min-height: 58px;
+  min-height: 70px;
   border-top: 1px solid #edf4f8;
 }
 
@@ -719,9 +726,36 @@ button {
   align-items: center;
   gap: 8px;
   color: var(--navy);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   line-height: 1.35;
+}
+
+.roadmap-code > span {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.roadmap-code strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.roadmap-code small {
+  color: #58778c;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.roadmap-empty {
+  padding: 32px;
+  border: 1px dashed #c9dfec;
+  border-radius: 14px;
+  color: #58778c;
+  font-size: 14px;
+  text-align: center;
 }
 
 .roadmap-code i {
@@ -788,7 +822,7 @@ button {
 .roadmap-value {
   flex: 0 0 46px;
   color: var(--navy);
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 700;
   text-align: right;
 }
@@ -1226,7 +1260,7 @@ dialog::backdrop {
 
 .dialog-footer-left span {
   color: #8499a7;
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .detail-section + .detail-section {
@@ -1238,7 +1272,7 @@ dialog::backdrop {
 .detail-section h3 {
   margin: 0 0 15px;
   color: var(--navy);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
 }
 
@@ -1268,12 +1302,12 @@ dialog::backdrop {
 
 .detail-row span {
   color: #7a92a2;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .detail-row strong {
   color: var(--ink);
-  font-size: 11px;
+  font-size: 13px;
   text-align: right;
 }
 
@@ -1338,6 +1372,53 @@ dialog::backdrop {
   border-width: 5px;
 }
 
+.stage-status-tracker {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.stage-status-step {
+  display: grid;
+  min-height: 72px;
+  align-content: center;
+  gap: 7px;
+  padding: 12px 13px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: #667f90;
+  background: var(--white);
+}
+
+.stage-status-step span {
+  color: #91a9b8;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.stage-status-step strong {
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+.stage-status-step.complete {
+  color: #3f718c;
+  border-color: #c6dfed;
+  background: #f3faff;
+}
+
+.stage-status-step.current {
+  color: var(--white);
+  border-color: var(--sky-600);
+  background: linear-gradient(135deg, #58ade0, #247fb9);
+  box-shadow: 0 8px 20px rgba(36, 127, 185, 0.2);
+}
+
+.stage-status-step.current span {
+  color: rgba(255, 255, 255, 0.75);
+}
+
 .status-timeline {
   position: relative;
   display: grid;
@@ -1392,7 +1473,7 @@ dialog::backdrop {
 
 .status-timeline-item small {
   color: #5f8196;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.06em;
 }
@@ -1400,13 +1481,13 @@ dialog::backdrop {
 .status-timeline-item strong {
   margin-top: 2px;
   color: var(--navy);
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .status-timeline-item p {
   margin: 4px 0 0;
   color: #637e90;
-  font-size: 10.5px;
+  font-size: 12px;
 }
 
 .history-list {
@@ -1427,7 +1508,7 @@ dialog::backdrop {
 
 .item-row-top strong {
   color: var(--navy);
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .submission-badge {
@@ -1443,7 +1524,7 @@ dialog::backdrop {
 .history-item p {
   margin: 7px 0 0;
   color: #8094a2;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .form-field {
@@ -1470,14 +1551,14 @@ dialog::backdrop {
   grid-column: 1 / -1;
   margin: 0;
   color: #52758a;
-  font-size: 10.5px;
+  font-size: 12px;
   font-weight: 500;
   line-height: 1.55;
 }
 
 .form-field > span {
   color: #6b8394;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
 }
 
@@ -1492,14 +1573,14 @@ dialog::backdrop {
 .form-field select,
 .form-field textarea {
   width: 100%;
-  min-height: 42px;
+  min-height: 46px;
   border: 1px solid var(--line-strong);
   border-radius: 10px;
   outline: 0;
   padding: 9px 11px;
   color: var(--ink);
   background: var(--white);
-  font-size: 11px;
+  font-size: 13px;
   transition: border-color 150ms ease, box-shadow 150ms ease;
 }
 
@@ -1544,7 +1625,7 @@ dialog::backdrop {
   max-width: 470px;
   margin: 0;
   color: #6b8394;
-  font-size: 11px;
+  font-size: 12px;
   text-align: right;
 }
 
@@ -1593,12 +1674,23 @@ dialog::backdrop {
 .editable-item {
   position: relative;
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr 1fr;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
   padding: 12px;
   border: 1px solid var(--line);
   border-radius: 12px;
   background: var(--sky-50);
+}
+
+.editable-item > label {
+  display: grid;
+  gap: 5px;
+}
+
+.editable-item > label > span {
+  color: #5f7b8d;
+  font-size: 11px;
+  font-weight: 700;
 }
 
 .editable-item.revision-item {
@@ -1639,13 +1731,13 @@ dialog::backdrop {
 .editable-item select {
   width: 100%;
   min-width: 0;
-  height: 37px;
+  height: 42px;
   padding: 7px 9px;
   border: 1px solid var(--line-strong);
   border-radius: 9px;
   outline: 0;
   background: var(--white);
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .remove-item {
@@ -1667,14 +1759,14 @@ dialog::backdrop {
 
 .add-row-button {
   width: 100%;
-  min-height: 36px;
+  min-height: 42px;
   margin-top: 9px;
   border: 1px dashed #b9d9ea;
   border-radius: 10px;
   color: var(--blue);
   background: var(--sky-50);
   cursor: pointer;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
 }
 
@@ -1691,7 +1783,7 @@ dialog::backdrop {
 
 .code-editor-row {
   display: grid;
-  grid-template-columns: minmax(0, 1.45fr) minmax(220px, 0.75fr);
+  grid-template-columns: minmax(0, 1.35fr) minmax(210px, 0.75fr) minmax(150px, 0.55fr);
   gap: 16px;
   align-items: center;
   padding: 12px 14px;
@@ -1702,7 +1794,7 @@ dialog::backdrop {
 
 .code-editor-row span {
   color: #587286;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.5;
 }
 
@@ -1716,7 +1808,29 @@ dialog::backdrop {
   outline: 0;
   color: var(--ink);
   background: var(--white);
-  font-size: 11px;
+  font-size: 13px;
+}
+
+.roadmap-visibility {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 9px;
+  color: var(--navy);
+  cursor: pointer;
+}
+
+.roadmap-visibility input {
+  width: 19px;
+  height: 19px;
+  flex: 0 0 auto;
+  accent-color: var(--sky-600);
+}
+
+.roadmap-visibility span {
+  color: var(--navy);
+  font-size: 12px;
+  font-weight: 700;
 }
 
 .code-editor-row input:focus {
@@ -2120,6 +2234,11 @@ dialog::backdrop {
 
   .writing-steps {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stage-status-tracker,
+  .stage-status-tracker.submission {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .editable-item,

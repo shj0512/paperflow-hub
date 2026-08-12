@@ -4,8 +4,8 @@ const raw = await readFile(new URL("../data/papers.json", import.meta.url), "utf
 const data = JSON.parse(raw);
 const requiredWritingKeys = ["question", "data", "draft", "format"];
 
-if (!data.meta || !Array.isArray(data.papers) || data.papers.length !== 9) {
-  throw new Error("Expected metadata and exactly 9 papers.");
+if (!data.meta || !Array.isArray(data.papers)) {
+  throw new Error("Expected metadata and a papers array.");
 }
 
 const ids = new Set();
@@ -38,4 +38,4 @@ for (const expected of ["roadmapChart", "paperList", "paperDialog", "toolsDialog
 if (!js.includes("saveLocalDraft")) throw new Error("Management persistence is missing.");
 if (!css.includes("--sky-100")) throw new Error("Theme variables are missing.");
 
-console.log(`Validated ${data.papers.length} papers, ${ids.size} unique ids, and all interface mounts.`);
+console.log(`Validated ${data.papers.length} papers, ${ids.size} unique ids, and all interface mounts. Project count may change in management mode.`);
