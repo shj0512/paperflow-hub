@@ -1,42 +1,34 @@
-# Paperflow · 论文进展台
+# Paperflow · Research Portfolio of SUN Huijie
 
 > 在线访问：https://shj0512.github.io/paperflow-hub/
 
-一个独立于个人主页的论文进展工作台，用于呈现撰写、并行投稿、多轮返修和发表状态。
+一个基于 GitHub Pages、原生 HTML/CSS/JavaScript 与 JSON 的个人研究项目工作台。阅读模式用于对外展示，Manage Mode 用于作者本人日常管理。
 
-## 功能
+## 核心功能
 
-- 可增减论文的组合总览、阶段筛选与搜索
-- 横轴为阶段化参考进度、纵轴为自定义论文简称的进展图；可逐篇设置显示或隐藏
-- 撰写阶段四步追踪：问题提出、数据处理、文本撰写、格式修改
-- 投稿阶段统一状态：Under Review、1st/2nd/3rd Revision、已修回、Decision Pending、拒稿与接收
-- 状态切换时按生效日自动结束上一状态，并保存完整阶段时间线
-- 多期刊投稿线程，每条线程使用同一套标准投稿状态
-- 起始日、当前状态历时与可独立调整的参考进度
-- 浏览器内管理模式、JSON 导入导出，以及 GitHub 安全发布入口
-- 响应式浅蓝色界面，适配桌面和移动设备
+- 按 Priority、Pinned、Deadline、返修与等待时间自动选择 Current Focus
+- Active、Under Review、Revision、Published 四项组合概览与轻量 Pipeline Distribution
+- Needs Attention 自动识别逾期、14 天内截止、高优先级、返修、长期等待和长期未更新项目
+- Writing → Submitted → Revision → Accepted → Published 五阶段 Research Pipeline
+- Project Card 重点显示 Next Action、Due Date、Reference Progress 与 Priority
+- Quick Update 快速修改状态、生效日、Next Action、Due Date 和 Priority
+- Full Edit 管理论文信息、投稿线程、完整状态时间线、Notes、Links 与 Advanced Settings
+- 状态变化时自动结束上一状态并保存起止日期
+- 可增减项目，并选择是否计入 Research Pipeline
+- JSON 导入导出、当前设备草稿与 GitHub 安全发布流程
 
-## 修改数据
+## 数据字段
 
-页面中的管理模式会把修改保存为当前设备上的草稿，不会改变访客看到的已发布版本。
+每篇论文支持 `focusStage`、`statusCode`、`statusStartedAt`、`statusTimeline`、`progress`、`priority`、`pinned`、`nextAction`、`nextDue`、`currentVenue`、`lastActionAt`、`startedAt`、`updatedAt`、`showOnRoadmap`、`submissions`、`tags`、`links` 与 `notes`。旧数据中的 `venueSummary`、`nextAction`、`nextDue` 和 `notes` 会兼容迁移，不会在页面初始化时丢失。
 
-正式发布有两种方式：
+## 修改与发布
 
-1. 在页面的“数据工具 → 发布到 GitHub”中复制 JSON，打开 `data/papers.json` 的 GitHub 编辑页，替换后提交。
-2. 直接在 GitHub 中编辑 `data/papers.json` 并提交。
+Manage Mode 中的修改先保存为当前设备草稿。正式发布时使用 Header 中的 `Publish`，复制完整 JSON 后替换仓库中的 `data/papers.json` 并提交。GitHub Actions 会自动部署 GitHub Pages。
 
-这样，访客只能查看；只有拥有仓库写权限的账号才能修改全站数据。每次提交也会自然保留版本历史和提交时间。
-
-## 本地预览
-
-项目没有构建依赖。在仓库根目录启动任意静态文件服务即可，例如：
+## 本地验证
 
 ```bash
 python3 -m http.server 4173
+node scripts/validate.mjs
+node scripts/test-status-engine.mjs
 ```
-
-然后访问 `http://localhost:4173`。
-
-## 数据说明
-
-未提供的起始日、投稿日和截止日均保留为空，页面会显示“待补充”，没有虚构日期。初始进度百分比按论文当前阶段设置为参考值，可在管理模式中逐篇调整。
