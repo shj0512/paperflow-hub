@@ -112,6 +112,7 @@
             <h2>论文项目</h2>
           </div>
           <div class="paper-toolbar">
+            <button class="button button-primary compact" id="addPaperButton" type="button" hidden>＋ 新增论文</button>
             <label class="search-box">
               <span aria-hidden="true">⌕</span>
               <input id="searchInput" type="search" placeholder="搜索题目、期刊或简称" aria-label="搜索论文" />
@@ -151,7 +152,10 @@
         </div>
         <div id="dialogBody" class="dialog-body"></div>
         <div class="dialog-footer" id="dialogFooter">
-          <span id="dialogHint">阅读视图</span>
+          <div class="dialog-footer-left">
+            <button class="button button-danger" id="deletePaperButton" type="button" hidden>删除项目</button>
+            <span id="dialogHint">阅读视图</span>
+          </div>
           <div>
             <button class="button button-ghost" value="cancel">关闭</button>
             <button class="button button-primary" id="savePaperButton" type="submit">保存修改</button>

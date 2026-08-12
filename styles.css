@@ -253,6 +253,17 @@ button {
   background: #0c314a;
 }
 
+.button-danger {
+  color: #a54f5d;
+  border-color: #efcbd1;
+  background: #fff7f8;
+}
+
+.button-danger:hover {
+  border-color: #dfa8b1;
+  background: #fff0f2;
+}
+
 .button-ghost {
   border-color: var(--line-strong);
   background: rgba(255, 255, 255, 0.8);
@@ -790,7 +801,9 @@ button {
 
 .paper-toolbar {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
+  justify-content: flex-end;
 }
 
 .search-box,
@@ -1210,10 +1223,11 @@ dialog::backdrop {
 
 .dialog-footer > div {
   display: flex;
+  align-items: center;
   gap: 8px;
 }
 
-.dialog-footer > span {
+.dialog-footer-left span {
   color: #8499a7;
   font-size: 11px;
 }
@@ -1273,6 +1287,23 @@ dialog::backdrop {
   background: var(--white);
   text-align: center;
   font-size: 10px;
+}
+
+.writing-step strong,
+.writing-step small {
+  display: block;
+}
+
+.writing-step strong {
+  color: inherit;
+  font-size: 11px;
+}
+
+.writing-step small {
+  margin-top: 5px;
+  color: #7890a1;
+  font-size: 9px;
+  font-weight: 500;
 }
 
 .writing-step::before {
@@ -1355,6 +1386,13 @@ dialog::backdrop {
   font-weight: 600;
 }
 
+.form-help {
+  color: #738b9c;
+  font-size: 10.5px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
 .form-field input,
 .form-field select,
 .form-field textarea {
@@ -1393,6 +1431,63 @@ dialog::backdrop {
   min-height: auto;
   padding: 0;
   accent-color: var(--sky-600);
+}
+
+.tracking-section-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 15px;
+}
+
+.tracking-section-heading h3 {
+  margin: 0;
+}
+
+.tracking-section-heading p {
+  max-width: 470px;
+  margin: 0;
+  color: #6b8394;
+  font-size: 11px;
+  text-align: right;
+}
+
+.writing-editor-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 11px;
+}
+
+.writing-stage-editor {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--sky-50);
+}
+
+.writing-stage-heading {
+  display: flex;
+  grid-column: 1 / -1;
+  align-items: center;
+  gap: 9px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--line);
+}
+
+.writing-stage-heading span {
+  color: #72a8c9;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.writing-stage-heading strong {
+  color: var(--navy);
+  font-size: 12px;
 }
 
 .editable-history {
@@ -1807,6 +1902,7 @@ dialog::backdrop {
 
   .paper-toolbar {
     width: 100%;
+    justify-content: flex-start;
   }
 
   .search-box {
@@ -1861,14 +1957,35 @@ dialog::backdrop {
     padding-inline: 19px;
   }
 
+  .dialog-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .dialog-footer > div:last-child {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
   .dialog-header h2 {
     font-size: 18px;
   }
 
   .detail-grid,
   .form-grid,
-  .tools-grid {
+  .tools-grid,
+  .writing-editor-grid {
     grid-template-columns: 1fr;
+  }
+
+  .tracking-section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .tracking-section-heading p {
+    text-align: left;
   }
 
   .writing-steps {
