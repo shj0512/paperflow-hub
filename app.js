@@ -54,8 +54,10 @@ const els = {
   focusPriority: document.querySelector("#focusPriority"),
   metrics: document.querySelector("#metrics"),
   pipelineDistribution: document.querySelector("#pipelineDistribution"),
+  overviewPipelineSelection: document.querySelector("#overviewPipelineSelection"),
   needsAttention: document.querySelector("#needsAttention"),
   pipelineChart: document.querySelector("#pipelineChart"),
+  pipelineSelection: document.querySelector("#pipelineSelection"),
   paperList: document.querySelector("#paperList"),
   searchInput: document.querySelector("#searchInput"),
   stageFilter: document.querySelector("#stageFilter"),
@@ -105,6 +107,8 @@ let quickPaperId = null;
 let isCreatingPaper = false;
 let newPaperDraft = null;
 let toastTimer;
+let selectedPipelineBucket = null;
+let selectedPipelineSource = null;
 
 function escapeHTML(value = "") {
   return String(value)
@@ -458,14 +462,29 @@ function renderHero() {
   `;
 }
 
+function pipelineBucket(paper) {
+  if (paper.focusStage === "writing") return "writing";
+  if (paper.focusStage === "publication" || paper.statusCode === "accepted") return "published";
+  if (revisionStatuses.has(paper.statusCode)) return "revision";
+  return "submitted";
+}
+
+function getPipelineBuckets() {
+  const buckets = { writing: [], submitted: [], revision: [], published: [] };
+  data.papers.filter((paper) => paper.showOnRoadmap !== false).forEach((paper) => buckets[pipelineBucket(paper)].push(paper));
+  Object.values(buckets).forEach((papers) => papers.sort(compareScore));
+  return buckets;
+}
+
 function portfolioCounts() {
-  const papers = data.papers;
+  const buckets = getPipelineBuckets();
   return {
-    active: papers.filter((paper) => paper.focusStage !== "publication" && paper.statusCode !== "accepted").length,
-    review: papers.filter(isReviewPaper).length,
-    revision: papers.filter(isRevisionPaper).length,
-    published: papers.filter((paper) => paper.focusStage === "publication").length,
-    writing: papers.filter((paper) => paper.focusStage === "writing").length
+    active: buckets.writing.length + buckets.submitted.length + buckets.revision.length,
+    review: data.papers.filter((paper) => paper.showOnRoadmap !== false && isReviewPaper(paper)).length,
+    submitted: buckets.submitted.length,
+    revision: buckets.revision.length,
+    published: buckets.published.length,
+    writing: buckets.writing.length
   };
 }
 
@@ -482,14 +501,16 @@ function renderOverview() {
   `).join("");
 
   const distribution = [
-    ["Writing", counts.writing, "writing"], ["Review", counts.review, "review"], ["Revision", counts.revision, "revision"], ["Published", counts.published, "published"]
+    ["Writing", counts.writing, "writing"], ["Submitted", counts.submitted, "submitted"], ["Revision", counts.revision, "revision"], ["Published", counts.published, "published"]
   ];
-  const total = distribution.reduce((sum, [, value]) => sum + value, 0) || 1;
+  const projectTotal = distribution.reduce((sum, [, value]) => sum + value, 0);
+  const distributionBase = projectTotal || 1;
   els.pipelineDistribution.innerHTML = `
-    <div class="distribution-heading"><strong>Pipeline Distribution</strong><span>${data.papers.length} projects</span></div>
-    <div class="distribution-bar">${distribution.map(([, value, tone]) => `<i class="${tone}" style="width:${(value / total) * 100}%"></i>`).join("")}</div>
-    <div class="distribution-labels">${distribution.map(([label, value, tone]) => `<span><i class="${tone}"></i>${label}<strong>${value}</strong></span>`).join("")}</div>
+    <div class="distribution-heading"><strong>Pipeline Distribution</strong><span>${projectTotal} projects</span></div>
+    <div class="distribution-bar">${distribution.map(([label, value, tone]) => `<button class="${tone} ${selectedPipelineBucket === tone ? "active" : ""}" style="width:${(value / distributionBase) * 100}%" type="button" data-pipeline-bucket="${tone}" data-pipeline-source="overview" aria-label="${label}: ${value} projects"></button>`).join("")}</div>
+    <div class="distribution-labels">${distribution.map(([label, value, tone]) => `<button class="${selectedPipelineBucket === tone ? "active" : ""}" type="button" data-pipeline-bucket="${tone}" data-pipeline-source="overview"><i class="${tone}"></i>${label}<strong>${value}</strong></button>`).join("")}</div>
   `;
+  renderPipelineSelection();
 }
 
 function attentionReason(paper) {
@@ -525,34 +546,63 @@ function renderAttention() {
   `).join("");
 }
 
-function pipelineBucket(paper) {
-  if (paper.focusStage === "writing") return "writing";
-  if (paper.focusStage === "publication") return ["published", "archived"].includes(paper.statusCode) ? "published" : "accepted";
-  if (paper.statusCode === "accepted") return "accepted";
-  if (revisionStatuses.has(paper.statusCode)) return "revision";
-  return "submitted";
-}
-
 function renderPipeline() {
-  const papers = data.papers.filter((paper) => paper.showOnRoadmap !== false);
-  const buckets = { writing: [], submitted: [], revision: [], accepted: [], published: [] };
-  papers.forEach((paper) => buckets[pipelineBucket(paper)].push(paper));
+  const buckets = getPipelineBuckets();
   const revisionCounts = [1, 2, 3].map((round) => buckets.revision.filter((paper) => paper.statusCode === `revision_${round}`).length);
   const returnedCount = buckets.revision.filter((paper) => paper.statusCode === "revision_resubmitted").length;
   const stages = [
     ["writing", "Writing", "撰写", buckets.writing.length, ""],
     ["submitted", "Submitted", "投稿 / 审稿", buckets.submitted.length, ""],
     ["revision", "Revision", "返修", buckets.revision.length, [...revisionCounts.map((count, index) => count ? `R${index + 1}: ${count}` : ""), returnedCount ? `Returned: ${returnedCount}` : ""].filter(Boolean).join(" · ")],
-    ["accepted", "Accepted", "接收", buckets.accepted.length, ""],
     ["published", "Published", "发表", buckets.published.length, ""]
   ];
   els.pipelineChart.innerHTML = stages.map(([tone, label, chinese, value, note], index) => `
-    <div class="pipeline-stage ${tone} ${value ? "has-projects" : ""}">
+    <button class="pipeline-stage ${tone} ${value ? "has-projects" : ""} ${selectedPipelineBucket === tone ? "active" : ""}" type="button" data-pipeline-bucket="${tone}" data-pipeline-source="pipeline" aria-expanded="${selectedPipelineBucket === tone && selectedPipelineSource === "pipeline"}">
       <span class="pipeline-marker"></span>
       <div><small>${escapeHTML(chinese)}</small><strong>${label}</strong><b>${value}</b>${note ? `<p>${escapeHTML(note)}</p>` : ""}</div>
       ${index < stages.length - 1 ? `<i class="pipeline-arrow" aria-hidden="true">→</i>` : ""}
-    </div>
+    </button>
   `).join("");
+  renderPipelineSelection();
+}
+
+function renderPipelineSelection() {
+  const buckets = getPipelineBuckets();
+  const labels = { writing: ["Writing", "撰写阶段"], submitted: ["Submitted", "投稿 / 审稿阶段"], revision: ["Revision", "返修阶段"], published: ["Published", "已发表 / 已完成"] };
+  [
+    [els.overviewPipelineSelection, "overview"],
+    [els.pipelineSelection, "pipeline"]
+  ].forEach(([target, source]) => {
+    const visible = selectedPipelineBucket && selectedPipelineSource === source;
+    target.hidden = !visible;
+    if (!visible) {
+      target.innerHTML = "";
+      return;
+    }
+    const papers = buckets[selectedPipelineBucket] || [];
+    const [english, chinese] = labels[selectedPipelineBucket];
+    target.innerHTML = `
+      <div class="pipeline-selection-heading">
+        <div><span class="section-kicker">${english} PROJECTS</span><h3>${chinese} · ${papers.length} 篇</h3></div>
+        <button type="button" data-close-pipeline-selection aria-label="关闭论文清单">×</button>
+      </div>
+      <div class="pipeline-paper-list">${papers.length ? papers.map((paper) => `
+        <button class="pipeline-paper-item" type="button" data-pipeline-paper-id="${escapeHTML(paper.id)}">
+          <span><strong>${escapeHTML(paper.shortCode)}</strong><small>${escapeHTML(statusLabel(paper.focusStage, paper.statusCode))}</small></span>
+          <p>${escapeHTML(paper.title)}</p>
+          <i aria-hidden="true">→</i>
+        </button>
+      `).join("") : `<div class="empty-state">当前没有处于该阶段的论文。</div>`}</div>
+    `;
+  });
+}
+
+function togglePipelineSelection(bucket, source) {
+  const closing = selectedPipelineBucket === bucket && selectedPipelineSource === source;
+  selectedPipelineBucket = closing ? null : bucket;
+  selectedPipelineSource = closing ? null : source;
+  renderOverview();
+  renderPipeline();
 }
 
 function matchesStageFilter(paper, filter) {
@@ -1083,6 +1133,24 @@ function handleDialogClick(event) {
   if (event.target.closest("#addSubmissionButton")) addSubmissionRow();
 }
 
+function handlePipelineClick(event) {
+  const close = event.target.closest("[data-close-pipeline-selection]");
+  if (close) {
+    selectedPipelineBucket = null;
+    selectedPipelineSource = null;
+    renderOverview();
+    renderPipeline();
+    return;
+  }
+  const paperTarget = event.target.closest("[data-pipeline-paper-id]");
+  if (paperTarget) {
+    isManageMode ? openQuickUpdate(paperTarget.dataset.pipelinePaperId) : openPaper(paperTarget.dataset.pipelinePaperId);
+    return;
+  }
+  const bucketTarget = event.target.closest("[data-pipeline-bucket]");
+  if (bucketTarget) togglePipelineSelection(bucketTarget.dataset.pipelineBucket, bucketTarget.dataset.pipelineSource);
+}
+
 function bindEvents() {
   els.toggleManageButton.addEventListener("click", () => {
     isManageMode = !isManageMode;
@@ -1094,6 +1162,10 @@ function bindEvents() {
   els.openToolsButton.addEventListener("click", () => els.toolsDialog.showModal());
   els.headerPublishButton.addEventListener("click", openPublishDialog);
   els.editCodesButton.addEventListener("click", openViewOptions);
+  els.pipelineDistribution.addEventListener("click", handlePipelineClick);
+  els.pipelineChart.addEventListener("click", handlePipelineClick);
+  els.overviewPipelineSelection.addEventListener("click", handlePipelineClick);
+  els.pipelineSelection.addEventListener("click", handlePipelineClick);
   els.searchInput.addEventListener("input", renderPaperList);
   els.stageFilter.addEventListener("change", renderPaperList);
   els.sortSelect.addEventListener("change", renderPaperList);
