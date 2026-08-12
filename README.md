@@ -9,7 +9,7 @@
 - 按 Priority、Pinned、Deadline、返修与等待时间自动选择 Current Focus
 - Active、Under Review、Revision、Published 四项组合概览与轻量 Pipeline Distribution
 - Needs Attention 自动识别逾期、14 天内截止、高优先级、返修、长期等待和长期未更新项目
-- Writing → Submitted → Revision → Accepted → Published 五阶段 Research Pipeline
+- Writing → Submitted → Revision → Published 四阶段 Research Pipeline；点击数字或 Distribution 分段可展开对应论文
 - Project Card 重点显示 Next Action、Due Date、Reference Progress 与 Priority
 - Quick Update 快速修改状态、生效日、Next Action、Due Date 和 Priority
 - Full Edit 管理论文信息、投稿线程、完整状态时间线、Notes、Links 与 Advanced Settings

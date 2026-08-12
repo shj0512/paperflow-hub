@@ -45,6 +45,7 @@
             <div class="distribution" id="pipelineDistribution"></div>
           </aside>
         </div>
+        <div class="pipeline-selection" id="overviewPipelineSelection" hidden></div>
         <section class="attention-section" aria-labelledby="attentionTitle">
           <div class="section-label-row"><span class="section-kicker" id="attentionTitle">NEEDS ATTENTION</span><small>按截止日期、优先级、返修状态和等待时间自动排序</small></div>
           <div class="attention-list" id="needsAttention"></div>
@@ -52,8 +53,9 @@
       </section>
 
       <section class="section shell" id="pipeline">
-        <div class="section-heading"><span class="section-kicker">RESEARCH PIPELINE</span><h2>研究流程</h2><p>以五个阶段查看研究组合分布；返修轮次作为投稿流程的一部分保留。</p></div>
+        <div class="section-heading"><span class="section-kicker">RESEARCH PIPELINE</span><h2>研究流程</h2><p>以 Writing、Submitted、Revision、Published 四个阶段查看研究组合，点击阶段数字即可查看对应论文。</p></div>
         <div class="pipeline-card" id="pipelineChart"></div>
+        <div class="pipeline-selection" id="pipelineSelection" hidden></div>
       </section>
 
       <section class="section shell" id="projects">
