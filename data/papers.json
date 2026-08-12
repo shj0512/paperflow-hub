@@ -1,0 +1,257 @@
+{
+  "meta": {
+    "version": 2,
+    "owner": "shj0512",
+    "title": "论文进展台",
+    "lastUpdated": "2026-08-12T00:00:00-07:00",
+    "manualUpdatedAt": "2026-08-12",
+    "progressNote": "进度值用于横向比较：撰写 0–40%，投稿 40–60%，返修 60–95%，发表 100%。所有数值均可独立调整。"
+  },
+  "papers": [
+    {
+      "id": "shadow-to-spotlight",
+      "shortCode": "S2S",
+      "title": "From Shadow to Spotlight: How Technological, Geographical, and Market Overlaps with Leading Firms Influence Non-Leading Firms’ Innovation",
+      "authors": "SUN Huijie",
+      "language": "en",
+      "focusStage": "revision",
+      "stageLabel": "二轮小修已修回",
+      "progress": 92,
+      "startedAt": "",
+      "updatedAt": "2026-08-12",
+      "manualUpdatedAt": "",
+      "nextAction": "等待 TASM 编辑决定",
+      "nextDue": "",
+      "venueSummary": "Technology Analysis & Strategic Management · R2 Minor Revision returned",
+      "notes": "在 Technology Analysis & Strategic Management 完成二轮小修并已修回。作者信息可继续补充。",
+      "writing": [
+        { "key": "question", "label": "问题提出", "status": "done" },
+        { "key": "data", "label": "数据处理", "status": "done" },
+        { "key": "draft", "label": "文本撰写", "status": "done" },
+        { "key": "format", "label": "格式修改", "status": "done" }
+      ],
+      "submissions": [
+        { "journal": "Technology Analysis & Strategic Management", "status": "revision", "submittedAt": "", "decisionAt": "", "note": "二轮小修" }
+      ],
+      "revisions": [
+        { "journal": "Technology Analysis & Strategic Management", "round": 1, "type": "小修", "status": "returned", "startedAt": "", "returnedAt": "", "dueAt": "", "note": "一轮已修回" },
+        { "journal": "Technology Analysis & Strategic Management", "round": 2, "type": "小修", "status": "returned", "startedAt": "", "returnedAt": "", "dueAt": "", "note": "二轮已修回" }
+      ]
+    },
+    {
+      "id": "opportunity-capability-nexus",
+      "shortCode": "OCN",
+      "title": "Decoding the Opportunity-Capability Nexus: Causal Recipes for Technological Innovation",
+      "authors": "SUN Huijie; YANG Chong; LIU Zhiying",
+      "language": "en",
+      "focusStage": "revision",
+      "stageLabel": "二轮小修尚未修回",
+      "progress": 84,
+      "startedAt": "",
+      "updatedAt": "2026-08-12",
+      "manualUpdatedAt": "",
+      "nextAction": "完成 APJM 二轮小修与逐条回应",
+      "nextDue": "",
+      "venueSummary": "Asia Pacific Journal of Management · R2 Minor Revision in progress",
+      "notes": "按输入中的语义记录为二轮小修尚未修回；如原意不同，可在管理模式中直接更改。",
+      "writing": [
+        { "key": "question", "label": "问题提出", "status": "done" },
+        { "key": "data", "label": "数据处理", "status": "done" },
+        { "key": "draft", "label": "文本撰写", "status": "done" },
+        { "key": "format", "label": "格式修改", "status": "done" }
+      ],
+      "submissions": [
+        { "journal": "Asia Pacific Journal of Management", "status": "revision", "submittedAt": "", "decisionAt": "", "note": "二轮小修" }
+      ],
+      "revisions": [
+        { "journal": "Asia Pacific Journal of Management", "round": 1, "type": "小修", "status": "returned", "startedAt": "", "returnedAt": "", "dueAt": "", "note": "一轮已修回" },
+        { "journal": "Asia Pacific Journal of Management", "round": 2, "type": "小修", "status": "in_progress", "startedAt": "", "returnedAt": "", "dueAt": "", "note": "二轮尚未修回" }
+      ]
+    },
+    {
+      "id": "resource-reconstruction",
+      "shortCode": "RBI",
+      "title": "Reconstructing Resources for Breakthrough Innovation: The Role of Divestiture–Acquisition Configurations Under Windows of Opportunity",
+      "authors": "SUN Huijie; ZHOU Yang; LIU Zhiying",
+      "language": "en",
+      "focusStage": "accepted",
+      "stageLabel": "2026 年已发表",
+      "progress": 100,
+      "startedAt": "",
+      "updatedAt": "2026-08-12",
+      "manualUpdatedAt": "",
+      "nextAction": "补充卷期、页码与 DOI 后归档",
+      "nextDue": "",
+      "venueSummary": "IEEE Transactions on Engineering Management · Published 2026",
+      "notes": "2026 年发表于 IEEE Transactions on Engineering Management。",
+      "writing": [
+        { "key": "question", "label": "问题提出", "status": "done" },
+        { "key": "data", "label": "数据处理", "status": "done" },
+        { "key": "draft", "label": "文本撰写", "status": "done" },
+        { "key": "format", "label": "格式修改", "status": "done" }
+      ],
+      "submissions": [
+        { "journal": "IEEE Transactions on Engineering Management", "status": "accepted", "submittedAt": "", "decisionAt": "", "note": "2026 年发表；具体日期待补充" }
+      ],
+      "revisions": []
+    },
+    {
+      "id": "digital-resource-manufacturing",
+      "shortCode": "DMR",
+      "title": "How to construct digital resource for traditional manufacturing incumbents: Revisiting the “buy or make” trade-off in the digital context",
+      "authors": "SUN Huijie; ZHOU Yang",
+      "language": "en",
+      "focusStage": "writing",
+      "stageLabel": "会议录用 · 正文重写",
+      "progress": 36,
+      "startedAt": "",
+      "updatedAt": "2026-08-12",
+      "manualUpdatedAt": "",
+      "nextAction": "完成正文 rewrite 并整合会议反馈",
+      "nextDue": "",
+      "venueSummary": "Strategic Management Society Conference · Accepted",
+      "notes": "SMS 会议已录用，但正文仍需 rewrite。",
+      "writing": [
+        { "key": "question", "label": "问题提出", "status": "done" },
+        { "key": "data", "label": "数据处理", "status": "done" },
+        { "key": "draft", "label": "文本撰写", "status": "in_progress" },
+        { "key": "format", "label": "格式修改", "status": "pending" }
+      ],
+      "submissions": [
+        { "journal": "SMS Conference", "status": "accepted", "submittedAt": "", "decisionAt": "", "note": "会议录用" }
+      ],
+      "revisions": []
+    },
+    {
+      "id": "ai-transferability",
+      "shortCode": "AIT",
+      "title": "Interdisciplinarity and Transferability in Markets for AI Technology",
+      "authors": "HOU Tianyu; SUN Huijie; XIAO Fenglong",
+      "language": "en",
+      "focusStage": "submission",
+      "stageLabel": "SMJ 已投稿",
+      "progress": 56,
+      "startedAt": "",
+      "updatedAt": "2026-08-12",
+      "manualUpdatedAt": "",
+      "nextAction": "跟踪 SMJ 审稿进度",
+      "nextDue": "",
+      "venueSummary": "Strategic Management Journal · Submitted",
+      "notes": "已向 SMJ 投稿；确切投稿日待补充。",
+      "writing": [
+        { "key": "question", "label": "问题提出", "status": "done" },
+        { "key": "data", "label": "数据处理", "status": "done" },
+        { "key": "draft", "label": "文本撰写", "status": "done" },
+        { "key": "format", "label": "格式修改", "status": "done" }
+      ],
+      "submissions": [
+        { "journal": "Strategic Management Journal", "status": "submitted", "submittedAt": "", "decisionAt": "", "note": "Submitted" }
+      ],
+      "revisions": []
+    },
+    {
+      "id": "ai-quality-quantity",
+      "shortCode": "AIQ",
+      "title": "Data Analytics, AI-capable Employees, and the Innovation Quality–Quantity Paradox in Manufacturing Industries",
+      "authors": "SUN Huijie; HOU Tianyu; CHEN Yubo",
+      "language": "en",
+      "focusStage": "writing",
+      "stageLabel": "Polishing",
+      "progress": 38,
+      "startedAt": "",
+      "updatedAt": "2026-08-12",
+      "manualUpdatedAt": "",
+      "nextAction": "完成语言与格式润色，锁定投稿版本",
+      "nextDue": "",
+      "venueSummary": "Manuscript polishing",
+      "notes": "当前处于 polishing 阶段。",
+      "writing": [
+        { "key": "question", "label": "问题提出", "status": "done" },
+        { "key": "data", "label": "数据处理", "status": "done" },
+        { "key": "draft", "label": "文本撰写", "status": "done" },
+        { "key": "format", "label": "格式修改", "status": "in_progress" }
+      ],
+      "submissions": [],
+      "revisions": []
+    },
+    {
+      "id": "ai-human-capital",
+      "shortCode": "HCOI",
+      "title": "Artificial Intelligence–Enabled Human Capital, Operational Efficiency, and Innovation Quality: Capability Gains and Operational Frictions",
+      "authors": "SUN Huijie; HOU Tianyu; LI Juan",
+      "language": "en",
+      "focusStage": "revision",
+      "stageLabel": "一轮大修尚未修回",
+      "progress": 70,
+      "startedAt": "",
+      "updatedAt": "2026-08-12",
+      "manualUpdatedAt": "",
+      "nextAction": "推进 IJOPM 一轮大修与回应信",
+      "nextDue": "",
+      "venueSummary": "International Journal of Operations & Production Management · R1 Major Revision",
+      "notes": "IJOPM 一轮大修，尚未修回。",
+      "writing": [
+        { "key": "question", "label": "问题提出", "status": "done" },
+        { "key": "data", "label": "数据处理", "status": "done" },
+        { "key": "draft", "label": "文本撰写", "status": "done" },
+        { "key": "format", "label": "格式修改", "status": "done" }
+      ],
+      "submissions": [
+        { "journal": "IJOPM", "status": "revision", "submittedAt": "", "decisionAt": "", "note": "Major Revision" }
+      ],
+      "revisions": [
+        { "journal": "IJOPM", "round": 1, "type": "大修", "status": "in_progress", "startedAt": "", "returnedAt": "", "dueAt": "", "note": "尚未修回" }
+      ]
+    },
+    {
+      "id": "learning-pathways",
+      "shortCode": "LPN",
+      "title": "Where Firms Learn and How They Learn: A Theory of Learning Pathways in Supply Networks",
+      "authors": "SUN Huijie; HOU Tianyu; LI Juan",
+      "language": "en",
+      "focusStage": "writing",
+      "stageLabel": "文本撰写中",
+      "progress": 25,
+      "startedAt": "",
+      "updatedAt": "2026-08-12",
+      "manualUpdatedAt": "",
+      "nextAction": "完成理论框架与核心段落初稿",
+      "nextDue": "",
+      "venueSummary": "Manuscript writing",
+      "notes": "当前处于文本撰写阶段。",
+      "writing": [
+        { "key": "question", "label": "问题提出", "status": "done" },
+        { "key": "data", "label": "数据处理", "status": "in_progress" },
+        { "key": "draft", "label": "文本撰写", "status": "in_progress" },
+        { "key": "format", "label": "格式修改", "status": "pending" }
+      ],
+      "submissions": [],
+      "revisions": []
+    },
+    {
+      "id": "digital-contextual-abundance",
+      "shortCode": "IDCA",
+      "title": "Indigenous Digital Contextual Abundance: Abundance Gap as a Driver of U.S. Digital Patent Learning from China",
+      "authors": "SUN Huijie; HOU Tianyu; CHEN Yubo",
+      "language": "en",
+      "focusStage": "writing",
+      "stageLabel": "问题框架构建中",
+      "progress": 8,
+      "startedAt": "",
+      "updatedAt": "2026-08-12",
+      "manualUpdatedAt": "",
+      "nextAction": "明确研究问题、核心机制与可检验边界",
+      "nextDue": "",
+      "venueSummary": "Framing the research question",
+      "notes": "当前处于问题提出与研究框架构建阶段。",
+      "writing": [
+        { "key": "question", "label": "问题提出", "status": "in_progress" },
+        { "key": "data", "label": "数据处理", "status": "pending" },
+        { "key": "draft", "label": "文本撰写", "status": "pending" },
+        { "key": "format", "label": "格式修改", "status": "pending" }
+      ],
+      "submissions": [],
+      "revisions": []
+    }
+  ]
+}
