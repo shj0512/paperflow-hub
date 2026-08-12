@@ -303,18 +303,11 @@ button {
   color: var(--sky-600);
 }
 
-.hero-description {
-  max-width: 600px;
-  margin: 26px 0 22px;
-  color: #587487;
-  font-size: 17px;
-  line-height: 1.8;
-}
-
 .hero-meta {
   display: flex;
   align-items: center;
   gap: 14px;
+  margin-top: 32px;
   color: #7890a1;
   font-size: 12px;
 }
@@ -443,6 +436,7 @@ button {
   margin: 19px 0 0;
   color: #688397;
   font-size: 13px;
+  line-height: 1.65;
 }
 
 .focus-next strong {
@@ -450,11 +444,9 @@ button {
 }
 
 .focus-controls {
-  position: absolute;
+  position: relative;
   z-index: 2;
-  right: 28px;
-  bottom: 24px;
-  left: 28px;
+  margin-top: 24px;
   justify-content: space-between;
 }
 
@@ -617,7 +609,7 @@ button {
 }
 
 .roadmap-chart {
-  min-width: 760px;
+  min-width: 980px;
   padding: 24px 28px 30px;
 }
 
@@ -628,7 +620,7 @@ button {
 
 .roadmap-label-spacer,
 .roadmap-code {
-  flex: 0 0 70px;
+  flex: 0 0 220px;
 }
 
 .roadmap-scale {
@@ -646,7 +638,7 @@ button {
 
 .roadmap-row {
   gap: 18px;
-  min-height: 47px;
+  min-height: 58px;
   border-top: 1px solid #edf4f8;
 }
 
@@ -657,9 +649,11 @@ button {
   color: var(--navy);
   font-size: 12px;
   font-weight: 700;
+  line-height: 1.35;
 }
 
 .roadmap-code i {
+  flex: 0 0 auto;
   width: 7px;
   height: 7px;
   border-radius: 50%;
@@ -728,26 +722,6 @@ button {
   text-align: right;
 }
 
-.roadmap-note {
-  display: flex;
-  gap: 14px;
-  padding: 16px 26px;
-  border-top: 1px solid var(--line);
-  background: var(--sky-50);
-  color: #7790a1;
-  font-size: 11px;
-}
-
-.roadmap-note span {
-  flex: 0 0 auto;
-  color: var(--blue);
-  font-weight: 700;
-}
-
-.roadmap-note p {
-  margin: 0;
-}
-
 .papers-heading {
   align-items: center;
 }
@@ -789,6 +763,47 @@ button {
 }
 
 .paper-list {
+  display: grid;
+  gap: 56px;
+}
+
+.project-group {
+  display: grid;
+  gap: 20px;
+}
+
+.project-group-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.project-group-heading span {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--blue);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+}
+
+.project-group-heading h3 {
+  margin: 0;
+  color: var(--navy);
+  font-size: 23px;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+
+.project-group-heading > strong {
+  color: #a6bac7;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.project-group-list {
   display: grid;
   gap: 14px;
 }
@@ -1344,6 +1359,48 @@ dialog::backdrop {
   padding-bottom: 25px;
 }
 
+.codes-editor {
+  display: grid;
+  gap: 11px;
+  overflow-y: auto;
+  padding: 24px 28px;
+}
+
+.code-editor-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(220px, 0.75fr);
+  gap: 16px;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  background: var(--sky-50);
+}
+
+.code-editor-row span {
+  color: #587286;
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.code-editor-row input {
+  width: 100%;
+  min-width: 0;
+  height: 40px;
+  padding: 8px 11px;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  outline: 0;
+  color: var(--ink);
+  background: var(--white);
+  font-size: 11px;
+}
+
+.code-editor-row input:focus {
+  border-color: var(--sky-500);
+  box-shadow: 0 0 0 3px rgba(97, 184, 238, 0.13);
+}
+
 .tools-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1610,10 +1667,6 @@ dialog::backdrop {
     font-size: clamp(38px, 12vw, 54px);
   }
 
-  .hero-description {
-    font-size: 15px;
-  }
-
   .hero-meta {
     flex-wrap: wrap;
   }
@@ -1666,10 +1719,6 @@ dialog::backdrop {
   .roadmap-legend {
     gap: 12px 17px;
     padding: 18px;
-  }
-
-  .roadmap-note {
-    padding-inline: 18px;
   }
 
   .paper-toolbar {
@@ -1748,6 +1797,15 @@ dialog::backdrop {
   .editable-item,
   .editable-item.revision-item {
     grid-template-columns: 1fr;
+  }
+
+  .code-editor-row {
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+
+  .codes-editor {
+    padding-inline: 19px;
   }
 
   .tools-grid {

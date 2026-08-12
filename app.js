@@ -40,7 +40,6 @@ const els = {
   focusNext: document.querySelector("#focusNext"),
   metrics: document.querySelector("#metrics"),
   roadmapChart: document.querySelector("#roadmapChart"),
-  progressNote: document.querySelector("#progressNote"),
   paperList: document.querySelector("#paperList"),
   searchInput: document.querySelector("#searchInput"),
   stageFilter: document.querySelector("#stageFilter"),
@@ -49,6 +48,9 @@ const els = {
   openToolsButton: document.querySelector("#openToolsButton"),
   paperDialog: document.querySelector("#paperDialog"),
   paperForm: document.querySelector("#paperForm"),
+  codesDialog: document.querySelector("#codesDialog"),
+  codesForm: document.querySelector("#codesForm"),
+  codesEditor: document.querySelector("#codesEditor"),
   dialogKicker: document.querySelector("#dialogKicker"),
   dialogTitle: document.querySelector("#dialogTitle"),
   dialogBody: document.querySelector("#dialogBody"),
@@ -110,6 +112,16 @@ function formatDate(value, fallback = "待补充") {
   }).format(date);
 }
 
+function formatMonth(value, fallback = "待补充") {
+  if (!value) return fallback;
+  const date = new Date(`${String(value).slice(0, 10)}T12:00:00`);
+  if (Number.isNaN(date.getTime())) return escapeHTML(value);
+  return new Intl.DateTimeFormat("zh-CN", {
+    year: "numeric",
+    month: "long"
+  }).format(date);
+}
+
 function durationText(start, end) {
   if (!start) return "未设置起始日";
   const startDate = new Date(`${start}T12:00:00`);
@@ -160,9 +172,11 @@ async function loadData() {
   if (localDraft) {
     try {
       const parsed = JSON.parse(localDraft);
-      if (isValidData(parsed)) {
+      if (isValidData(parsed) && Number(parsed.meta.version || 0) >= Number(publishedData.meta.version || 0)) {
         data = parsed;
         setDraftState(true);
+      } else {
+        localStorage.removeItem(STORAGE_KEY);
       }
     } catch {
       localStorage.removeItem(STORAGE_KEY);
@@ -180,11 +194,24 @@ function renderAll() {
   renderManageState();
 }
 
+function paperStartTime(paper) {
+  const timestamp = Date.parse(`${paper.startedAt || "1900-01-01"}T12:00:00`);
+  return Number.isNaN(timestamp) ? 0 : timestamp;
+}
+
+function getPortfolioPapers() {
+  const byLatestStart = (a, b) => paperStartTime(b) - paperStartTime(a);
+  const ongoing = data.papers.filter((paper) => paper.focusStage !== "accepted").sort(byLatestStart);
+  const completed = data.papers.filter((paper) => paper.focusStage === "accepted").sort(byLatestStart);
+  return [...ongoing, ...completed];
+}
+
 function renderHero() {
-  const paper = data.papers[focusPosition] || data.papers[0];
+  const portfolioPapers = getPortfolioPapers();
+  const paper = portfolioPapers[focusPosition] || portfolioPapers[0];
   if (!paper) return;
-  focusPosition = data.papers.indexOf(paper);
-  const total = data.papers.length;
+  focusPosition = portfolioPapers.indexOf(paper);
+  const total = portfolioPapers.length;
   els.lastUpdatedLabel.textContent = `更新于 ${formatDate((data.meta.manualUpdatedAt || data.meta.lastUpdated || "").slice(0, 10))}`;
   els.focusIndex.textContent = `${String(focusPosition + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`;
   els.focusContent.innerHTML = `
@@ -196,7 +223,7 @@ function renderHero() {
     </div>
     <p class="focus-next">下一行动 · <strong>${escapeHTML(paper.nextAction || "待设置")}</strong></p>
   `;
-  els.focusDots.innerHTML = data.papers.map((_, index) => `<i class="${index === focusPosition ? "active" : ""}"></i>`).join("");
+  els.focusDots.innerHTML = portfolioPapers.map((_, index) => `<i class="${index === focusPosition ? "active" : ""}"></i>`).join("");
 }
 
 function renderMetrics() {
@@ -227,7 +254,7 @@ function renderRoadmap() {
       <span class="roadmap-value"></span>
     </div>
   `;
-  const rows = data.papers
+  const rows = getPortfolioPapers()
     .map((paper) => {
       const progress = clamp(paper.progress, 0, 100);
       return `
@@ -243,13 +270,12 @@ function renderRoadmap() {
     })
     .join("");
   els.roadmapChart.innerHTML = scale + rows;
-  els.progressNote.textContent = data.meta.progressNote || "进度百分比可在管理模式中自行调整。";
 }
 
 function getFilteredPapers() {
   const query = els.searchInput.value.trim().toLocaleLowerCase();
   const stage = els.stageFilter.value;
-  return data.papers.filter((paper) => {
+  return getPortfolioPapers().filter((paper) => {
     const haystack = [paper.title, paper.shortCode, paper.authors, paper.venueSummary, paper.nextAction, paper.notes]
       .filter(Boolean)
       .join(" ")
@@ -265,8 +291,30 @@ function renderPaperList() {
     return;
   }
 
-  els.paperList.innerHTML = papers
-    .map((paper) => {
+  const ongoing = papers.filter((paper) => paper.focusStage !== "accepted");
+  const completed = papers.filter((paper) => paper.focusStage === "accepted");
+  els.paperList.innerHTML = [
+    renderProjectGroup("正在进行", "ONGOING", ongoing),
+    renderProjectGroup("已经完成", "COMPLETED", completed)
+  ].filter(Boolean).join("");
+}
+
+function renderProjectGroup(title, kicker, papers) {
+  if (!papers.length) return "";
+  return `
+    <section class="project-group">
+      <div class="project-group-heading">
+        <div><span>${kicker}</span><h3>${title}</h3></div>
+        <strong>${String(papers.length).padStart(2, "0")}</strong>
+      </div>
+      <div class="project-group-list">
+        ${papers.map(renderPaperCard).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderPaperCard(paper) {
       const progress = clamp(paper.progress, 0, 100);
       return `
         <article class="paper-card" tabindex="0" data-paper-id="${escapeHTML(paper.id)}" style="--paper-color:${stageColor(paper.focusStage)}">
@@ -277,6 +325,7 @@ function renderPaperList() {
             </div>
             <h3>${escapeHTML(paper.title)}</h3>
             <div class="paper-meta">
+              <span>启动 ${formatMonth(paper.startedAt)}</span>
               <span>${escapeHTML(paper.authors || "作者待补充")}</span>
               <span>${escapeHTML(paper.venueSummary || "期刊信息待补充")}</span>
               <span>${durationText(paper.startedAt, paper.manualUpdatedAt || paper.updatedAt)}</span>
@@ -295,8 +344,6 @@ function renderPaperList() {
           </div>
         </article>
       `;
-    })
-    .join("");
 }
 
 function stageColor(stage) {
@@ -324,7 +371,8 @@ function renderManageState() {
 }
 
 function moveFocus(delta) {
-  focusPosition = (focusPosition + delta + data.papers.length) % data.papers.length;
+  const total = getPortfolioPapers().length;
+  focusPosition = (focusPosition + delta + total) % total;
   renderHero();
 }
 
@@ -442,7 +490,7 @@ function renderEditForm(paper) {
       <div class="form-grid">
         <label class="form-field full"><span>论文标题</span><textarea name="title" required>${escapeHTML(paper.title)}</textarea></label>
         <label class="form-field full"><span>作者（用分号分隔）</span><input name="authors" value="${escapeHTML(paper.authors || "")}" /></label>
-        <label class="form-field"><span>简称</span><input name="shortCode" value="${escapeHTML(paper.shortCode)}" maxlength="12" required /></label>
+        <label class="form-field"><span>简称（最多 50 个字符）</span><input name="shortCode" value="${escapeHTML(paper.shortCode)}" maxlength="50" required /></label>
         <label class="form-field"><span>当前大阶段</span><select name="focusStage">${optionsHtml(stageNames, paper.focusStage)}</select></label>
         <label class="form-field"><span>阶段显示名称</span><input name="stageLabel" value="${escapeHTML(paper.stageLabel || "")}" /></label>
         <label class="form-field"><span>起始日</span><input name="startedAt" type="date" value="${escapeHTML(paper.startedAt || "")}" /></label>
@@ -527,7 +575,7 @@ function saveActivePaper(event) {
   const formData = new FormData(els.paperForm);
   paper.title = formData.get("title").trim();
   paper.authors = formData.get("authors").trim();
-  paper.shortCode = formData.get("shortCode").trim().toUpperCase();
+  paper.shortCode = formData.get("shortCode").trim();
   paper.focusStage = formData.get("focusStage");
   paper.stageLabel = formData.get("stageLabel").trim() || stageNames[paper.focusStage];
   paper.startedAt = formData.get("startedAt");
@@ -554,6 +602,39 @@ function addEditableRow(type) {
   const target = els.dialogBody.querySelector(type === "submission" ? "#submissionRows" : "#revisionRows");
   if (!target) return;
   target.insertAdjacentHTML("beforeend", type === "submission" ? renderSubmissionRow() : renderRevisionRow());
+}
+
+function openCodesManager() {
+  els.codesEditor.innerHTML = getPortfolioPapers().map((paper) => `
+    <label class="code-editor-row">
+      <span>${escapeHTML(paper.title)}</span>
+      <input data-code-paper-id="${escapeHTML(paper.id)}" value="${escapeHTML(paper.shortCode)}" maxlength="50" required />
+    </label>
+  `).join("");
+  els.codesDialog.showModal();
+}
+
+function saveAllCodes(event) {
+  event.preventDefault();
+  const inputs = [...els.codesEditor.querySelectorAll("[data-code-paper-id]")];
+  const codes = inputs.map((input) => input.value.trim());
+  if (codes.some((code) => !code)) {
+    showToast("每篇论文都需要一个简称");
+    return;
+  }
+  const normalized = codes.map((code) => code.toLocaleLowerCase());
+  if (new Set(normalized).size !== normalized.length) {
+    showToast("论文简称不能重复");
+    return;
+  }
+  inputs.forEach((input) => {
+    const paper = data.papers.find((item) => item.id === input.dataset.codePaperId);
+    if (paper) paper.shortCode = input.value.trim();
+  });
+  saveLocalDraft();
+  renderAll();
+  els.codesDialog.close();
+  showToast("全部论文简称已保存到本机草稿");
 }
 
 function exportData() {
@@ -640,7 +721,7 @@ function bindEvents() {
     renderManageState();
     showToast(isManageMode ? "管理模式已开启：修改将保存为本机草稿" : "已返回阅读视图");
   });
-  els.editCodesButton.addEventListener("click", () => openPaper(data.papers[0]?.id, true));
+  els.editCodesButton.addEventListener("click", openCodesManager);
   els.paperList.addEventListener("click", (event) => {
     const editButton = event.target.closest("[data-edit-id]");
     if (editButton) {
@@ -660,6 +741,7 @@ function bindEvents() {
     }
   });
   els.paperForm.addEventListener("submit", saveActivePaper);
+  els.codesForm.addEventListener("submit", saveAllCodes);
   els.dialogBody.addEventListener("click", handleDialogClick);
   els.dialogBody.addEventListener("input", (event) => {
     if (event.target.name === "progressRange") {
@@ -678,13 +760,13 @@ function bindEvents() {
   els.closePublishButton.addEventListener("click", () => els.publishDialog.close());
   els.copyDataButton.addEventListener("click", copyCurrentData);
   els.draftPublishButton.addEventListener("click", openPublishDialog);
-  [els.paperDialog, els.toolsDialog, els.publishDialog].forEach((dialog) => {
+  [els.paperDialog, els.codesDialog, els.toolsDialog, els.publishDialog].forEach((dialog) => {
     dialog.addEventListener("click", (event) => {
       if (event.target === dialog) dialog.close();
     });
   });
   window.setInterval(() => {
-    if (!els.paperDialog.open && !els.toolsDialog.open && !els.publishDialog.open) moveFocus(1);
+    if (!els.paperDialog.open && !els.codesDialog.open && !els.toolsDialog.open && !els.publishDialog.open) moveFocus(1);
   }, 9000);
 }
 

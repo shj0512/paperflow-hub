@@ -47,9 +47,8 @@
     <main>
       <section class="hero shell" id="overview">
         <div class="hero-copy">
-          <p class="eyebrow">RESEARCH PORTFOLIO · 2026</p>
+          <p class="eyebrow">RESEARCH PORTFOLIO OF SUN Huijie</p>
           <h1>让每一篇论文的<br /><span>下一步，都清晰可见。</span></h1>
-          <p class="hero-description">从问题提出到多轮返修，把并行投稿、关键节点和下一行动放进同一张研究地图。</p>
           <div class="hero-meta">
             <span id="lastUpdatedLabel">更新于 —</span>
             <span class="meta-divider"></span>
@@ -97,10 +96,6 @@
           <div class="roadmap-scroll">
             <div class="roadmap-chart" id="roadmapChart"></div>
           </div>
-          <div class="roadmap-note">
-            <span>说明</span>
-            <p id="progressNote">进度百分比按阶段位置估算，可在管理模式中自行调整。</p>
-          </div>
         </div>
       </section>
 
@@ -108,7 +103,7 @@
         <div class="section-heading split-heading papers-heading">
           <div>
             <span class="section-kicker">PROJECTS</span>
-            <h2>全部论文</h2>
+            <h2>论文项目</h2>
           </div>
           <div class="paper-toolbar">
             <label class="search-box">
@@ -122,7 +117,7 @@
                 <option value="writing">撰写阶段</option>
                 <option value="submission">投稿阶段</option>
                 <option value="revision">返修阶段</option>
-                <option value="accepted">已接收</option>
+                <option value="accepted">已完成 / 发表</option>
               </select>
             </label>
           </div>
@@ -154,6 +149,26 @@
           <div>
             <button class="button button-ghost" value="cancel">关闭</button>
             <button class="button button-primary" id="savePaperButton" type="submit">保存修改</button>
+          </div>
+        </div>
+      </form>
+    </dialog>
+
+    <dialog class="codes-dialog" id="codesDialog">
+      <form method="dialog" class="dialog-shell small-dialog" id="codesForm">
+        <div class="dialog-header">
+          <div>
+            <span class="section-kicker">PROJECT LABELS</span>
+            <h2>管理全部论文简称</h2>
+          </div>
+          <button class="close-button" value="cancel" aria-label="关闭">×</button>
+        </div>
+        <div class="codes-editor" id="codesEditor"></div>
+        <div class="dialog-footer">
+          <span>每个简称最多 50 个字符，例如 “From Shadow to Spotlight”</span>
+          <div>
+            <button class="button button-ghost" value="cancel">关闭</button>
+            <button class="button button-primary" type="submit">保存全部简称</button>
           </div>
         </div>
       </form>

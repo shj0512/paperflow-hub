@@ -15,6 +15,8 @@ for (const paper of data.papers) {
   if (!paper.id || !paper.shortCode || !paper.title || !paper.authors) throw new Error("Every paper needs id, shortCode, title and authors.");
   if (ids.has(paper.id)) throw new Error(`Duplicate paper id: ${paper.id}`);
   if (codes.has(paper.shortCode)) throw new Error(`Duplicate short code: ${paper.shortCode}`);
+  if (paper.shortCode.length > 50) throw new Error(`Short code is longer than 50 characters: ${paper.id}`);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(paper.startedAt)) throw new Error(`Missing or invalid start date: ${paper.id}`);
   if (!Number.isFinite(paper.progress) || paper.progress < 0 || paper.progress > 100) {
     throw new Error(`Invalid progress for ${paper.id}`);
   }
