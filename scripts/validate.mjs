@@ -32,10 +32,17 @@ const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
 const js = await readFile(new URL("../app.js", import.meta.url), "utf8");
 const css = await readFile(new URL("../styles.css", import.meta.url), "utf8");
 
-for (const expected of ["roadmapChart", "paperList", "paperDialog", "toolsDialog"]) {
+for (const expected of ["pipelineChart", "needsAttention", "paperList", "quickDialog", "paperDialog", "toolsDialog"]) {
   if (!html.includes(`id=\"${expected}\"`)) throw new Error(`Missing interface mount: ${expected}`);
 }
 if (!js.includes("saveLocalDraft")) throw new Error("Management persistence is missing.");
-if (!css.includes("--sky-100")) throw new Error("Theme variables are missing.");
+if (!js.includes("buildStatusTransition")) throw new Error("Automatic status timeline persistence is missing.");
+for (const field of ["nextAction", "nextDue", "currentVenue", "priority", "pinned", "showOnRoadmap"]) {
+  if (!js.includes(field)) throw new Error(`Missing supported paper field: ${field}`);
+}
+for (const label of ["NEXT ACTION", "REFERENCE PROGRESS", "NEEDS ATTENTION", "Research Pipeline"]) {
+  if (!html.includes(label) && !js.includes(label)) throw new Error(`Missing required interface label: ${label}`);
+}
+if (!css.includes("--blue-100")) throw new Error("Theme variables are missing.");
 
 console.log(`Validated ${data.papers.length} papers, ${ids.size} unique ids, and all interface mounts. Project count may change in management mode.`);
