@@ -3,302 +3,10 @@
     "version": 6,
     "owner": "shj0512",
     "title": "论文进展台",
-    "lastUpdated": "2026-08-13T02:00:00.000Z",
+    "lastUpdated": "2026-08-13T02:41:37.117Z",
     "manualUpdatedAt": "2026-08-13"
   },
   "papers": [
-    {
-      "id": "quantum-academic-entrepreneurship",
-      "shortCode": "Quantum Academic Entrepreneurship",
-      "title": "围绕创新链布局产业链的学术创业路径及机制——基于量子技术企业的多案例研究",
-      "authors": "刘志迎; 孙慧杰; 张晓凤; 徐毅",
-      "language": "zh",
-      "focusStage": "submission",
-      "statusCode": "revision_2",
-      "stageLabel": "2nd Revision",
-      "statusStartedAt": "2026-08-13",
-      "statusTimeline": [
-        { "id": "quantum-data", "stage": "writing", "status": "data_processing", "label": "数据处理中", "startedAt": "2022-08-01", "endedAt": "2022-12-26" },
-        { "id": "quantum-draft", "stage": "writing", "status": "manuscript_writing", "label": "文本撰写中", "startedAt": "2022-12-26", "endedAt": "2023-04-01" },
-        { "id": "quantum-mw-review-1", "stage": "submission", "status": "under_review", "label": "Under Review", "startedAt": "2023-04-01", "endedAt": "2023-10-05" },
-        { "id": "quantum-mw-rejected-1", "stage": "submission", "status": "rejected", "label": "拒稿", "startedAt": "2023-10-05", "endedAt": "2025-04-23" },
-        { "id": "quantum-mw-review-2", "stage": "submission", "status": "under_review", "label": "Under Review", "startedAt": "2025-04-23", "endedAt": "2025-08-01" },
-        { "id": "quantum-mw-rejected-2", "stage": "submission", "status": "rejected", "label": "拒稿", "startedAt": "2025-08-01", "endedAt": "2026-04-11" },
-        { "id": "quantum-case-review", "stage": "submission", "status": "under_review", "label": "Under Review", "startedAt": "2026-04-11", "endedAt": "2026-05-21" },
-        { "id": "quantum-r1", "stage": "submission", "status": "revision_1", "label": "1st Revision", "startedAt": "2026-05-21", "endedAt": "2026-06-10" },
-        { "id": "quantum-r1-returned", "stage": "submission", "status": "revision_resubmitted", "label": "已修回", "startedAt": "2026-06-10", "endedAt": "2026-08-13" }
-      ],
-      "progress": 82,
-      "priority": "high",
-      "pinned": false,
-      "showInAttention": true,
-      "startedAt": "2022-08-01",
-      "updatedAt": "2026-08-13",
-      "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-08-13",
-      "nextAction": "完成二轮小修与逐条回应，2026-09-12 前修回",
-      "nextDue": "2026-09-12",
-      "currentVenue": "管理案例研究与评论",
-      "venueSummary": "管理案例研究与评论 · 二轮小修",
-      "notes": "2022 年 8 月启动。两次投稿《管理世界》均被拒；2026-04-11 投稿《管理案例研究与评论》，当前为二轮小修。作者名单已去除输入中的重复项。",
-      "writing": [
-        { "key": "question", "label": "问题提出", "status": "done" },
-        { "key": "data", "label": "数据处理", "status": "done" },
-        { "key": "draft", "label": "文本撰写", "status": "done" },
-        { "key": "format", "label": "格式修改", "status": "done" }
-      ],
-      "submissions": [
-        { "journal": "管理世界", "status": "rejected", "statusStartedAt": "2023-04-01", "statusEndedAt": "2023-10-05", "note": "2023-10-05 拒稿" },
-        { "journal": "管理世界", "status": "rejected", "statusStartedAt": "2025-04-23", "statusEndedAt": "2025-08-01", "note": "重写后再次投稿；2025 年 8 月拒稿" },
-        { "journal": "管理案例研究与评论", "status": "revision_2", "statusStartedAt": "2026-08-13", "statusEndedAt": "", "note": "二轮小修；2026-09-12 前修回" }
-      ],
-      "tags": ["学术创业", "创新链", "产业链", "量子技术", "多案例研究"],
-      "links": []
-    },
-    {
-      "id": "shadow-to-spotlight",
-      "shortCode": "From Shadow to Spotlight",
-      "title": "From Shadow to Spotlight: How Technological, Geographical, and Market Overlaps with Leading Firms Influence Non-Leading Firms’ Innovation",
-      "authors": "SUN Huijie; GONG Lei; LIU Zhiying; ZHOU Ziyu*",
-      "language": "en",
-      "focusStage": "submission",
-      "statusCode": "revision_resubmitted",
-      "stageLabel": "已修回",
-      "statusStartedAt": "2026-07-02",
-      "statusTimeline": [
-        { "id": "shadow-draft", "stage": "writing", "status": "manuscript_writing", "label": "文本撰写中", "startedAt": "2023-11-23", "endedAt": "2024-07-30" },
-        { "id": "shadow-technovation-review", "stage": "submission", "status": "under_review", "label": "Under Review", "startedAt": "2024-07-30", "endedAt": "2025-01-01" },
-        { "id": "shadow-technovation-rejected", "stage": "submission", "status": "rejected", "label": "拒稿", "startedAt": "2025-01-01", "endedAt": "2025-01-26" },
-        { "id": "shadow-tasm-review", "stage": "submission", "status": "under_review", "label": "Under Review", "startedAt": "2025-01-26", "endedAt": "2026-01-23" },
-        { "id": "shadow-r1", "stage": "submission", "status": "revision_1", "label": "1st Revision", "startedAt": "2026-01-23", "endedAt": "2026-02-14" },
-        { "id": "shadow-r1-returned", "stage": "submission", "status": "revision_resubmitted", "label": "已修回", "startedAt": "2026-02-14", "endedAt": "2026-06-16" },
-        { "id": "shadow-r2", "stage": "submission", "status": "revision_2", "label": "2nd Revision", "startedAt": "2026-06-16", "endedAt": "2026-07-02" }
-      ],
-      "progress": 92,
-      "priority": "medium",
-      "pinned": false,
-      "showInAttention": false,
-      "startedAt": "2023-07-01",
-      "updatedAt": "2026-08-13",
-      "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-07-02",
-      "nextAction": "等待 TASM 编辑决定",
-      "nextDue": "",
-      "currentVenue": "Technology Analysis & Strategic Management",
-      "venueSummary": "Technology Analysis & Strategic Management · R2 returned",
-      "notes": "2023-11-23 形成初稿；Technovation 拒稿后转投 TASM，已于 2026-07-02 修回第二轮小修。",
-      "writing": [
-        { "key": "question", "label": "问题提出", "status": "done" },
-        { "key": "data", "label": "数据处理", "status": "done" },
-        { "key": "draft", "label": "文本撰写", "status": "done" },
-        { "key": "format", "label": "格式修改", "status": "done" }
-      ],
-      "submissions": [
-        { "journal": "Technovation", "status": "rejected", "statusStartedAt": "2024-07-30", "statusEndedAt": "2025-01-01", "note": "2025 年 1 月拒稿" },
-        { "journal": "Technology Analysis & Strategic Management", "status": "revision_resubmitted", "statusStartedAt": "2026-07-02", "statusEndedAt": "", "note": "二轮小修已修回" }
-      ],
-      "tags": [],
-      "links": []
-    },
-    {
-      "id": "opportunity-capability-nexus",
-      "shortCode": "Opportunity-Capability",
-      "title": "Decoding the Opportunity-Capability Nexus: Causal Recipes for Technological Innovation",
-      "authors": "SUN Huijie; YANG Chong; LIU Zhiying",
-      "language": "en",
-      "focusStage": "submission",
-      "statusCode": "revision_resubmitted",
-      "stageLabel": "已修回",
-      "statusStartedAt": "2026-08-01",
-      "statusTimeline": [
-        { "id": "opportunity-review", "stage": "submission", "status": "under_review", "label": "Under Review", "startedAt": "2024-09-01", "endedAt": "2025-07-30" },
-        { "id": "opportunity-r1", "stage": "submission", "status": "revision_1", "label": "1st Revision", "startedAt": "2025-07-30", "endedAt": "2026-05-20" },
-        { "id": "opportunity-r1-returned", "stage": "submission", "status": "revision_resubmitted", "label": "已修回", "startedAt": "2026-05-20", "endedAt": "2026-07-24" },
-        { "id": "opportunity-r2", "stage": "submission", "status": "revision_2", "label": "2nd Revision", "startedAt": "2026-07-24", "endedAt": "2026-08-01" }
-      ],
-      "progress": 93,
-      "priority": "medium",
-      "pinned": false,
-      "showInAttention": false,
-      "startedAt": "2024-09-01",
-      "updatedAt": "2026-08-13",
-      "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-08-01",
-      "nextAction": "等待 APJM 编辑决定",
-      "nextDue": "",
-      "currentVenue": "Asia Pacific Journal of Management",
-      "venueSummary": "Asia Pacific Journal of Management · R2 returned",
-      "notes": "依据节点先后关系，将输入中的“0730 第一次大修”记录为 2025-07-30；二轮小修已于 2026-08-01 修回。",
-      "writing": [
-        { "key": "question", "label": "问题提出", "status": "done" },
-        { "key": "data", "label": "数据处理", "status": "done" },
-        { "key": "draft", "label": "文本撰写", "status": "done" },
-        { "key": "format", "label": "格式修改", "status": "done" }
-      ],
-      "submissions": [
-        { "journal": "Asia Pacific Journal of Management", "status": "revision_resubmitted", "statusStartedAt": "2026-08-01", "statusEndedAt": "", "note": "二轮小修已修回" }
-      ],
-      "tags": [],
-      "links": []
-    },
-    {
-      "id": "resource-reconstruction",
-      "shortCode": "Divestiture–Acquisition",
-      "title": "Reconstructing Resources for Breakthrough Innovation: The Role of Divestiture–Acquisition Configurations Under Windows of Opportunity",
-      "authors": "SUN Huijie; ZHOU Yang; LIU Zhiying",
-      "language": "en",
-      "focusStage": "publication",
-      "statusCode": "published",
-      "stageLabel": "已发表",
-      "statusStartedAt": "2026-04-03",
-      "statusTimeline": [],
-      "progress": 100,
-      "priority": "low",
-      "pinned": false,
-      "showInAttention": false,
-      "startedAt": "2024-04-01",
-      "updatedAt": "2026-08-13",
-      "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-04-03",
-      "nextAction": "补充卷期、页码与 DOI 后归档",
-      "nextDue": "",
-      "currentVenue": "IEEE Transactions on Engineering Management",
-      "venueSummary": "IEEE Transactions on Engineering Management · Published 2026",
-      "notes": "2026 年发表于 IEEE Transactions on Engineering Management。",
-      "writing": [
-        { "key": "question", "label": "问题提出", "status": "done" },
-        { "key": "data", "label": "数据处理", "status": "done" },
-        { "key": "draft", "label": "文本撰写", "status": "done" },
-        { "key": "format", "label": "格式修改", "status": "done" }
-      ],
-      "submissions": [
-        { "journal": "IEEE Transactions on Engineering Management", "status": "accepted", "statusStartedAt": "2026-04-03", "statusEndedAt": "", "note": "2026 年发表；具体日期待补充" }
-      ],
-      "tags": [],
-      "links": []
-    },
-    {
-      "id": "digital-resource-manufacturing",
-      "shortCode": "Digital Resource Construction",
-      "title": "How to construct digital resource for traditional manufacturing incumbents: Revisiting the “buy or make” trade-off in the digital context",
-      "authors": "SUN Huijie; ZHOU Yang",
-      "language": "en",
-      "focusStage": "writing",
-      "statusCode": "manuscript_writing",
-      "stageLabel": "文本撰写中",
-      "statusStartedAt": "2026-04-24",
-      "statusTimeline": [
-        { "id": "digital-resource-data", "stage": "writing", "status": "data_processing", "label": "数据处理中", "startedAt": "2025-03-03", "endedAt": "2025-05-20" },
-        { "id": "digital-resource-draft", "stage": "writing", "status": "manuscript_writing", "label": "文本撰写中", "startedAt": "2025-05-20", "endedAt": "2025-11-28" },
-        { "id": "digital-resource-sms-review", "stage": "submission", "status": "under_review", "label": "Under Review", "startedAt": "2025-11-28", "endedAt": "2026-04-24" }
-      ],
-      "progress": 45,
-      "priority": "high",
-      "pinned": false,
-      "showInAttention": true,
-      "startedAt": "2025-03-03",
-      "updatedAt": "2026-08-13",
-      "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-04-24",
-      "nextAction": "完成正文 rewrite 并整合 SMS 会议反馈",
-      "nextDue": "",
-      "currentVenue": "Strategic Management Society Conference",
-      "venueSummary": "SMS Conference · Accepted · manuscript rewrite",
-      "notes": "SMS 投稿日期为 2025-11-28。依据时间顺序，将输入中的“2024-04-24 SMS 录用”记录为 2026-04-24。",
-      "writing": [
-        { "key": "question", "label": "问题提出", "status": "done" },
-        { "key": "data", "label": "数据处理", "status": "done" },
-        { "key": "draft", "label": "文本撰写", "status": "in_progress" },
-        { "key": "format", "label": "格式修改", "status": "pending" }
-      ],
-      "submissions": [
-        { "journal": "Strategic Management Society Conference", "status": "accepted", "statusStartedAt": "2025-11-28", "statusEndedAt": "2026-04-24", "note": "2026-04-24 录用；正文仍需 rewrite" }
-      ],
-      "tags": [],
-      "links": []
-    },
-    {
-      "id": "ai-transferability",
-      "shortCode": "Interdisciplinarity",
-      "title": "Interdisciplinarity and Transferability in Markets for AI Technology",
-      "authors": "HOU Tianyu; SUN Huijie; XIAO Fenglong",
-      "language": "en",
-      "focusStage": "submission",
-      "statusCode": "under_review",
-      "stageLabel": "Under Review",
-      "statusStartedAt": "2026-08-13",
-      "statusTimeline": [
-        { "id": "interdisciplinarity-data", "stage": "writing", "status": "data_processing", "label": "数据处理中", "startedAt": "2025-06-13", "endedAt": "2025-09-23" },
-        { "id": "interdisciplinarity-os-review", "stage": "submission", "status": "under_review", "label": "Under Review", "startedAt": "2025-09-23", "endedAt": "2025-12-11" },
-        { "id": "interdisciplinarity-os-rejected", "stage": "submission", "status": "rejected", "label": "拒稿", "startedAt": "2025-12-11", "endedAt": "2026-08-13" }
-      ],
-      "progress": 56,
-      "priority": "medium",
-      "pinned": false,
-      "showInAttention": false,
-      "startedAt": "2025-06-13",
-      "updatedAt": "2026-08-13",
-      "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-08-13",
-      "nextAction": "跟踪 SMJ 审稿进度",
-      "nextDue": "",
-      "currentVenue": "Strategic Management Journal",
-      "venueSummary": "Strategic Management Journal · Submitted 2026-08-13",
-      "notes": "2025-09-23 投稿 Organization Science，2025-12-11 被拒；2026-08-13 转投 SMJ。",
-      "writing": [
-        { "key": "question", "label": "问题提出", "status": "done" },
-        { "key": "data", "label": "数据处理", "status": "done" },
-        { "key": "draft", "label": "文本撰写", "status": "done" },
-        { "key": "format", "label": "格式修改", "status": "done" }
-      ],
-      "submissions": [
-        { "journal": "Organization Science", "status": "rejected", "statusStartedAt": "2025-09-23", "statusEndedAt": "2025-12-11", "note": "Rejected" },
-        { "journal": "Strategic Management Journal", "status": "under_review", "statusStartedAt": "2026-08-13", "statusEndedAt": "", "note": "Submitted" }
-      ],
-      "tags": [],
-      "links": []
-    },
-    {
-      "id": "ai-quality-quantity",
-      "shortCode": "Data Analytics",
-      "title": "Data Analytics, AI-capable Employees, and the Innovation Quality–Quantity Paradox in Manufacturing Industries",
-      "authors": "SUN Huijie; HOU Tianyu; CHEN Yubo",
-      "language": "en",
-      "focusStage": "writing",
-      "statusCode": "formatting",
-      "stageLabel": "格式修改中",
-      "statusStartedAt": "2026-04-26",
-      "statusTimeline": [
-        { "id": "data-analytics-data", "stage": "writing", "status": "data_processing", "label": "数据处理中", "startedAt": "2025-08-26", "endedAt": "2025-09-16" },
-        { "id": "data-analytics-question", "stage": "writing", "status": "research_question", "label": "问题提出中", "startedAt": "2025-09-16", "endedAt": "2026-03-14" },
-        { "id": "data-analytics-pom-review", "stage": "submission", "status": "under_review", "label": "Under Review", "startedAt": "2026-03-14", "endedAt": "2026-04-26" },
-        { "id": "data-analytics-pom-rejected", "stage": "submission", "status": "rejected", "label": "拒稿", "startedAt": "2026-04-26", "endedAt": "2026-04-26" }
-      ],
-      "progress": 40,
-      "priority": "medium",
-      "pinned": false,
-      "showInAttention": true,
-      "startedAt": "2025-08-26",
-      "updatedAt": "2026-08-13",
-      "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-04-26",
-      "nextAction": "完成语言与格式润色，确定下一投稿期刊",
-      "nextDue": "",
-      "currentVenue": "Manuscript polishing",
-      "venueSummary": "POM rejected · manuscript polishing",
-      "notes": "2026-03-14 投稿 POM，2026-04-26 被拒；当前继续润色并准备转投。",
-      "writing": [
-        { "key": "question", "label": "问题提出", "status": "done" },
-        { "key": "data", "label": "数据处理", "status": "done" },
-        { "key": "draft", "label": "文本撰写", "status": "done" },
-        { "key": "format", "label": "格式修改", "status": "in_progress" }
-      ],
-      "submissions": [
-        { "journal": "Production and Operations Management", "status": "rejected", "statusStartedAt": "2026-03-14", "statusEndedAt": "2026-04-26", "note": "POM rejected" }
-      ],
-      "tags": [],
-      "links": []
-    },
     {
       "id": "ai-human-capital",
       "shortCode": "AI-Enabled Human Capital",
@@ -310,11 +18,46 @@
       "stageLabel": "1st Revision",
       "statusStartedAt": "2026-08-04",
       "statusTimeline": [
-        { "id": "human-capital-data", "stage": "writing", "status": "data_processing", "label": "数据处理中", "startedAt": "2025-11-05", "endedAt": "2025-11-24" },
-        { "id": "human-capital-question", "stage": "writing", "status": "research_question", "label": "问题提出中", "startedAt": "2025-11-24", "endedAt": "2026-03-05" },
-        { "id": "human-capital-jom-review", "stage": "submission", "status": "under_review", "label": "Under Review", "startedAt": "2026-03-05", "endedAt": "2026-05-15" },
-        { "id": "human-capital-jom-rejected", "stage": "submission", "status": "rejected", "label": "拒稿", "startedAt": "2026-05-15", "endedAt": "2026-05-22" },
-        { "id": "human-capital-ijopm-review", "stage": "submission", "status": "under_review", "label": "Under Review", "startedAt": "2026-05-22", "endedAt": "2026-08-04" }
+        {
+          "id": "human-capital-data",
+          "stage": "writing",
+          "status": "data_processing",
+          "label": "数据处理中",
+          "startedAt": "2025-11-05",
+          "endedAt": "2025-11-24"
+        },
+        {
+          "id": "human-capital-question",
+          "stage": "writing",
+          "status": "research_question",
+          "label": "问题提出中",
+          "startedAt": "2025-11-24",
+          "endedAt": "2026-03-05"
+        },
+        {
+          "id": "human-capital-jom-review",
+          "stage": "submission",
+          "status": "under_review",
+          "label": "Under Review",
+          "startedAt": "2026-03-05",
+          "endedAt": "2026-05-15"
+        },
+        {
+          "id": "human-capital-jom-rejected",
+          "stage": "submission",
+          "status": "rejected",
+          "label": "拒稿",
+          "startedAt": "2026-05-15",
+          "endedAt": "2026-05-22"
+        },
+        {
+          "id": "human-capital-ijopm-review",
+          "stage": "submission",
+          "status": "under_review",
+          "label": "Under Review",
+          "startedAt": "2026-05-22",
+          "endedAt": "2026-08-04"
+        }
       ],
       "progress": 72,
       "priority": "high",
@@ -330,17 +73,290 @@
       "venueSummary": "IJOPM · R1 Major Revision",
       "notes": "JOM 拒稿后于 2026-05-22 转投 IJOPM；2026-08-04 收到一轮大修，10 月 2 日前修回。",
       "writing": [
-        { "key": "question", "label": "问题提出", "status": "done" },
-        { "key": "data", "label": "数据处理", "status": "done" },
-        { "key": "draft", "label": "文本撰写", "status": "done" },
-        { "key": "format", "label": "格式修改", "status": "done" }
+        {
+          "key": "question",
+          "label": "问题提出中",
+          "status": "done"
+        },
+        {
+          "key": "data",
+          "label": "数据处理中",
+          "status": "done"
+        },
+        {
+          "key": "draft",
+          "label": "文本撰写中",
+          "status": "done"
+        },
+        {
+          "key": "format",
+          "label": "格式修改中",
+          "status": "done"
+        }
       ],
       "submissions": [
-        { "journal": "Journal of Operations Management", "status": "rejected", "statusStartedAt": "2026-03-05", "statusEndedAt": "2026-05-15", "note": "JOM rejected" },
-        { "journal": "International Journal of Operations & Production Management", "status": "revision_1", "statusStartedAt": "2026-08-04", "statusEndedAt": "", "note": "一轮大修；2026-10-02 前修回" }
+        {
+          "journal": "Journal of Operations Management",
+          "status": "rejected",
+          "statusStartedAt": "2026-03-05",
+          "statusEndedAt": "2026-05-15",
+          "note": "JOM rejected"
+        },
+        {
+          "journal": "International Journal of Operations & Production Management",
+          "status": "revision_1",
+          "statusStartedAt": "2026-08-04",
+          "statusEndedAt": "",
+          "note": "一轮大修；2026-10-02 前修回"
+        }
       ],
       "tags": [],
-      "links": []
+      "links": [],
+      "showOnRoadmap": true
+    },
+    {
+      "id": "quantum-academic-entrepreneurship",
+      "shortCode": "Quantum Academic Entrepreneurship",
+      "title": "围绕创新链布局产业链的学术创业路径及机制——基于量子技术企业的多案例研究",
+      "authors": "刘志迎; 孙慧杰; 张晓凤; 徐毅",
+      "language": "zh",
+      "focusStage": "submission",
+      "statusCode": "revision_2",
+      "stageLabel": "2nd Revision",
+      "statusStartedAt": "2026-08-13",
+      "statusTimeline": [
+        {
+          "id": "quantum-data",
+          "stage": "writing",
+          "status": "data_processing",
+          "label": "数据处理中",
+          "startedAt": "2022-08-01",
+          "endedAt": "2022-12-26"
+        },
+        {
+          "id": "quantum-draft",
+          "stage": "writing",
+          "status": "manuscript_writing",
+          "label": "文本撰写中",
+          "startedAt": "2022-12-26",
+          "endedAt": "2023-04-01"
+        },
+        {
+          "id": "quantum-mw-review-1",
+          "stage": "submission",
+          "status": "under_review",
+          "label": "Under Review",
+          "startedAt": "2023-04-01",
+          "endedAt": "2023-10-05"
+        },
+        {
+          "id": "quantum-mw-rejected-1",
+          "stage": "submission",
+          "status": "rejected",
+          "label": "拒稿",
+          "startedAt": "2023-10-05",
+          "endedAt": "2025-04-23"
+        },
+        {
+          "id": "quantum-mw-review-2",
+          "stage": "submission",
+          "status": "under_review",
+          "label": "Under Review",
+          "startedAt": "2025-04-23",
+          "endedAt": "2025-08-01"
+        },
+        {
+          "id": "quantum-mw-rejected-2",
+          "stage": "submission",
+          "status": "rejected",
+          "label": "拒稿",
+          "startedAt": "2025-08-01",
+          "endedAt": "2026-04-11"
+        },
+        {
+          "id": "quantum-case-review",
+          "stage": "submission",
+          "status": "under_review",
+          "label": "Under Review",
+          "startedAt": "2026-04-11",
+          "endedAt": "2026-05-21"
+        },
+        {
+          "id": "quantum-r1",
+          "stage": "submission",
+          "status": "revision_1",
+          "label": "1st Revision",
+          "startedAt": "2026-05-21",
+          "endedAt": "2026-06-10"
+        },
+        {
+          "id": "quantum-r1-returned",
+          "stage": "submission",
+          "status": "revision_resubmitted",
+          "label": "已修回",
+          "startedAt": "2026-06-10",
+          "endedAt": "2026-08-13"
+        }
+      ],
+      "progress": 82,
+      "priority": "high",
+      "pinned": false,
+      "showInAttention": true,
+      "startedAt": "2022-08-01",
+      "updatedAt": "2026-08-13",
+      "manualUpdatedAt": "2026-08-13",
+      "lastActionAt": "2026-08-13",
+      "nextAction": "完成二轮小修与逐条回应，2026-09-12 前修回",
+      "nextDue": "2026-09-12",
+      "currentVenue": "管理案例研究与评论",
+      "venueSummary": "管理案例研究与评论 · 二轮小修",
+      "notes": "2022 年 8 月启动。两次投稿《管理世界》均被拒；2026-04-11 投稿《管理案例研究与评论》，当前为二轮小修。作者名单已去除输入中的重复项。",
+      "writing": [
+        {
+          "key": "question",
+          "label": "问题提出中",
+          "status": "done"
+        },
+        {
+          "key": "data",
+          "label": "数据处理中",
+          "status": "done"
+        },
+        {
+          "key": "draft",
+          "label": "文本撰写中",
+          "status": "done"
+        },
+        {
+          "key": "format",
+          "label": "格式修改中",
+          "status": "done"
+        }
+      ],
+      "submissions": [
+        {
+          "journal": "管理世界",
+          "status": "rejected",
+          "statusStartedAt": "2023-04-01",
+          "statusEndedAt": "2023-10-05",
+          "note": "2023-10-05 拒稿"
+        },
+        {
+          "journal": "管理世界",
+          "status": "rejected",
+          "statusStartedAt": "2025-04-23",
+          "statusEndedAt": "2025-08-01",
+          "note": "重写后再次投稿；2025 年 8 月拒稿"
+        },
+        {
+          "journal": "管理案例研究与评论",
+          "status": "revision_2",
+          "statusStartedAt": "2026-08-13",
+          "statusEndedAt": "",
+          "note": "二轮小修；2026-09-12 前修回"
+        }
+      ],
+      "tags": [
+        "学术创业",
+        "创新链",
+        "产业链",
+        "量子技术",
+        "多案例研究"
+      ],
+      "links": [],
+      "showOnRoadmap": true
+    },
+    {
+      "id": "ai-quality-quantity",
+      "shortCode": "Data Analytics",
+      "title": "Data Analytics, AI-capable Employees, and the Innovation Quality–Quantity Paradox in Manufacturing Industries",
+      "authors": "SUN Huijie; HOU Tianyu; CHEN Yubo",
+      "language": "en",
+      "focusStage": "writing",
+      "statusCode": "formatting",
+      "stageLabel": "格式修改中",
+      "statusStartedAt": "2026-04-26",
+      "statusTimeline": [
+        {
+          "id": "data-analytics-data",
+          "stage": "writing",
+          "status": "data_processing",
+          "label": "数据处理中",
+          "startedAt": "2025-08-26",
+          "endedAt": "2025-09-16"
+        },
+        {
+          "id": "data-analytics-question",
+          "stage": "writing",
+          "status": "research_question",
+          "label": "问题提出中",
+          "startedAt": "2025-09-16",
+          "endedAt": "2026-03-14"
+        },
+        {
+          "id": "data-analytics-pom-review",
+          "stage": "submission",
+          "status": "under_review",
+          "label": "Under Review",
+          "startedAt": "2026-03-14",
+          "endedAt": "2026-04-26"
+        },
+        {
+          "id": "data-analytics-pom-rejected",
+          "stage": "submission",
+          "status": "rejected",
+          "label": "拒稿",
+          "startedAt": "2026-04-26",
+          "endedAt": "2026-04-26"
+        }
+      ],
+      "progress": 40,
+      "priority": "medium",
+      "pinned": false,
+      "showInAttention": true,
+      "startedAt": "2025-08-26",
+      "updatedAt": "2026-08-13",
+      "manualUpdatedAt": "2026-08-13",
+      "lastActionAt": "2026-04-26",
+      "nextAction": "完成语言与格式润色，确定下一投稿期刊",
+      "nextDue": "",
+      "currentVenue": "Manuscript polishing",
+      "venueSummary": "POM rejected · manuscript polishing",
+      "notes": "2026-03-14 投稿 POM，2026-04-26 被拒；当前继续润色并准备转投。",
+      "writing": [
+        {
+          "key": "question",
+          "label": "问题提出中",
+          "status": "done"
+        },
+        {
+          "key": "data",
+          "label": "数据处理中",
+          "status": "done"
+        },
+        {
+          "key": "draft",
+          "label": "文本撰写中",
+          "status": "done"
+        },
+        {
+          "key": "format",
+          "label": "格式修改中",
+          "status": "in_progress"
+        }
+      ],
+      "submissions": [
+        {
+          "journal": "Production and Operations Management",
+          "status": "rejected",
+          "statusStartedAt": "2026-03-14",
+          "statusEndedAt": "2026-04-26",
+          "note": "POM rejected"
+        }
+      ],
+      "tags": [],
+      "links": [],
+      "showOnRoadmap": true
     },
     {
       "id": "learning-pathways",
@@ -353,12 +369,19 @@
       "stageLabel": "文本撰写中",
       "statusStartedAt": "2026-07-08",
       "statusTimeline": [
-        { "id": "learning-data", "stage": "writing", "status": "data_processing", "label": "数据处理中", "startedAt": "2026-03-19", "endedAt": "2026-07-08" }
+        {
+          "id": "learning-data",
+          "stage": "writing",
+          "status": "data_processing",
+          "label": "数据处理中",
+          "startedAt": "2026-03-19",
+          "endedAt": "2026-07-08"
+        }
       ],
       "progress": 32,
       "priority": "medium",
       "pinned": false,
-      "showInAttention": false,
+      "showInAttention": true,
       "startedAt": "2026-03-19",
       "updatedAt": "2026-08-13",
       "manualUpdatedAt": "2026-08-13",
@@ -369,14 +392,31 @@
       "venueSummary": "Initial draft formed 2026-07-08",
       "notes": "2026-03-19 开始数据处理，2026-07-08 形成初稿。",
       "writing": [
-        { "key": "question", "label": "问题提出", "status": "done" },
-        { "key": "data", "label": "数据处理", "status": "done" },
-        { "key": "draft", "label": "文本撰写", "status": "in_progress" },
-        { "key": "format", "label": "格式修改", "status": "pending" }
+        {
+          "key": "question",
+          "label": "问题提出中",
+          "status": "done"
+        },
+        {
+          "key": "data",
+          "label": "数据处理中",
+          "status": "done"
+        },
+        {
+          "key": "draft",
+          "label": "文本撰写中",
+          "status": "in_progress"
+        },
+        {
+          "key": "format",
+          "label": "格式修改中",
+          "status": "pending"
+        }
       ],
       "submissions": [],
       "tags": [],
-      "links": []
+      "links": [],
+      "showOnRoadmap": true
     },
     {
       "id": "digital-contextual-abundance",
@@ -392,25 +432,125 @@
       "progress": 8,
       "priority": "medium",
       "pinned": false,
-      "showInAttention": false,
+      "showInAttention": true,
       "startedAt": "2026-06-25",
       "updatedAt": "2026-08-13",
       "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-06-25",
+      "lastActionAt": "2026-08-13",
       "nextAction": "明确研究问题、核心机制与可检验边界",
       "nextDue": "",
       "currentVenue": "Research question framing",
       "venueSummary": "Framing the research question",
       "notes": "2026-06-25 开始问题提出与研究框架构建。",
       "writing": [
-        { "key": "question", "label": "问题提出", "status": "in_progress" },
-        { "key": "data", "label": "数据处理", "status": "pending" },
-        { "key": "draft", "label": "文本撰写", "status": "pending" },
-        { "key": "format", "label": "格式修改", "status": "pending" }
+        {
+          "key": "question",
+          "label": "问题提出中",
+          "status": "in_progress"
+        },
+        {
+          "key": "data",
+          "label": "数据处理中",
+          "status": "pending"
+        },
+        {
+          "key": "draft",
+          "label": "文本撰写中",
+          "status": "pending"
+        },
+        {
+          "key": "format",
+          "label": "格式修改中",
+          "status": "pending"
+        }
       ],
       "submissions": [],
       "tags": [],
-      "links": []
+      "links": [],
+      "showOnRoadmap": true
+    },
+    {
+      "id": "digital-resource-manufacturing",
+      "shortCode": "Digital Resource Construction",
+      "title": "How to construct digital resource for traditional manufacturing incumbents: Revisiting the “buy or make” trade-off in the digital context",
+      "authors": "SUN Huijie; ZHOU Yang",
+      "language": "en",
+      "focusStage": "writing",
+      "statusCode": "manuscript_writing",
+      "stageLabel": "文本撰写中",
+      "statusStartedAt": "2026-04-24",
+      "statusTimeline": [
+        {
+          "id": "digital-resource-data",
+          "stage": "writing",
+          "status": "data_processing",
+          "label": "数据处理中",
+          "startedAt": "2025-03-03",
+          "endedAt": "2025-05-20"
+        },
+        {
+          "id": "digital-resource-draft",
+          "stage": "writing",
+          "status": "manuscript_writing",
+          "label": "文本撰写中",
+          "startedAt": "2025-05-20",
+          "endedAt": "2025-11-28"
+        },
+        {
+          "id": "digital-resource-sms-review",
+          "stage": "submission",
+          "status": "under_review",
+          "label": "Under Review",
+          "startedAt": "2025-11-28",
+          "endedAt": "2026-04-24"
+        }
+      ],
+      "progress": 45,
+      "priority": "medium",
+      "pinned": false,
+      "showInAttention": false,
+      "startedAt": "2025-03-03",
+      "updatedAt": "2026-08-13",
+      "manualUpdatedAt": "2026-08-13",
+      "lastActionAt": "2026-08-13",
+      "nextAction": "完成正文 rewrite 并整合 SMS 会议反馈",
+      "nextDue": "",
+      "currentVenue": "Strategic Management Society Conference",
+      "venueSummary": "SMS Conference · Accepted · manuscript rewrite",
+      "notes": "SMS 投稿日期为 2025-11-28。依据时间顺序，将输入中的“2024-04-24 SMS 录用”记录为 2026-04-24。",
+      "writing": [
+        {
+          "key": "question",
+          "label": "问题提出中",
+          "status": "done"
+        },
+        {
+          "key": "data",
+          "label": "数据处理中",
+          "status": "done"
+        },
+        {
+          "key": "draft",
+          "label": "文本撰写中",
+          "status": "in_progress"
+        },
+        {
+          "key": "format",
+          "label": "格式修改中",
+          "status": "pending"
+        }
+      ],
+      "submissions": [
+        {
+          "journal": "Strategic Management Society Conference",
+          "status": "accepted",
+          "statusStartedAt": "2025-11-28",
+          "statusEndedAt": "2026-04-24"
+        }
+      ],
+      "tags": [],
+      "links": [],
+      "showOnRoadmap": true
     },
     {
       "id": "mic2025-success",
@@ -437,14 +577,391 @@
       "venueSummary": "Framing the research question",
       "notes": "2026-05-25 开始问题提出。作者信息尚待补充。",
       "writing": [
-        { "key": "question", "label": "问题提出", "status": "in_progress" },
-        { "key": "data", "label": "数据处理", "status": "pending" },
-        { "key": "draft", "label": "文本撰写", "status": "pending" },
-        { "key": "format", "label": "格式修改", "status": "pending" }
+        {
+          "key": "question",
+          "label": "问题提出中",
+          "status": "in_progress"
+        },
+        {
+          "key": "data",
+          "label": "数据处理中",
+          "status": "pending"
+        },
+        {
+          "key": "draft",
+          "label": "文本撰写中",
+          "status": "pending"
+        },
+        {
+          "key": "format",
+          "label": "格式修改中",
+          "status": "pending"
+        }
       ],
       "submissions": [],
       "tags": [],
-      "links": []
+      "links": [],
+      "showOnRoadmap": true
+    },
+    {
+      "id": "opportunity-capability-nexus",
+      "shortCode": "Opportunity-Capability",
+      "title": "Decoding the Opportunity-Capability Nexus: Causal Recipes for Technological Innovation",
+      "authors": "SUN Huijie; YANG Chong; LIU Zhiying",
+      "language": "en",
+      "focusStage": "submission",
+      "statusCode": "revision_resubmitted",
+      "stageLabel": "已修回",
+      "statusStartedAt": "2026-08-01",
+      "statusTimeline": [
+        {
+          "id": "opportunity-review",
+          "stage": "submission",
+          "status": "under_review",
+          "label": "Under Review",
+          "startedAt": "2024-09-01",
+          "endedAt": "2025-07-30"
+        },
+        {
+          "id": "opportunity-r1",
+          "stage": "submission",
+          "status": "revision_1",
+          "label": "1st Revision",
+          "startedAt": "2025-07-30",
+          "endedAt": "2026-05-20"
+        },
+        {
+          "id": "opportunity-r1-returned",
+          "stage": "submission",
+          "status": "revision_resubmitted",
+          "label": "已修回",
+          "startedAt": "2026-05-20",
+          "endedAt": "2026-07-24"
+        },
+        {
+          "id": "opportunity-r2",
+          "stage": "submission",
+          "status": "revision_2",
+          "label": "2nd Revision",
+          "startedAt": "2026-07-24",
+          "endedAt": "2026-08-01"
+        }
+      ],
+      "progress": 93,
+      "priority": "medium",
+      "pinned": false,
+      "showInAttention": false,
+      "startedAt": "2024-09-01",
+      "updatedAt": "2026-08-13",
+      "manualUpdatedAt": "2026-08-13",
+      "lastActionAt": "2026-08-01",
+      "nextAction": "等待 APJM 编辑决定",
+      "nextDue": "",
+      "currentVenue": "Asia Pacific Journal of Management",
+      "venueSummary": "Asia Pacific Journal of Management · R2 returned",
+      "notes": "依据节点先后关系，将输入中的“0730 第一次大修”记录为 2025-07-30；二轮小修已于 2026-08-01 修回。",
+      "writing": [
+        {
+          "key": "question",
+          "label": "问题提出中",
+          "status": "done"
+        },
+        {
+          "key": "data",
+          "label": "数据处理中",
+          "status": "done"
+        },
+        {
+          "key": "draft",
+          "label": "文本撰写中",
+          "status": "done"
+        },
+        {
+          "key": "format",
+          "label": "格式修改中",
+          "status": "done"
+        }
+      ],
+      "submissions": [
+        {
+          "journal": "Asia Pacific Journal of Management",
+          "status": "revision_resubmitted",
+          "statusStartedAt": "2026-08-01",
+          "statusEndedAt": "",
+          "note": "二轮小修已修回"
+        }
+      ],
+      "tags": [],
+      "links": [],
+      "showOnRoadmap": true
+    },
+    {
+      "id": "ai-transferability",
+      "shortCode": "Interdisciplinarity",
+      "title": "Interdisciplinarity and Transferability in Markets for AI Technology",
+      "authors": "HOU Tianyu; SUN Huijie; XIAO Fenglong",
+      "language": "en",
+      "focusStage": "submission",
+      "statusCode": "under_review",
+      "stageLabel": "Under Review",
+      "statusStartedAt": "2026-08-13",
+      "statusTimeline": [
+        {
+          "id": "interdisciplinarity-data",
+          "stage": "writing",
+          "status": "data_processing",
+          "label": "数据处理中",
+          "startedAt": "2025-06-13",
+          "endedAt": "2025-09-23"
+        },
+        {
+          "id": "interdisciplinarity-os-review",
+          "stage": "submission",
+          "status": "under_review",
+          "label": "Under Review",
+          "startedAt": "2025-09-23",
+          "endedAt": "2025-12-11"
+        },
+        {
+          "id": "interdisciplinarity-os-rejected",
+          "stage": "submission",
+          "status": "rejected",
+          "label": "拒稿",
+          "startedAt": "2025-12-11",
+          "endedAt": "2026-08-13"
+        }
+      ],
+      "progress": 56,
+      "priority": "medium",
+      "pinned": false,
+      "showInAttention": false,
+      "startedAt": "2025-06-13",
+      "updatedAt": "2026-08-13",
+      "manualUpdatedAt": "2026-08-13",
+      "lastActionAt": "2026-08-13",
+      "nextAction": "跟踪 SMJ 审稿进度",
+      "nextDue": "",
+      "currentVenue": "Strategic Management Journal",
+      "venueSummary": "Strategic Management Journal · Submitted 2026-08-13",
+      "notes": "2025-09-23 投稿 Organization Science，2025-12-11 被拒；2026-08-13 转投 SMJ。",
+      "writing": [
+        {
+          "key": "question",
+          "label": "问题提出中",
+          "status": "done"
+        },
+        {
+          "key": "data",
+          "label": "数据处理中",
+          "status": "done"
+        },
+        {
+          "key": "draft",
+          "label": "文本撰写中",
+          "status": "done"
+        },
+        {
+          "key": "format",
+          "label": "格式修改中",
+          "status": "done"
+        }
+      ],
+      "submissions": [
+        {
+          "journal": "Organization Science",
+          "status": "rejected",
+          "statusStartedAt": "2025-09-23",
+          "statusEndedAt": "2025-12-11"
+        },
+        {
+          "journal": "Strategic Management Journal",
+          "status": "under_review",
+          "statusStartedAt": "2026-08-13",
+          "statusEndedAt": ""
+        }
+      ],
+      "tags": [],
+      "links": [],
+      "showOnRoadmap": true
+    },
+    {
+      "id": "shadow-to-spotlight",
+      "shortCode": "From Shadow to Spotlight",
+      "title": "From Shadow to Spotlight: How Technological, Geographical, and Market Overlaps with Leading Firms Influence Non-Leading Firms’ Innovation",
+      "authors": "SUN Huijie; GONG Lei; LIU Zhiying; ZHOU Ziyu*",
+      "language": "en",
+      "focusStage": "submission",
+      "statusCode": "revision_resubmitted",
+      "stageLabel": "已修回",
+      "statusStartedAt": "2026-07-02",
+      "statusTimeline": [
+        {
+          "id": "shadow-draft",
+          "stage": "writing",
+          "status": "manuscript_writing",
+          "label": "文本撰写中",
+          "startedAt": "2023-11-23",
+          "endedAt": "2024-07-30"
+        },
+        {
+          "id": "shadow-technovation-review",
+          "stage": "submission",
+          "status": "under_review",
+          "label": "Under Review",
+          "startedAt": "2024-07-30",
+          "endedAt": "2025-01-01"
+        },
+        {
+          "id": "shadow-technovation-rejected",
+          "stage": "submission",
+          "status": "rejected",
+          "label": "拒稿",
+          "startedAt": "2025-01-01",
+          "endedAt": "2025-01-26"
+        },
+        {
+          "id": "shadow-tasm-review",
+          "stage": "submission",
+          "status": "under_review",
+          "label": "Under Review",
+          "startedAt": "2025-01-26",
+          "endedAt": "2026-01-23"
+        },
+        {
+          "id": "shadow-r1",
+          "stage": "submission",
+          "status": "revision_1",
+          "label": "1st Revision",
+          "startedAt": "2026-01-23",
+          "endedAt": "2026-02-14"
+        },
+        {
+          "id": "shadow-r1-returned",
+          "stage": "submission",
+          "status": "revision_resubmitted",
+          "label": "已修回",
+          "startedAt": "2026-02-14",
+          "endedAt": "2026-06-16"
+        },
+        {
+          "id": "shadow-r2",
+          "stage": "submission",
+          "status": "revision_2",
+          "label": "2nd Revision",
+          "startedAt": "2026-06-16",
+          "endedAt": "2026-07-02"
+        }
+      ],
+      "progress": 92,
+      "priority": "low",
+      "pinned": false,
+      "showInAttention": false,
+      "startedAt": "2023-07-01",
+      "updatedAt": "2026-08-13",
+      "manualUpdatedAt": "2026-08-13",
+      "lastActionAt": "2026-08-13",
+      "nextAction": "等待 TASM 编辑决定",
+      "nextDue": "",
+      "currentVenue": "Technology Analysis & Strategic Management",
+      "venueSummary": "Technology Analysis & Strategic Management · R2 returned",
+      "notes": "2023-11-23 形成初稿；Technovation 拒稿后转投 TASM，已于 2026-07-02 修回第二轮小修。",
+      "writing": [
+        {
+          "key": "question",
+          "label": "问题提出中",
+          "status": "done"
+        },
+        {
+          "key": "data",
+          "label": "数据处理中",
+          "status": "done"
+        },
+        {
+          "key": "draft",
+          "label": "文本撰写中",
+          "status": "done"
+        },
+        {
+          "key": "format",
+          "label": "格式修改中",
+          "status": "done"
+        }
+      ],
+      "submissions": [
+        {
+          "journal": "Technovation",
+          "status": "rejected",
+          "statusStartedAt": "2024-07-30",
+          "statusEndedAt": "2025-01-01"
+        },
+        {
+          "journal": "Technology Analysis & Strategic Management",
+          "status": "revision_resubmitted",
+          "statusStartedAt": "2026-07-02",
+          "statusEndedAt": ""
+        }
+      ],
+      "tags": [],
+      "links": [],
+      "showOnRoadmap": true
+    },
+    {
+      "id": "resource-reconstruction",
+      "shortCode": "Divestiture–Acquisition",
+      "title": "Reconstructing Resources for Breakthrough Innovation: The Role of Divestiture–Acquisition Configurations Under Windows of Opportunity",
+      "authors": "SUN Huijie; ZHOU Yang; LIU Zhiying",
+      "language": "en",
+      "focusStage": "publication",
+      "statusCode": "published",
+      "stageLabel": "已发表",
+      "statusStartedAt": "2026-04-03",
+      "statusTimeline": [],
+      "progress": 100,
+      "priority": "low",
+      "pinned": false,
+      "showInAttention": false,
+      "startedAt": "2024-04-01",
+      "updatedAt": "2026-08-13",
+      "manualUpdatedAt": "2026-08-13",
+      "lastActionAt": "2026-08-13",
+      "nextAction": "补充卷期、页码与 DOI 后归档",
+      "nextDue": "",
+      "currentVenue": "IEEE Transactions on Engineering Management",
+      "venueSummary": "IEEE Transactions on Engineering Management · Published 2026",
+      "notes": "2026 年发表于 IEEE Transactions on Engineering Management。",
+      "writing": [
+        {
+          "key": "question",
+          "label": "问题提出中",
+          "status": "done"
+        },
+        {
+          "key": "data",
+          "label": "数据处理中",
+          "status": "done"
+        },
+        {
+          "key": "draft",
+          "label": "文本撰写中",
+          "status": "done"
+        },
+        {
+          "key": "format",
+          "label": "格式修改中",
+          "status": "done"
+        }
+      ],
+      "submissions": [
+        {
+          "journal": "IEEE Transactions on Engineering Management",
+          "status": "accepted",
+          "statusStartedAt": "2026-04-03",
+          "statusEndedAt": ""
+        }
+      ],
+      "tags": [],
+      "links": [],
+      "showOnRoadmap": true
     },
     {
       "id": "future-industry-technology-forecasting",
@@ -457,7 +974,14 @@
       "stageLabel": "Forthcoming",
       "statusStartedAt": "2026-07-16",
       "statusTimeline": [
-        { "id": "future-industry-review", "stage": "submission", "status": "under_review", "label": "Under Review", "startedAt": "2026-04-01", "endedAt": "2026-07-16" }
+        {
+          "id": "future-industry-review",
+          "stage": "submission",
+          "status": "under_review",
+          "label": "Under Review",
+          "startedAt": "2026-04-01",
+          "endedAt": "2026-07-16"
+        }
       ],
       "progress": 100,
       "priority": "low",
@@ -473,15 +997,42 @@
       "venueSummary": "技术经济 · Accepted 2026-07-16",
       "notes": "2026 年 4 月投稿《技术经济》，2026-07-16 稿件采用。孙慧杰为通讯作者。",
       "writing": [
-        { "key": "question", "label": "问题提出", "status": "done" },
-        { "key": "data", "label": "数据处理", "status": "done" },
-        { "key": "draft", "label": "文本撰写", "status": "done" },
-        { "key": "format", "label": "格式修改", "status": "done" }
+        {
+          "key": "question",
+          "label": "问题提出",
+          "status": "done"
+        },
+        {
+          "key": "data",
+          "label": "数据处理",
+          "status": "done"
+        },
+        {
+          "key": "draft",
+          "label": "文本撰写",
+          "status": "done"
+        },
+        {
+          "key": "format",
+          "label": "格式修改",
+          "status": "done"
+        }
       ],
       "submissions": [
-        { "journal": "技术经济", "status": "accepted", "statusStartedAt": "2026-04-01", "statusEndedAt": "2026-07-16", "note": "2026-07-16 稿件采用" }
+        {
+          "journal": "技术经济",
+          "status": "accepted",
+          "statusStartedAt": "2026-04-01",
+          "statusEndedAt": "2026-07-16",
+          "note": "2026-07-16 稿件采用"
+        }
       ],
-      "tags": ["未来产业", "技术预测", "理论", "方法"],
+      "tags": [
+        "未来产业",
+        "技术预测",
+        "理论",
+        "方法"
+      ],
       "links": []
     }
   ],
