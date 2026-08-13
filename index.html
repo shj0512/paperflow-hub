@@ -18,8 +18,9 @@
         <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M10 10.5h20v19H10z" fill="none" stroke="currentColor" stroke-width="2" /><path d="M15 15h10M15 20h10M15 25h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" /><circle cx="30" cy="10" r="5" fill="#8fd0ff" /></svg></span>
         <strong>Paperflow</strong>
       </a>
-      <nav class="top-nav" aria-label="主要导航"><a href="#overview">Overview</a><a href="#pipeline">Pipeline</a><a href="#projects">Projects</a></nav>
+      <nav class="top-nav" aria-label="主要导航"><a href="#overview">Overview</a><a href="#portfolioOverview">Pipeline</a><a href="#projects">Projects</a></nav>
       <div class="header-actions">
+        <button class="button" id="openAllPapersButton" type="button">All Papers</button>
         <button class="button header-manage-only" id="headerAddPaperButton" type="button">＋ Add Paper</button>
         <button class="button header-manage-only" id="openToolsButton" type="button">Data</button>
         <button class="button header-manage-only" id="headerPublishButton" type="button">Publish</button>
@@ -39,7 +40,7 @@
             <div class="focus-card-header"><span class="section-kicker" id="focusHeading">CURRENT FOCUS</span><span class="focus-priority" id="focusPriority"></span></div>
             <div class="focus-card-body" id="focusContent"></div>
           </aside>
-          <aside class="portfolio-summary" aria-labelledby="portfolioSummaryTitle">
+          <aside class="portfolio-summary" id="portfolioOverview" aria-labelledby="portfolioSummaryTitle">
             <div class="summary-heading"><span class="section-kicker">PORTFOLIO OVERVIEW</span><h2 id="portfolioSummaryTitle">研究组合概览</h2></div>
             <div class="metrics" id="metrics"></div>
             <div class="distribution" id="pipelineDistribution"></div>
@@ -52,12 +53,6 @@
         </section>
       </section>
 
-      <section class="section shell" id="pipeline">
-        <div class="section-heading"><span class="section-kicker">RESEARCH PIPELINE</span><h2>研究流程</h2><p>以 Writing、Submitted、Revision、Published 四个阶段查看研究组合，点击阶段数字即可查看对应论文。</p></div>
-        <div class="pipeline-card" id="pipelineChart"></div>
-        <div class="pipeline-selection" id="pipelineSelection" hidden></div>
-      </section>
-
       <section class="section shell" id="projects">
         <div class="section-heading project-heading">
           <div><span class="section-kicker">PROJECTS</span><h2>论文项目</h2></div>
@@ -66,7 +61,7 @@
         <div class="project-toolbar">
           <label class="search-box"><span aria-hidden="true">⌕</span><input id="searchInput" type="search" placeholder="Search projects..." aria-label="搜索论文项目" /></label>
           <label class="toolbar-select"><span>Stage</span><select id="stageFilter"><option value="all">All</option><option value="writing">Writing</option><option value="review">Under Review</option><option value="revision">Revision</option><option value="publication">Published</option></select></label>
-          <label class="toolbar-select"><span>Sort</span><select id="sortSelect"><option value="priority">Priority</option><option value="deadline">Deadline</option><option value="updated">Last Updated</option><option value="started">Start Date</option></select></label>
+          <label class="toolbar-select"><span>Sort</span><select id="sortSelect"><option value="custom">Custom Order</option><option value="priority">Priority</option><option value="deadline">Deadline</option><option value="updated">Last Updated</option><option value="started">Start Date</option></select></label>
           <button class="button" id="editCodesButton" type="button">View options</button>
         </div>
         <div class="paper-list" id="paperList" aria-live="polite"></div>
@@ -86,6 +81,14 @@
       </form>
     </dialog>
 
+    <dialog class="all-papers-dialog" id="allPapersDialog">
+      <div class="dialog-shell">
+        <div class="dialog-header"><div><span class="section-kicker">ALL PAPERS</span><h2>全部论文 · 快捷导航</h2></div><button class="close-button" id="closeAllPapersButton" type="button" aria-label="关闭">×</button></div>
+        <div class="all-papers-intro"><span>无需滚动即可查看全部项目；点击论文直接查看或更新。</span><strong id="allPapersModeHint">Reading Mode</strong></div>
+        <div class="all-papers-list" id="allPapersList"></div>
+      </div>
+    </dialog>
+
     <dialog class="paper-dialog" id="paperDialog">
       <form method="dialog" class="dialog-shell" id="paperForm">
         <div class="dialog-header"><div><span class="section-kicker" id="dialogKicker">PAPER DETAILS</span><h2 id="dialogTitle">论文详情</h2></div><button class="close-button" value="cancel" aria-label="关闭">×</button></div>
@@ -98,7 +101,7 @@
       <form method="dialog" class="dialog-shell" id="codesForm">
         <div class="dialog-header"><div><span class="section-kicker">VIEW OPTIONS</span><h2>项目显示设置</h2></div><button class="close-button" value="cancel" aria-label="关闭">×</button></div>
         <div class="codes-editor" id="codesEditor"></div>
-        <div class="dialog-footer"><span>修改简称，并选择项目是否计入 Research Pipeline。</span><div><button class="button" value="cancel">关闭</button><button class="button button-primary" type="submit">保存显示设置</button></div></div>
+        <div class="dialog-footer"><span>修改各论文的页面简称；项目顺序可在 Manage Mode 中直接拖动。</span><div><button class="button" value="cancel">关闭</button><button class="button button-primary" type="submit">保存显示设置</button></div></div>
       </form>
     </dialog>
 
