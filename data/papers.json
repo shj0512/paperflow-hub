@@ -1,6 +1,6 @@
 {
   "meta": {
-    "version": 5,
+    "version": 6,
     "owner": "shj0512",
     "title": "论文进展台",
     "lastUpdated": "2026-08-13T02:41:37.117Z",
@@ -962,6 +962,112 @@
       "tags": [],
       "links": [],
       "showOnRoadmap": true
+    },
+    {
+      "id": "future-industry-technology-forecasting",
+      "shortCode": "Future Industry Forecasting",
+      "title": "面向未来产业的技术预测分析——理论、方法与实践路径",
+      "authors": "刘志迎; 孙慧杰*",
+      "language": "zh",
+      "focusStage": "publication",
+      "statusCode": "forthcoming",
+      "stageLabel": "Forthcoming",
+      "statusStartedAt": "2026-07-16",
+      "statusTimeline": [
+        {
+          "id": "future-industry-review",
+          "stage": "submission",
+          "status": "under_review",
+          "label": "Under Review",
+          "startedAt": "2026-04-01",
+          "endedAt": "2026-07-16"
+        }
+      ],
+      "progress": 100,
+      "priority": "low",
+      "pinned": false,
+      "showInAttention": false,
+      "startedAt": "2026-04-01",
+      "updatedAt": "2026-08-13",
+      "manualUpdatedAt": "2026-08-13",
+      "lastActionAt": "2026-07-16",
+      "nextAction": "等待卷期、页码等正式出版信息",
+      "nextDue": "",
+      "currentVenue": "技术经济",
+      "venueSummary": "技术经济 · Accepted 2026-07-16",
+      "notes": "2026 年 4 月投稿《技术经济》，2026-07-16 稿件采用。孙慧杰为通讯作者。",
+      "writing": [
+        {
+          "key": "question",
+          "label": "问题提出",
+          "status": "done"
+        },
+        {
+          "key": "data",
+          "label": "数据处理",
+          "status": "done"
+        },
+        {
+          "key": "draft",
+          "label": "文本撰写",
+          "status": "done"
+        },
+        {
+          "key": "format",
+          "label": "格式修改",
+          "status": "done"
+        }
+      ],
+      "submissions": [
+        {
+          "journal": "技术经济",
+          "status": "accepted",
+          "statusStartedAt": "2026-04-01",
+          "statusEndedAt": "2026-07-16",
+          "note": "2026-07-16 稿件采用"
+        }
+      ],
+      "tags": [
+        "未来产业",
+        "技术预测",
+        "理论",
+        "方法"
+      ],
+      "links": []
+    }
+  ],
+  "otherProjects": [
+    {
+      "id": "process-innovation-huaheng",
+      "title": "动态能力视角下企业工艺创新路径——华恒生物的探索性案例研究",
+      "authors": "刘志迎; 赵蕊; 孙慧杰",
+      "status": "published",
+      "venue": "管理学报",
+      "citation": "2026, 23(1): 13–21"
+    },
+    {
+      "id": "key-core-technology-identification",
+      "title": "关键核心技术识别：流程框架构建与未来研究展望",
+      "authors": "刘志迎; 蔡志国; 孙慧杰",
+      "status": "published",
+      "venue": "华东经济管理",
+      "citation": "2025, 39(7): 1–8, 137"
+    },
+    {
+      "id": "sole-actual-controllers",
+      "title": "When Sole Actual Controllers Take Charge: Corporate Social Responsibility, Financial Risk and Artificial Intelligence Technology Innovation",
+      "authors": "Ziyu Zhou; Huijie Sun; Zhiying Liu; Jiahui Liu; Yajing Li*",
+      "status": "minor_revision",
+      "venue": "Journal under review",
+      "citation": "Minor Revision"
+    },
+    {
+      "id": "cto-general-ability",
+      "title": "Too Much of a Good Thing? Chief Technology Officers’ General Ability and Firm Innovation: Moderating Effects of AI and Gender Diversity",
+      "authors": "Hang Yang; Huijie Sun; Zhiying Liu; Jialing Liu*",
+      "status": "under_review",
+      "venue": "Journal under review",
+      "citation": "Under Review"
     }
   ]
 }

@@ -32,7 +32,7 @@ const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
 const js = await readFile(new URL("../app.js", import.meta.url), "utf8");
 const css = await readFile(new URL("../styles.css", import.meta.url), "utf8");
 
-for (const expected of ["portfolioOverview", "metrics", "pipelineDistribution", "overviewPipelineSelection", "needsAttention", "paperList", "allPapersDialog", "allPapersList", "quickDialog", "paperDialog", "toolsDialog"]) {
+for (const expected of ["portfolioOverview", "metrics", "pipelineDistribution", "overviewPipelineSelection", "needsAttention", "paperList", "otherProjectsList", "allPapersDialog", "allPapersList", "quickDialog", "paperDialog", "toolsDialog"]) {
   if (!html.includes(`id=\"${expected}\"`)) throw new Error(`Missing interface mount: ${expected}`);
 }
 if (!js.includes("saveLocalDraft")) throw new Error("Management persistence is missing.");
@@ -50,6 +50,8 @@ if (js.includes('["accepted", "Accepted",')) throw new Error("Accepted must not 
 if (js.includes('["accepted", "接收"]')) throw new Error("Accepted must not be selectable in the submission workflow.");
 if (!js.includes("data.papers.forEach((paper) => buckets[pipelineBucket(paper)].push(paper))")) throw new Error("Pipeline counts must include every paper.");
 if (!js.includes("reorderPapers")) throw new Error("Custom paper ordering is missing.");
+if (!Array.isArray(data.otherProjects) || data.otherProjects.length !== 4) throw new Error("Expected four independent Other Projects.");
+if (!js.includes("renderOtherProjects")) throw new Error("Other Projects rendering is missing.");
 if (js.includes("Waiting for external decision\", date: `Waiting")) throw new Error("Needs Attention must not display waiting-day counters.");
 if (!css.includes("--blue-100")) throw new Error("Theme variables are missing.");
 

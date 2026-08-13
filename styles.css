@@ -80,7 +80,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .brand-mark svg { width: 29px; height: 29px; }
 
-.top-nav { gap: 32px; }
+.top-nav { gap: 25px; }
 .top-nav a { color: #435f72; font-size: 15px; font-weight: 600; transition: color 150ms ease; }
 .top-nav a:hover { color: var(--blue-600); }
 
@@ -306,6 +306,19 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .card-update, .card-full-edit { display: none; }
 .manage-mode .card-update, .manage-mode .card-full-edit { display: inline-flex; }
 
+.other-projects-section { padding-bottom: 12px; }
+.other-projects-heading { display: grid; grid-template-columns: minmax(260px, .8fr) minmax(420px, 1.2fr); gap: 34px; align-items: end; }
+.other-projects-heading p { justify-self: end; max-width: 650px; padding-left: 24px; border-left: 2px solid var(--blue-100); }
+.other-projects-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.other-project-card { display: grid; min-height: 276px; align-content: start; padding: 25px 26px 23px; border: 1px solid var(--line); border-radius: 17px; background: linear-gradient(145deg, #fff 65%, var(--blue-50)); box-shadow: 0 5px 20px rgba(30, 78, 108, .045); }
+.other-project-topline { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
+.other-project-topline > span:first-child { color: #9aaab5; font-size: 12px; font-weight: 700; letter-spacing: .12em; }
+.other-project-card h3 { margin: 18px 0 10px; color: var(--navy-deep); font-size: 21px; font-weight: 600; line-height: 1.43; letter-spacing: -.018em; }
+.other-project-authors { margin: 0; color: #5b7485; font-size: 14px; }
+.other-project-meta { display: grid; gap: 3px; margin-top: auto; padding-top: 22px; border-top: 1px solid var(--line); }
+.other-project-meta strong { color: var(--blue-600); font-size: 15px; }
+.other-project-meta span { color: #657e8e; font-size: 14px; }
+
 .site-footer { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 88px; padding-top: 32px; padding-bottom: 42px; border-top: 1px solid var(--line); color: #677f8f; font-size: 13px; }
 .site-footer > div { display: grid; gap: 5px; }
 .site-footer strong { color: var(--navy); font-size: 14px; }
@@ -438,6 +451,8 @@ dialog::backdrop { background: rgba(13, 43, 63, 0.34); backdrop-filter: blur(4px
   .paper-card { grid-template-columns: minmax(0, 1.6fr) minmax(220px, 1fr); }
   .paper-progress, .paper-controls { padding-top: 18px; border-top: 1px solid var(--line); border-left: 0; }
   .paper-action { border-left: 1px solid var(--line); }
+  .other-projects-heading { grid-template-columns: 1fr; gap: 12px; }
+  .other-projects-heading p { justify-self: start; padding-left: 0; border-left: 0; }
   .project-toolbar { grid-template-columns: 1fr 1fr 1fr; }
   .search-box { grid-column: 1 / -1; }
 }
@@ -490,6 +505,9 @@ dialog::backdrop { background: rgba(13, 43, 63, 0.34); backdrop-filter: blur(4px
   .project-toolbar > .button { grid-column: 1 / -1; }
   .toolbar-select select { min-width: 0; width: 100%; }
   .paper-card { grid-template-columns: 1fr; gap: 18px; padding: 21px 19px; }
+  .other-projects-grid { grid-template-columns: 1fr; }
+  .other-project-card { min-height: 238px; padding: 21px 20px; }
+  .other-project-card h3 { font-size: 19px; }
   .paper-info h3 { font-size: 18px; }
   .paper-action, .paper-progress, .paper-controls { padding: 18px 0 0; border-top: 1px solid var(--line); border-left: 0; }
   .paper-action strong { font-size: 15px; }

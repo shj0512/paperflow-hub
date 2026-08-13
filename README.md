@@ -16,11 +16,12 @@
 - 状态变化时自动结束上一状态并保存起止日期
 - 可增减项目；在 Manage Mode 下可拖动项目保存自定义顺序
 - Header 的 All Papers 在单一弹窗内列出全部论文，点击即可查看或更新，无需滚动整页
+- 独立 Other Projects 展示共同参与但非主导的项目，不计入 Portfolio Overview、Pipeline Distribution 或 Needs Attention
 - JSON 导入导出、当前设备草稿与 GitHub 安全发布流程
 
 ## 数据字段
 
-每篇论文支持 `focusStage`、`statusCode`、`statusStartedAt`、`statusTimeline`、`progress`、`priority`、`pinned`、`showInAttention`、`nextAction`、`nextDue`、`currentVenue`、`lastActionAt`、`startedAt`、`updatedAt`、`submissions`、`tags`、`links` 与 `notes`。旧数据中的 `venueSummary`、`nextAction`、`nextDue` 和 `notes` 会兼容迁移。
+主组合论文保存在 `papers`，共同参与项目单独保存在 `otherProjects`。每篇主组合论文支持 `focusStage`、`statusCode`、`statusStartedAt`、`statusTimeline`、`progress`、`priority`、`pinned`、`showInAttention`、`nextAction`、`nextDue`、`currentVenue`、`lastActionAt`、`startedAt`、`updatedAt`、`submissions`、`tags`、`links` 与 `notes`。
 
 ## 修改与发布
 

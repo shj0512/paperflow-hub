@@ -56,6 +56,7 @@ const els = {
   overviewPipelineSelection: document.querySelector("#overviewPipelineSelection"),
   needsAttention: document.querySelector("#needsAttention"),
   paperList: document.querySelector("#paperList"),
+  otherProjectsList: document.querySelector("#otherProjectsList"),
   searchInput: document.querySelector("#searchInput"),
   stageFilter: document.querySelector("#stageFilter"),
   sortSelect: document.querySelector("#sortSelect"),
@@ -294,7 +295,7 @@ function normalizePaper(paper) {
 }
 
 function normalizePortfolio(value) {
-  return { ...value, meta: { ...value.meta, version: Math.max(5, Number(value.meta?.version || 0)) }, papers: (value.papers || []).map(normalizePaper) };
+  return { ...value, meta: { ...value.meta, version: Math.max(6, Number(value.meta?.version || 0)) }, papers: (value.papers || []).map(normalizePaper) };
 }
 
 function mergePublishedFields(draft, published) {
@@ -434,6 +435,7 @@ function renderAll() {
   renderOverview();
   renderAttention();
   renderPaperList();
+  renderOtherProjects();
   renderAllPapersList();
   renderManageState();
 }
@@ -680,6 +682,38 @@ function renderPaperCard(paper) {
       </div>
     </article>
   `;
+}
+
+function otherProjectTone(project) {
+  if (project.status === "published") return "published";
+  if (project.status === "minor_revision") return "revision";
+  return "review";
+}
+
+function otherProjectStatus(project) {
+  return { published: "Published", minor_revision: "Minor Revision", under_review: "Under Review" }[project.status] || "In Progress";
+}
+
+function renderOtherProjects() {
+  const projects = Array.isArray(data.otherProjects) ? data.otherProjects : [];
+  if (!projects.length) {
+    els.otherProjectsList.innerHTML = `<div class="empty-state">暂无共同参与项目。</div>`;
+    return;
+  }
+  els.otherProjectsList.innerHTML = projects.map((project, index) => `
+    <article class="other-project-card">
+      <div class="other-project-topline">
+        <span>${String(index + 1).padStart(2, "0")}</span>
+        <span class="status-badge ${otherProjectTone(project)}">${otherProjectStatus(project)}</span>
+      </div>
+      <h3>${escapeHTML(project.title)}</h3>
+      <p class="other-project-authors">${escapeHTML(project.authors)}</p>
+      <div class="other-project-meta">
+        <strong>${escapeHTML(project.venue || "Venue not set")}</strong>
+        <span>${escapeHTML(project.citation || otherProjectStatus(project))}</span>
+      </div>
+    </article>
+  `).join("");
 }
 
 function renderAllPapersList() {

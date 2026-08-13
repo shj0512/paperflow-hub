@@ -18,7 +18,7 @@
         <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M10 10.5h20v19H10z" fill="none" stroke="currentColor" stroke-width="2" /><path d="M15 15h10M15 20h10M15 25h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" /><circle cx="30" cy="10" r="5" fill="#8fd0ff" /></svg></span>
         <strong>Paperflow</strong>
       </a>
-      <nav class="top-nav" aria-label="主要导航"><a href="#overview">Overview</a><a href="#portfolioOverview">Pipeline</a><a href="#projects">Projects</a></nav>
+      <nav class="top-nav" aria-label="主要导航"><a href="#overview">Overview</a><a href="#portfolioOverview">Pipeline</a><a href="#projects">Projects</a><a href="#other-projects">Other Projects</a></nav>
       <div class="header-actions">
         <button class="button" id="openAllPapersButton" type="button">All Papers</button>
         <button class="button header-manage-only" id="headerAddPaperButton" type="button">＋ Add Paper</button>
@@ -65,6 +65,14 @@
           <button class="button" id="editCodesButton" type="button">View options</button>
         </div>
         <div class="paper-list" id="paperList" aria-live="polite"></div>
+      </section>
+
+      <section class="section shell other-projects-section" id="other-projects">
+        <div class="section-heading other-projects-heading">
+          <div><span class="section-kicker">OTHER PROJECTS</span><h2>共同参与项目</h2></div>
+          <p>作为共同作者参与、但不主导的研究项目。该区域独立展示，不计入 Portfolio Overview、Pipeline Distribution 或 Needs Attention。</p>
+        </div>
+        <div class="other-projects-grid" id="otherProjectsList" aria-live="polite"></div>
       </section>
     </main>
 
