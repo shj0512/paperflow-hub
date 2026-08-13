@@ -31,8 +31,7 @@ const stageStatuses = {
     ["revision_3", "3rd Revision"],
     ["revision_resubmitted", "已修回"],
     ["decision_pending", "Decision Pending"],
-    ["rejected", "拒稿"],
-    ["accepted", "接收"]
+    ["rejected", "拒稿"]
   ],
   publication: [
     ["forthcoming", "Forthcoming"],
@@ -56,8 +55,6 @@ const els = {
   pipelineDistribution: document.querySelector("#pipelineDistribution"),
   overviewPipelineSelection: document.querySelector("#overviewPipelineSelection"),
   needsAttention: document.querySelector("#needsAttention"),
-  pipelineChart: document.querySelector("#pipelineChart"),
-  pipelineSelection: document.querySelector("#pipelineSelection"),
   paperList: document.querySelector("#paperList"),
   searchInput: document.querySelector("#searchInput"),
   stageFilter: document.querySelector("#stageFilter"),
@@ -68,6 +65,11 @@ const els = {
   editCodesButton: document.querySelector("#editCodesButton"),
   openToolsButton: document.querySelector("#openToolsButton"),
   headerPublishButton: document.querySelector("#headerPublishButton"),
+  openAllPapersButton: document.querySelector("#openAllPapersButton"),
+  allPapersDialog: document.querySelector("#allPapersDialog"),
+  closeAllPapersButton: document.querySelector("#closeAllPapersButton"),
+  allPapersList: document.querySelector("#allPapersList"),
+  allPapersModeHint: document.querySelector("#allPapersModeHint"),
   quickDialog: document.querySelector("#quickDialog"),
   quickForm: document.querySelector("#quickForm"),
   quickTitle: document.querySelector("#quickTitle"),
@@ -108,7 +110,7 @@ let isCreatingPaper = false;
 let newPaperDraft = null;
 let toastTimer;
 let selectedPipelineBucket = null;
-let selectedPipelineSource = null;
+let draggedPaperId = null;
 
 function escapeHTML(value = "") {
   return String(value)
@@ -191,6 +193,7 @@ function statusPeriodText(start, end) {
 }
 
 function statusLabel(stage, status) {
+  if (stage === "submission" && status === "accepted") return "接收（历史记录）";
   return stageStatuses[stage]?.find(([value]) => value === status)?.[1] || "状态待设置";
 }
 
@@ -225,7 +228,8 @@ function normalizeSubmissionStatus(status, paperStatus) {
   if (stageStatuses.submission.some(([value]) => value === status)) return status;
   if (status === "submitted") return "under_review";
   if (status === "revision") return paperStatus?.startsWith("revision_") ? paperStatus : "revision_1";
-  if (["rejected", "accepted"].includes(status)) return status;
+  if (status === "rejected") return status;
+  if (status === "accepted") return "accepted";
   return "under_review";
 }
 
@@ -248,8 +252,12 @@ function venueFromLegacy(paper) {
 
 function normalizePaper(paper) {
   const rawStage = paper.focusStage === "revision" ? "submission" : paper.focusStage === "accepted" ? "publication" : paper.focusStage;
-  const focusStage = stageStatuses[rawStage] ? rawStage : "writing";
-  const statusCode = inferLegacyStatus(paper, focusStage);
+  let focusStage = stageStatuses[rawStage] ? rawStage : "writing";
+  let statusCode = inferLegacyStatus(paper, focusStage);
+  if (focusStage === "submission" && statusCode === "accepted") {
+    focusStage = "publication";
+    statusCode = inferLegacyStatus(paper, focusStage);
+  }
   const writingByKey = new Map((paper.writing || []).map((item) => [item.key, item]));
   const writing = defaultWritingSteps.map((fallback) => ({ ...fallback, ...(writingByKey.get(fallback.key) || {}), label: fallback.label }));
   const submissions = (paper.submissions || []).map((item) => ({
@@ -424,8 +432,8 @@ function renderAll() {
   renderHero();
   renderOverview();
   renderAttention();
-  renderPipeline();
   renderPaperList();
+  renderAllPapersList();
   renderManageState();
 }
 
@@ -452,7 +460,7 @@ function renderHero() {
     <p class="focus-status-line"><span class="status-dot ${statusTone(paper)}"></span>${escapeHTML(statusLabel(paper.focusStage, paper.statusCode))}${paper.currentVenue ? ` · ${escapeHTML(paper.currentVenue)}` : ""}</p>
     <div class="focus-action"><span>NEXT ACTION</span><strong>${escapeHTML(action)}</strong></div>
     <div class="focus-deadline ${due.tone}">
-      <span>${paper.nextDue ? `Due ${formatEnglishDate(paper.nextDue)}` : !paper.nextAction && waiting ? `Waiting ${waiting} days` : "Deadline not set"}</span>
+      <span>${escapeHTML(deadlineText(paper, true))}</span>
       <strong>${paper.nextDue ? due.label : paper.priority === "high" ? "High priority" : ""}</strong>
     </div>
     <div class="focus-progress">
@@ -471,16 +479,13 @@ function pipelineBucket(paper) {
 
 function getPipelineBuckets() {
   const buckets = { writing: [], submitted: [], revision: [], published: [] };
-  data.papers.filter((paper) => paper.showOnRoadmap !== false).forEach((paper) => buckets[pipelineBucket(paper)].push(paper));
-  Object.values(buckets).forEach((papers) => papers.sort(compareScore));
+  data.papers.forEach((paper) => buckets[pipelineBucket(paper)].push(paper));
   return buckets;
 }
 
 function portfolioCounts() {
   const buckets = getPipelineBuckets();
   return {
-    active: buckets.writing.length + buckets.submitted.length + buckets.revision.length,
-    review: data.papers.filter((paper) => paper.showOnRoadmap !== false && isReviewPaper(paper)).length,
     submitted: buckets.submitted.length,
     revision: buckets.revision.length,
     published: buckets.published.length,
@@ -491,13 +496,13 @@ function portfolioCounts() {
 function renderOverview() {
   const counts = portfolioCounts();
   const metrics = [
-    ["进行中", "ACTIVE", counts.active, "active"],
-    ["审稿中", "UNDER REVIEW", counts.review, "review"],
+    ["撰写中", "WRITING", counts.writing, "writing"],
+    ["投稿 / 审稿中", "SUBMITTED", counts.submitted, "submitted"],
     ["返修中", "REVISION", counts.revision, "revision"],
     ["已发表", "PUBLISHED", counts.published, "published"]
   ];
   els.metrics.innerHTML = metrics.map(([label, english, value, tone]) => `
-    <div class="metric metric-${tone}"><span>${label}</span><strong>${value}</strong><small>${english}</small></div>
+    <button class="metric metric-${tone} ${selectedPipelineBucket === tone ? "active" : ""}" type="button" data-pipeline-bucket="${tone}" aria-expanded="${selectedPipelineBucket === tone}"><span>${label}</span><strong>${value}</strong><small>${english}</small></button>
   `).join("");
 
   const distribution = [
@@ -507,8 +512,8 @@ function renderOverview() {
   const distributionBase = projectTotal || 1;
   els.pipelineDistribution.innerHTML = `
     <div class="distribution-heading"><strong>Pipeline Distribution</strong><span>${projectTotal} projects</span></div>
-    <div class="distribution-bar">${distribution.map(([label, value, tone]) => `<button class="${tone} ${selectedPipelineBucket === tone ? "active" : ""}" style="width:${(value / distributionBase) * 100}%" type="button" data-pipeline-bucket="${tone}" data-pipeline-source="overview" aria-label="${label}: ${value} projects"></button>`).join("")}</div>
-    <div class="distribution-labels">${distribution.map(([label, value, tone]) => `<button class="${selectedPipelineBucket === tone ? "active" : ""}" type="button" data-pipeline-bucket="${tone}" data-pipeline-source="overview"><i class="${tone}"></i>${label}<strong>${value}</strong></button>`).join("")}</div>
+    <div class="distribution-bar">${distribution.map(([label, value, tone]) => `<button class="${tone} ${selectedPipelineBucket === tone ? "active" : ""}" style="width:${(value / distributionBase) * 100}%" type="button" data-pipeline-bucket="${tone}" aria-label="${label}: ${value} projects"></button>`).join("")}</div>
+    <div class="distribution-labels">${distribution.map(([label, value, tone]) => `<button class="${selectedPipelineBucket === tone ? "active" : ""}" type="button" data-pipeline-bucket="${tone}"><i class="${tone}"></i>${label}<strong>${value}</strong></button>`).join("")}</div>
   `;
   renderPipelineSelection();
 }
@@ -546,39 +551,16 @@ function renderAttention() {
   `).join("");
 }
 
-function renderPipeline() {
-  const buckets = getPipelineBuckets();
-  const revisionCounts = [1, 2, 3].map((round) => buckets.revision.filter((paper) => paper.statusCode === `revision_${round}`).length);
-  const returnedCount = buckets.revision.filter((paper) => paper.statusCode === "revision_resubmitted").length;
-  const stages = [
-    ["writing", "Writing", "撰写", buckets.writing.length, ""],
-    ["submitted", "Submitted", "投稿 / 审稿", buckets.submitted.length, ""],
-    ["revision", "Revision", "返修", buckets.revision.length, [...revisionCounts.map((count, index) => count ? `R${index + 1}: ${count}` : ""), returnedCount ? `Returned: ${returnedCount}` : ""].filter(Boolean).join(" · ")],
-    ["published", "Published", "发表", buckets.published.length, ""]
-  ];
-  els.pipelineChart.innerHTML = stages.map(([tone, label, chinese, value, note], index) => `
-    <button class="pipeline-stage ${tone} ${value ? "has-projects" : ""} ${selectedPipelineBucket === tone ? "active" : ""}" type="button" data-pipeline-bucket="${tone}" data-pipeline-source="pipeline" aria-expanded="${selectedPipelineBucket === tone && selectedPipelineSource === "pipeline"}">
-      <span class="pipeline-marker"></span>
-      <div><small>${escapeHTML(chinese)}</small><strong>${label}</strong><b>${value}</b>${note ? `<p>${escapeHTML(note)}</p>` : ""}</div>
-      ${index < stages.length - 1 ? `<i class="pipeline-arrow" aria-hidden="true">→</i>` : ""}
-    </button>
-  `).join("");
-  renderPipelineSelection();
-}
-
 function renderPipelineSelection() {
   const buckets = getPipelineBuckets();
   const labels = { writing: ["Writing", "撰写阶段"], submitted: ["Submitted", "投稿 / 审稿阶段"], revision: ["Revision", "返修阶段"], published: ["Published", "已发表 / 已完成"] };
-  [
-    [els.overviewPipelineSelection, "overview"],
-    [els.pipelineSelection, "pipeline"]
-  ].forEach(([target, source]) => {
-    const visible = selectedPipelineBucket && selectedPipelineSource === source;
-    target.hidden = !visible;
-    if (!visible) {
-      target.innerHTML = "";
-      return;
-    }
+  const target = els.overviewPipelineSelection;
+  const visible = Boolean(selectedPipelineBucket);
+  target.hidden = !visible;
+  if (!visible) {
+    target.innerHTML = "";
+    return;
+  }
     const papers = buckets[selectedPipelineBucket] || [];
     const [english, chinese] = labels[selectedPipelineBucket];
     target.innerHTML = `
@@ -594,15 +576,12 @@ function renderPipelineSelection() {
         </button>
       `).join("") : `<div class="empty-state">当前没有处于该阶段的论文。</div>`}</div>
     `;
-  });
 }
 
-function togglePipelineSelection(bucket, source) {
-  const closing = selectedPipelineBucket === bucket && selectedPipelineSource === source;
+function togglePipelineSelection(bucket) {
+  const closing = selectedPipelineBucket === bucket;
   selectedPipelineBucket = closing ? null : bucket;
-  selectedPipelineSource = closing ? null : source;
   renderOverview();
-  renderPipeline();
 }
 
 function matchesStageFilter(paper, filter) {
@@ -630,6 +609,7 @@ function getFilteredPapers() {
     return (!query || haystack.includes(query)) && matchesStageFilter(paper, filter);
   });
   const sort = els.sortSelect.value;
+  if (sort === "custom") return papers;
   return papers.sort((a, b) => {
     if (sort === "deadline") return compareDeadline(a, b);
     if (sort === "updated") return String(b.updatedAt || "").localeCompare(String(a.updatedAt || ""));
@@ -653,6 +633,12 @@ function cardActionText(paper) {
   return "Next action not set";
 }
 
+function deadlineText(paper, withHint = false) {
+  if (paper.nextDue) return `Due ${formatEnglishDate(paper.nextDue)} · ${deadlineInfo(paper).label}`;
+  if (!paper.nextAction && waitingDays(paper)) return `Waiting ${waitingDays(paper)} days`;
+  return withHint && isManageMode ? "Deadline not set · 在 Update 中设置" : "Deadline not set";
+}
+
 function renderPaperList() {
   const papers = getFilteredPapers();
   if (!papers.length) {
@@ -665,17 +651,18 @@ function renderPaperList() {
 function renderPaperCard(paper) {
   const due = deadlineInfo(paper);
   const progress = clamp(paper.progress, 0, 100);
+  const sortable = isManageMode && els.sortSelect.value === "custom";
   return `
-    <article class="paper-card" data-paper-id="${escapeHTML(paper.id)}">
+    <article class="paper-card ${sortable ? "is-sortable" : ""}" data-paper-id="${escapeHTML(paper.id)}" data-sort-paper-id="${escapeHTML(paper.id)}" draggable="${sortable}">
       <div class="paper-info">
-        <div class="paper-topline"><span class="paper-code">${escapeHTML(paper.shortCode)}</span><span class="status-badge ${statusTone(paper)}">${escapeHTML(statusLabel(paper.focusStage, paper.statusCode))}</span></div>
+        <div class="paper-topline">${sortable ? `<span class="drag-handle" title="拖动排序" aria-hidden="true">⠿</span>` : ""}<span class="paper-code">${escapeHTML(paper.shortCode)}</span><span class="status-badge ${statusTone(paper)}">${escapeHTML(statusLabel(paper.focusStage, paper.statusCode))}</span></div>
         <h3>${escapeHTML(paper.title)}</h3>
         <p class="paper-venue">${escapeHTML(paper.currentVenue || "Venue not set")}</p>
       </div>
       <div class="paper-action">
         <span class="card-label">NEXT ACTION</span>
         <strong>${escapeHTML(cardActionText(paper))}</strong>
-        <p class="deadline ${due.tone}">${paper.nextDue ? `Due ${formatEnglishDate(paper.nextDue)} · ${due.label}` : !paper.nextAction && waitingDays(paper) ? `Waiting ${waitingDays(paper)} days` : "Deadline not set"}</p>
+        <p class="deadline ${due.tone}">${escapeHTML(deadlineText(paper, true))}</p>
       </div>
       <div class="paper-progress">
         <span class="card-label">REFERENCE PROGRESS</span>
@@ -694,6 +681,74 @@ function renderPaperCard(paper) {
       </div>
     </article>
   `;
+}
+
+function renderAllPapersList() {
+  if (!data || !els.allPapersList) return;
+  els.allPapersModeHint.textContent = isManageMode ? "Manage Mode · 拖动排序" : "Reading Mode";
+  els.allPapersList.innerHTML = data.papers.map((paper, index) => `
+    <article class="all-paper-item ${isManageMode ? "is-sortable" : ""}" data-sort-paper-id="${escapeHTML(paper.id)}" draggable="${isManageMode}">
+      <span class="all-paper-index">${String(index + 1).padStart(2, "0")}</span>
+      ${isManageMode ? `<span class="drag-handle" title="拖动排序" aria-hidden="true">⠿</span>` : ""}
+      <button class="all-paper-open" type="button" data-all-paper-id="${escapeHTML(paper.id)}">
+        <strong>${escapeHTML(paper.shortCode)}</strong>
+        <span>${escapeHTML(paper.title)}</span>
+      </button>
+      <span class="status-badge ${statusTone(paper)}">${escapeHTML(statusLabel(paper.focusStage, paper.statusCode))}</span>
+      <span class="all-paper-arrow" aria-hidden="true">→</span>
+    </article>
+  `).join("");
+}
+
+function openAllPapers() {
+  renderAllPapersList();
+  els.allPapersDialog.showModal();
+}
+
+function reorderPapers(dragId, targetId, placeAfter = false) {
+  if (!isManageMode || !dragId || !targetId || dragId === targetId) return;
+  const fromIndex = data.papers.findIndex((paper) => paper.id === dragId);
+  if (fromIndex < 0) return;
+  const [moved] = data.papers.splice(fromIndex, 1);
+  const targetIndex = data.papers.findIndex((paper) => paper.id === targetId);
+  if (targetIndex < 0) {
+    data.papers.splice(fromIndex, 0, moved);
+    return;
+  }
+  data.papers.splice(targetIndex + (placeAfter ? 1 : 0), 0, moved);
+  saveLocalDraft();
+  renderAll();
+  showToast("论文顺序已更新");
+}
+
+function bindSortable(container, allowProjectSort = false) {
+  container.addEventListener("dragstart", (event) => {
+    const item = event.target.closest("[data-sort-paper-id]");
+    const allowed = isManageMode && (!allowProjectSort || els.sortSelect.value === "custom");
+    if (!item || !allowed) return event.preventDefault();
+    draggedPaperId = item.dataset.sortPaperId;
+    item.classList.add("is-dragging");
+    event.dataTransfer.effectAllowed = "move";
+    event.dataTransfer.setData("text/plain", draggedPaperId);
+  });
+  container.addEventListener("dragover", (event) => {
+    const item = event.target.closest("[data-sort-paper-id]");
+    if (!draggedPaperId || !item || item.dataset.sortPaperId === draggedPaperId) return;
+    event.preventDefault();
+    container.querySelectorAll(".drop-before, .drop-after").forEach((node) => node.classList.remove("drop-before", "drop-after"));
+    const after = event.clientY > item.getBoundingClientRect().top + item.getBoundingClientRect().height / 2;
+    item.classList.add(after ? "drop-after" : "drop-before");
+  });
+  container.addEventListener("drop", (event) => {
+    const item = event.target.closest("[data-sort-paper-id]");
+    if (!draggedPaperId || !item) return;
+    event.preventDefault();
+    reorderPapers(draggedPaperId, item.dataset.sortPaperId, item.classList.contains("drop-after"));
+  });
+  container.addEventListener("dragend", () => {
+    draggedPaperId = null;
+    container.querySelectorAll(".is-dragging, .drop-before, .drop-after").forEach((node) => node.classList.remove("is-dragging", "drop-before", "drop-after"));
+  });
 }
 
 function renderManageState() {
@@ -723,7 +778,7 @@ function openQuickUpdate(paperId) {
       <label class="form-field"><span>Effective Date</span><input name="quickEffectiveAt" type="date" value="${escapeHTML(paper.statusStartedAt || todayISO())}" required /></label>
       <label class="form-field"><span>Priority</span><select name="quickPriority">${optionsHtml(priorityNames, paper.priority)}</select></label>
       <label class="form-field full"><span>Next Action</span><textarea name="quickNextAction" placeholder="What should happen next?">${escapeHTML(paper.nextAction)}</textarea></label>
-      <label class="form-field"><span>Due Date</span><input name="quickNextDue" type="date" value="${escapeHTML(paper.nextDue)}" /></label>
+      <label class="form-field"><span>Deadline / 截止日期</span><input name="quickNextDue" type="date" value="${escapeHTML(paper.nextDue)}" /><small>设置后会显示在 Current Focus 和 Needs Attention，并用于到期提醒。</small></label>
       <p class="status-change-hint full" id="quickStatusHint">修改状态后，Effective Date 将作为新状态开始日，并自动结束上一状态。</p>
     </div>
   `;
@@ -840,9 +895,11 @@ function renderTimelineEditRow(item = {}) {
 }
 
 function renderSubmissionRow(item = {}) {
+  const currentStatus = normalizeSubmissionStatus(item.status, "under_review");
+  const historicalAccepted = currentStatus === "accepted" ? `<option value="accepted" selected disabled>接收（历史记录）</option>` : "";
   return `<div class="editable-item submission-item">
     <label><span>期刊 / 会议</span><input data-field="journal" value="${escapeHTML(item.journal || "")}" placeholder="Journal or conference" /></label>
-    <label><span>当前状态</span><select data-field="status">${statusOptionsHtml("submission", normalizeSubmissionStatus(item.status, "under_review"))}</select></label>
+    <label><span>当前状态</span><select data-field="status">${historicalAccepted}${statusOptionsHtml("submission", currentStatus)}</select></label>
     <label><span>状态开始日</span><input data-field="statusStartedAt" type="date" value="${escapeHTML(item.statusStartedAt || "")}" /></label>
     <label><span>状态结束日</span><input data-field="statusEndedAt" type="date" value="${escapeHTML(item.statusEndedAt || "")}" /></label>
     <button class="remove-item" type="button" aria-label="删除投稿线程">×</button>
@@ -882,8 +939,9 @@ function renderEditForm(paper) {
         <label class="form-field"><span id="statusDateLabel">Current Status Start</span><input name="statusEffectiveAt" type="date" value="${escapeHTML(paper.statusStartedAt)}" required /></label>
         <label class="form-field"><span>Priority</span><select name="priority">${optionsHtml(priorityNames, paper.priority)}</select></label>
         <label class="form-field full"><span>Reference Progress</span><div class="progress-input-row"><input name="progressRange" type="range" min="0" max="100" value="${clamp(paper.progress, 0, 100)}" /><input name="progress" type="number" min="0" max="100" value="${clamp(paper.progress, 0, 100)}" /></div></label>
+        <label class="form-field full"><span>Next Action</span><textarea name="nextAction" placeholder="What should happen next?">${escapeHTML(paper.nextAction)}</textarea></label>
+        <label class="form-field"><span>Deadline / 截止日期</span><input name="nextDue" type="date" value="${escapeHTML(paper.nextDue)}" /><small>用于 Current Focus 与 Needs Attention 提醒。</small></label>
         <label class="check-field"><input name="pinned" type="checkbox" ${paper.pinned ? "checked" : ""} /><span>Pin as Current Focus</span></label>
-        <label class="check-field"><input name="showOnRoadmap" type="checkbox" ${paper.showOnRoadmap !== false ? "checked" : ""} /><span>Include in Research Pipeline</span></label>
         <p class="status-change-hint full" id="statusChangeHint">状态变化后，所选日期会结束上一状态并开始新状态。</p>
       </div>
     </section>
@@ -1005,9 +1063,11 @@ function saveFullPaper(event) {
   paper.statusTimeline = transition.timeline;
   paper.priority = form.get("priority");
   paper.progress = clamp(form.get("progress"), 0, 100);
+  paper.nextAction = form.get("nextAction").trim();
+  paper.nextDue = form.get("nextDue");
   paper.pinned = form.get("pinned") === "on";
-  paper.showOnRoadmap = form.get("showOnRoadmap") === "on";
   paper.submissions = collectSubmissionRows();
+  paper.lastActionAt = todayISO();
   paper.updatedAt = todayISO();
   if (isCreatingPaper) data.papers.push(paper);
   saveLocalDraft();
@@ -1039,8 +1099,8 @@ function openViewOptions() {
     showToast("进入 Manage Mode 后可修改项目显示设置");
     return;
   }
-  els.codesEditor.innerHTML = [...data.papers].sort(compareScore).map((paper) => `
-    <div class="code-editor-row"><span>${escapeHTML(paper.title)}</span><input data-code-paper-id="${escapeHTML(paper.id)}" value="${escapeHTML(paper.shortCode)}" maxlength="50" required aria-label="论文简称" /><label class="check-field"><input type="checkbox" data-roadmap-paper-id="${escapeHTML(paper.id)}" ${paper.showOnRoadmap !== false ? "checked" : ""} /><span>Include in Pipeline</span></label></div>
+  els.codesEditor.innerHTML = data.papers.map((paper) => `
+    <div class="code-editor-row"><span>${escapeHTML(paper.title)}</span><input data-code-paper-id="${escapeHTML(paper.id)}" value="${escapeHTML(paper.shortCode)}" maxlength="50" required aria-label="论文简称" /></div>
   `).join("");
   els.codesDialog.showModal();
 }
@@ -1053,10 +1113,6 @@ function saveViewOptions(event) {
   inputs.forEach((input) => {
     const paper = data.papers.find((item) => item.id === input.dataset.codePaperId);
     if (paper) paper.shortCode = input.value.trim();
-  });
-  els.codesEditor.querySelectorAll("[data-roadmap-paper-id]").forEach((input) => {
-    const paper = data.papers.find((item) => item.id === input.dataset.roadmapPaperId);
-    if (paper) paper.showOnRoadmap = input.checked;
   });
   saveLocalDraft();
   renderAll();
@@ -1137,9 +1193,7 @@ function handlePipelineClick(event) {
   const close = event.target.closest("[data-close-pipeline-selection]");
   if (close) {
     selectedPipelineBucket = null;
-    selectedPipelineSource = null;
     renderOverview();
-    renderPipeline();
     return;
   }
   const paperTarget = event.target.closest("[data-pipeline-paper-id]");
@@ -1148,24 +1202,25 @@ function handlePipelineClick(event) {
     return;
   }
   const bucketTarget = event.target.closest("[data-pipeline-bucket]");
-  if (bucketTarget) togglePipelineSelection(bucketTarget.dataset.pipelineBucket, bucketTarget.dataset.pipelineSource);
+  if (bucketTarget) togglePipelineSelection(bucketTarget.dataset.pipelineBucket);
 }
 
 function bindEvents() {
   els.toggleManageButton.addEventListener("click", () => {
     isManageMode = !isManageMode;
-    renderManageState();
+    renderAll();
     showToast(isManageMode ? "Manage Mode 已开启" : "已返回 Reading Mode");
   });
   els.addPaperButton.addEventListener("click", openNewPaper);
   els.headerAddPaperButton.addEventListener("click", openNewPaper);
   els.openToolsButton.addEventListener("click", () => els.toolsDialog.showModal());
   els.headerPublishButton.addEventListener("click", openPublishDialog);
+  els.openAllPapersButton.addEventListener("click", openAllPapers);
+  els.closeAllPapersButton.addEventListener("click", () => els.allPapersDialog.close());
   els.editCodesButton.addEventListener("click", openViewOptions);
+  els.metrics.addEventListener("click", handlePipelineClick);
   els.pipelineDistribution.addEventListener("click", handlePipelineClick);
-  els.pipelineChart.addEventListener("click", handlePipelineClick);
   els.overviewPipelineSelection.addEventListener("click", handlePipelineClick);
-  els.pipelineSelection.addEventListener("click", handlePipelineClick);
   els.searchInput.addEventListener("input", renderPaperList);
   els.stageFilter.addEventListener("change", renderPaperList);
   els.sortSelect.addEventListener("change", renderPaperList);
@@ -1185,6 +1240,14 @@ function bindEvents() {
     const details = event.target.closest("[data-details-id]");
     if (details) return openPaper(details.dataset.detailsId);
   });
+  els.allPapersList.addEventListener("click", (event) => {
+    const target = event.target.closest("[data-all-paper-id]");
+    if (!target) return;
+    els.allPapersDialog.close();
+    isManageMode ? openQuickUpdate(target.dataset.allPaperId) : openPaper(target.dataset.allPaperId);
+  });
+  bindSortable(els.paperList, true);
+  bindSortable(els.allPapersList);
   els.quickForm.addEventListener("submit", saveQuickUpdate);
   els.paperForm.addEventListener("submit", saveFullPaper);
   els.deletePaperButton.addEventListener("click", deleteActivePaper);
@@ -1213,7 +1276,7 @@ function bindEvents() {
   els.closePublishButton.addEventListener("click", () => els.publishDialog.close());
   els.copyDataButton.addEventListener("click", copyCurrentData);
   els.draftPublishButton.addEventListener("click", openPublishDialog);
-  [els.quickDialog, els.paperDialog, els.codesDialog, els.toolsDialog, els.publishDialog].forEach((dialog) => dialog.addEventListener("click", (event) => {
+  [els.quickDialog, els.paperDialog, els.codesDialog, els.toolsDialog, els.publishDialog, els.allPapersDialog].forEach((dialog) => dialog.addEventListener("click", (event) => {
     if (event.target === dialog) dialog.close();
   }));
 }
