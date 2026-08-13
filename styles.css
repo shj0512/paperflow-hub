@@ -177,14 +177,15 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .summary-heading { padding-bottom: 20px; border-bottom: 1px solid var(--line); }
 .summary-heading h2 { margin: 8px 0 0; color: var(--navy); font-size: 30px; font-weight: 600; line-height: 1.25; letter-spacing: -0.03em; }
 .metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 18px; }
-.metric { display: grid; min-height: 104px; align-content: center; padding: 14px 17px; border: 1px solid #e3edf3; border-radius: 14px; background: #fff; }
+.metric { display: grid; min-height: 104px; align-content: center; padding: 14px 17px; border: 1px solid #e3edf3; border-radius: 14px; color: inherit; background: #fff; cursor: pointer; font: inherit; text-align: left; transition: transform 150ms ease, border-color 150ms ease, background 150ms ease; }
+.metric:hover, .metric.active { transform: translateY(-1px); border-color: #a9cee2; background: var(--blue-50); }
 .metric span { color: #49687b; font-size: 15px; font-weight: 600; }
 .metric strong { grid-row: 1 / span 2; grid-column: 2; align-self: center; justify-self: end; color: var(--navy); font-size: 34px; line-height: 1; }
 .metric small { margin-top: 5px; color: #899ba7; font-size: 11px; font-weight: 700; letter-spacing: 0.09em; }
-.metric-review { border-left: 3px solid var(--navy); }
+.metric-submitted { border-left: 3px solid var(--navy); }
 .metric-revision { border-left: 3px solid var(--amber); }
 .metric-published { border-left: 3px solid var(--green); }
-.metric-active { border-left: 3px solid var(--blue-500); }
+.metric-writing { border-left: 3px solid var(--blue-500); }
 
 .distribution { margin-top: 22px; padding-top: 19px; border-top: 1px solid var(--line); }
 .distribution-heading { justify-content: space-between; gap: 12px; }
@@ -271,6 +272,12 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .paper-list { display: grid; gap: 14px; }
 .paper-card { display: grid; grid-template-columns: minmax(0, 2fr) minmax(230px, 1.2fr) minmax(160px, 0.72fr) minmax(155px, 0.68fr); gap: 24px; align-items: stretch; padding: 23px 24px; border-radius: 17px; box-shadow: 0 5px 20px rgba(30, 78, 108, 0.045); transition: transform 150ms ease, border-color 150ms ease; }
 .paper-card:hover { transform: translateY(-1px); border-color: #bfd7e5; }
+.paper-card.is-sortable { cursor: grab; }
+.paper-card.is-sortable:active { cursor: grabbing; }
+.is-dragging { opacity: .42; }
+.drop-before { box-shadow: inset 0 4px 0 var(--blue-500), var(--shadow) !important; }
+.drop-after { box-shadow: inset 0 -4px 0 var(--blue-500), var(--shadow) !important; }
+.drag-handle { display: inline-grid; width: 27px; height: 27px; place-items: center; border: 1px solid #c8dce8; border-radius: 8px; color: var(--blue-600); background: var(--blue-50); cursor: grab; font-size: 18px; line-height: 1; }
 .paper-info h3 { margin: 10px 0 6px; color: var(--navy-deep); font-size: 20px; font-weight: 600; line-height: 1.37; letter-spacing: -0.018em; }
 .paper-topline { gap: 9px; flex-wrap: wrap; }
 .paper-code { color: var(--blue-600); font-size: 14px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
@@ -307,8 +314,20 @@ button, a { -webkit-tap-highlight-color: transparent; }
 dialog { width: min(860px, calc(100vw - 36px)); max-height: min(90vh, 940px); padding: 0; overflow: hidden; border: 0; border-radius: 20px; color: var(--ink); background: #fff; box-shadow: 0 28px 90px rgba(20, 60, 88, 0.24); }
 dialog::backdrop { background: rgba(13, 43, 63, 0.34); backdrop-filter: blur(4px); }
 .quick-dialog { width: min(620px, calc(100vw - 36px)); }
+.all-papers-dialog { width: min(1040px, calc(100vw - 36px)); }
 .tools-dialog, .publish-dialog, .codes-dialog { width: min(760px, calc(100vw - 36px)); }
 .dialog-shell { display: flex; max-height: min(90vh, 940px); flex-direction: column; }
+.all-papers-intro { display: flex; flex: 0 0 auto; align-items: center; justify-content: space-between; gap: 20px; padding: 15px 27px; border-bottom: 1px solid var(--line); color: #60798a; font-size: 14px; }
+.all-papers-intro strong { color: var(--blue-600); font-size: 13px; }
+.all-papers-list { display: grid; gap: 8px; padding: 18px 20px 22px; overflow-y: auto; background: var(--surface-soft); }
+.all-paper-item { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto 24px; gap: 12px; align-items: center; min-height: 68px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; background: #fff; transition: border-color 150ms ease, box-shadow 150ms ease; }
+.all-paper-item.is-sortable { grid-template-columns: 34px 29px minmax(0, 1fr) auto 24px; cursor: grab; }
+.all-paper-item:hover { border-color: #b7d4e4; }
+.all-paper-index { color: #8a9ca8; font-size: 12px; font-weight: 700; }
+.all-paper-open { display: grid; min-width: 0; gap: 2px; padding: 2px 0; border: 0; color: inherit; background: transparent; cursor: pointer; text-align: left; }
+.all-paper-open strong { color: var(--blue-600); font-size: 14px; letter-spacing: .04em; }
+.all-paper-open span { overflow: hidden; color: var(--navy); font-size: 15px; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+.all-paper-arrow { color: #7893a3; font-size: 18px; }
 .dialog-header { flex: 0 0 auto; justify-content: space-between; gap: 20px; padding: 24px 27px 21px; border-bottom: 1px solid var(--line); }
 .dialog-header h2 { max-width: 700px; margin: 6px 0 0; color: var(--navy); font-size: 24px; font-weight: 600; line-height: 1.3; letter-spacing: -0.025em; }
 .close-button { display: grid; width: 38px; height: 38px; flex: 0 0 auto; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: #607b8b; background: #fff; cursor: pointer; font-size: 22px; }
@@ -385,7 +404,7 @@ dialog::backdrop { background: rgba(13, 43, 63, 0.34); backdrop-filter: blur(4px
 .add-row-button { width: 100%; min-height: 44px; margin-top: 10px; border: 1px dashed #acd0e4; border-radius: 10px; color: var(--blue-600); background: var(--blue-50); cursor: pointer; font-size: 13px; font-weight: 700; }
 
 .codes-editor { display: grid; gap: 11px; overflow-y: auto; padding: 24px 27px; }
-.code-editor-row { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(190px, .7fr) minmax(160px, .55fr); gap: 12px; align-items: center; padding: 13px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-soft); }
+.code-editor-row { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(220px, .7fr); gap: 12px; align-items: center; padding: 13px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-soft); }
 .code-editor-row > span { color: #4f6d80; font-size: 13px; line-height: 1.45; }
 
 .tools-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding: 25px 27px 18px; }
@@ -482,6 +501,12 @@ dialog::backdrop { background: rgba(13, 43, 63, 0.34); backdrop-filter: blur(4px
   .dialog-header, .dialog-body, .dialog-footer { padding-inline: 18px; }
   .dialog-footer { align-items: flex-start; flex-direction: column; }
   .dialog-footer > div { width: 100%; justify-content: flex-end; }
+  .all-papers-intro { align-items: flex-start; flex-direction: column; gap: 3px; padding-inline: 18px; }
+  .all-papers-list { padding: 12px; }
+  .all-paper-item, .all-paper-item.is-sortable { grid-template-columns: 28px 27px minmax(0, 1fr) auto; gap: 8px; }
+  .all-paper-item:not(.is-sortable) { grid-template-columns: 28px minmax(0, 1fr) auto; }
+  .all-paper-item .status-badge { display: none; }
+  .all-paper-arrow { display: none; }
   .quick-grid, .form-grid, .detail-grid, .status-editor { grid-template-columns: 1fr; }
   .full { grid-column: auto; }
   .detail-action-panel { grid-template-columns: 1fr; }
@@ -500,6 +525,8 @@ dialog::backdrop { background: rgba(13, 43, 63, 0.34); backdrop-filter: blur(4px
 @media (max-width: 430px) {
   .header-actions .button { padding-inline: 9px; }
   .manage-mode .header-actions #headerPublishButton { display: none; }
+  .header-actions #openAllPapersButton { font-size: 0; }
+  .header-actions #openAllPapersButton::after { content: "Papers"; font-size: 13px; }
   .metrics { gap: 8px; }
   .metric span { font-size: 14px; }
   .metric small { font-size: 11px; }
