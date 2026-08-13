@@ -7,14 +7,15 @@
 ## 核心功能
 
 - 按 Priority、Pinned、Deadline、返修与等待时间自动选择 Current Focus
-- Active、Under Review、Revision、Published 四项组合概览与轻量 Pipeline Distribution
+- Writing、Submitted、Revision、Published 四项互斥组合概览与轻量 Pipeline Distribution；所有统计始终覆盖全部论文
 - Needs Attention 自动识别逾期、14 天内截止、高优先级、返修、长期等待和长期未更新项目
-- Writing → Submitted → Revision → Published 四阶段 Research Pipeline；点击数字或 Distribution 分段可展开对应论文
+- 点击组合概览数字或 Distribution 分段可展开对应论文，不再设置重复的独立 Research Pipeline 区块
 - Project Card 重点显示 Next Action、Due Date、Reference Progress 与 Priority
-- Quick Update 快速修改状态、生效日、Next Action、Due Date 和 Priority
+- Quick Update 快速修改状态、生效日、Next Action、Deadline 和 Priority
 - Full Edit 管理论文信息、投稿线程、完整状态时间线、Notes、Links 与 Advanced Settings
 - 状态变化时自动结束上一状态并保存起止日期
-- 可增减项目，并选择是否计入 Research Pipeline
+- 可增减项目；在 Manage Mode 下可拖动项目保存自定义顺序
+- Header 的 All Papers 在单一弹窗内列出全部论文，点击即可查看或更新，无需滚动整页
 - JSON 导入导出、当前设备草稿与 GitHub 安全发布流程
 
 ## 数据字段
