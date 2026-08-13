@@ -8,7 +8,7 @@
 
 - 按 Priority、Pinned、Deadline、返修与等待时间自动选择 Current Focus
 - Writing、Submitted、Revision、Published 四项互斥组合概览与轻量 Pipeline Distribution；所有统计始终覆盖全部论文
-- Needs Attention 自动识别逾期、14 天内截止、高优先级、返修、长期等待和长期未更新项目
+- Needs Attention 按 Priority 排序，不显示 waiting days；可在 View options 中逐篇选择是否展示
 - 点击组合概览数字或 Distribution 分段可展开对应论文，不再设置重复的独立 Research Pipeline 区块
 - Project Card 重点显示 Next Action、Due Date、Reference Progress 与 Priority
 - Quick Update 快速修改状态、生效日、Next Action、Deadline 和 Priority
@@ -20,7 +20,7 @@
 
 ## 数据字段
 
-每篇论文支持 `focusStage`、`statusCode`、`statusStartedAt`、`statusTimeline`、`progress`、`priority`、`pinned`、`nextAction`、`nextDue`、`currentVenue`、`lastActionAt`、`startedAt`、`updatedAt`、`showOnRoadmap`、`submissions`、`tags`、`links` 与 `notes`。旧数据中的 `venueSummary`、`nextAction`、`nextDue` 和 `notes` 会兼容迁移，不会在页面初始化时丢失。
+每篇论文支持 `focusStage`、`statusCode`、`statusStartedAt`、`statusTimeline`、`progress`、`priority`、`pinned`、`showInAttention`、`nextAction`、`nextDue`、`currentVenue`、`lastActionAt`、`startedAt`、`updatedAt`、`submissions`、`tags`、`links` 与 `notes`。旧数据中的 `venueSummary`、`nextAction`、`nextDue` 和 `notes` 会兼容迁移。
 
 ## 修改与发布
 
