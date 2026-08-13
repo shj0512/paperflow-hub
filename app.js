@@ -284,6 +284,7 @@ function normalizePaper(paper) {
     lastActionAt: paper.lastActionAt || paper.updatedAt || paper.startedAt || "",
     updatedAt: paper.updatedAt || todayISO(),
     showOnRoadmap: paper.showOnRoadmap !== false,
+    showInAttention: paper.showInAttention !== false,
     tags: Array.isArray(paper.tags) ? paper.tags : [],
     links: Array.isArray(paper.links) ? paper.links : [],
     notes: paper.notes || "",
@@ -293,7 +294,7 @@ function normalizePaper(paper) {
 }
 
 function normalizePortfolio(value) {
-  return { ...value, meta: { ...value.meta, version: Math.max(4, Number(value.meta?.version || 0)) }, papers: (value.papers || []).map(normalizePaper) };
+  return { ...value, meta: { ...value.meta, version: Math.max(5, Number(value.meta?.version || 0)) }, papers: (value.papers || []).map(normalizePaper) };
 }
 
 function mergePublishedFields(draft, published) {
@@ -327,7 +328,7 @@ function createBlankPaper() {
   return normalizePaper({
     id: createPaperId(), title: "", shortCode: "", authors: "", focusStage: "writing", statusCode: "research_question",
     statusStartedAt: todayISO(), statusTimeline: [], progress: 0, priority: "medium", pinned: false, nextAction: "", nextDue: "",
-    currentVenue: "", lastActionAt: todayISO(), startedAt: todayISO(), updatedAt: todayISO(), showOnRoadmap: true,
+    currentVenue: "", lastActionAt: todayISO(), startedAt: todayISO(), updatedAt: todayISO(), showOnRoadmap: true, showInAttention: true,
     submissions: [], writing: deepClone(defaultWritingSteps), tags: [], links: [], notes: ""
   });
 }
@@ -358,7 +359,7 @@ async function loadData() {
   if (localDraft) {
     try {
       const parsed = JSON.parse(localDraft);
-      if (isValidData(parsed) && Number(parsed.meta.version || 0) >= 3) {
+      if (isValidData(parsed) && Number(parsed.meta.version || 0) >= Number(publishedData.meta.version || 0)) {
         data = normalizePortfolio(mergePublishedFields(parsed, publishedData));
         setDraftState(true);
       } else {
@@ -520,22 +521,20 @@ function renderOverview() {
 
 function attentionReason(paper) {
   const due = deadlineInfo(paper);
-  if (due.tone === "overdue") return { score: 1000 + Math.abs(due.days), tone: "overdue", text: due.label, date: formatEnglishDate(paper.nextDue) };
-  if (due.tone === "due-soon") return { score: 900 - due.days, tone: "due-soon", text: due.label, date: formatEnglishDate(paper.nextDue) };
-  if (paper.priority === "high") return { score: 800, tone: "priority", text: "High priority project", date: paper.nextDue ? formatEnglishDate(paper.nextDue) : "Action required" };
-  if (isRevisionPaper(paper)) return { score: 700, tone: "revision", text: `${statusLabel(paper.focusStage, paper.statusCode)} in progress`, date: paper.nextDue ? formatEnglishDate(paper.nextDue) : "No deadline set" };
-  const waiting = waitingDays(paper);
-  if (waiting >= 30) return { score: 600 + waiting, tone: "waiting", text: `Waiting for external decision`, date: `Waiting ${waiting} days` };
-  const stale = staleDays(paper);
-  if (stale >= 30) return { score: 500 + stale, tone: "stale", text: "No recent project update", date: `${stale} days` };
-  return null;
+  const tone = due.tone === "overdue" || due.tone === "due-soon" ? due.tone : isRevisionPaper(paper) ? "revision" : "priority";
+  return {
+    tone,
+    text: paper.nextAction || statusLabel(paper.focusStage, paper.statusCode),
+    date: paper.nextDue ? `${formatEnglishDate(paper.nextDue)} · ${due.label}` : priorityNames[paper.priority]
+  };
 }
 
 function renderAttention() {
+  const order = new Map(data.papers.map((paper, index) => [paper.id, index]));
   const items = data.papers
+    .filter((paper) => paper.showInAttention !== false && paper.focusStage !== "publication")
+    .sort((a, b) => priorityWeight(b.priority) - priorityWeight(a.priority) || compareDeadline(a, b) || order.get(a.id) - order.get(b.id))
     .map((paper) => ({ paper, reason: attentionReason(paper) }))
-    .filter((item) => item.reason)
-    .sort((a, b) => b.reason.score - a.reason.score || compareScore(a.paper, b.paper))
     .slice(0, 4);
   if (!items.length) {
     els.needsAttention.innerHTML = `<div class="attention-empty">当前没有逾期、临近截止或长期停滞的项目。</div>`;
@@ -942,6 +941,7 @@ function renderEditForm(paper) {
         <label class="form-field full"><span>Next Action</span><textarea name="nextAction" placeholder="What should happen next?">${escapeHTML(paper.nextAction)}</textarea></label>
         <label class="form-field"><span>Deadline / 截止日期</span><input name="nextDue" type="date" value="${escapeHTML(paper.nextDue)}" /><small>用于 Current Focus 与 Needs Attention 提醒。</small></label>
         <label class="check-field"><input name="pinned" type="checkbox" ${paper.pinned ? "checked" : ""} /><span>Pin as Current Focus</span></label>
+        <label class="check-field"><input name="showInAttention" type="checkbox" ${paper.showInAttention !== false ? "checked" : ""} /><span>Show in Needs Attention</span></label>
         <p class="status-change-hint full" id="statusChangeHint">状态变化后，所选日期会结束上一状态并开始新状态。</p>
       </div>
     </section>
@@ -1066,6 +1066,7 @@ function saveFullPaper(event) {
   paper.nextAction = form.get("nextAction").trim();
   paper.nextDue = form.get("nextDue");
   paper.pinned = form.get("pinned") === "on";
+  paper.showInAttention = form.get("showInAttention") === "on";
   paper.submissions = collectSubmissionRows();
   paper.lastActionAt = todayISO();
   paper.updatedAt = todayISO();
@@ -1100,7 +1101,7 @@ function openViewOptions() {
     return;
   }
   els.codesEditor.innerHTML = data.papers.map((paper) => `
-    <div class="code-editor-row"><span>${escapeHTML(paper.title)}</span><input data-code-paper-id="${escapeHTML(paper.id)}" value="${escapeHTML(paper.shortCode)}" maxlength="50" required aria-label="论文简称" /></div>
+    <div class="code-editor-row"><span>${escapeHTML(paper.title)}</span><input data-code-paper-id="${escapeHTML(paper.id)}" value="${escapeHTML(paper.shortCode)}" maxlength="50" required aria-label="论文简称" /><label class="check-field"><input type="checkbox" data-attention-paper-id="${escapeHTML(paper.id)}" ${paper.showInAttention !== false ? "checked" : ""} /><span>Needs Attention</span></label></div>
   `).join("");
   els.codesDialog.showModal();
 }
@@ -1113,6 +1114,10 @@ function saveViewOptions(event) {
   inputs.forEach((input) => {
     const paper = data.papers.find((item) => item.id === input.dataset.codePaperId);
     if (paper) paper.shortCode = input.value.trim();
+  });
+  els.codesEditor.querySelectorAll("[data-attention-paper-id]").forEach((input) => {
+    const paper = data.papers.find((item) => item.id === input.dataset.attentionPaperId);
+    if (paper) paper.showInAttention = input.checked;
   });
   saveLocalDraft();
   renderAll();
