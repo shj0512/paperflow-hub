@@ -3,7 +3,7 @@
     "version": 6,
     "owner": "shj0512",
     "title": "论文进展台",
-    "lastUpdated": "2026-08-13T02:41:37.117Z",
+    "lastUpdated": "2026-08-13T09:42:04.433Z",
     "manualUpdatedAt": "2026-08-13"
   },
   "papers": [
@@ -116,7 +116,7 @@
     },
     {
       "id": "quantum-academic-entrepreneurship",
-      "shortCode": "Quantum Academic Entrepreneurship",
+      "shortCode": "案例研究",
       "title": "围绕创新链布局产业链的学术创业路径及机制——基于量子技术企业的多案例研究",
       "authors": "刘志迎; 孙慧杰; 张晓凤; 徐毅",
       "language": "zh",
@@ -999,22 +999,22 @@
       "writing": [
         {
           "key": "question",
-          "label": "问题提出",
+          "label": "问题提出中",
           "status": "done"
         },
         {
           "key": "data",
-          "label": "数据处理",
+          "label": "数据处理中",
           "status": "done"
         },
         {
           "key": "draft",
-          "label": "文本撰写",
+          "label": "文本撰写中",
           "status": "done"
         },
         {
           "key": "format",
-          "label": "格式修改",
+          "label": "格式修改中",
           "status": "done"
         }
       ],
@@ -1033,7 +1033,8 @@
         "理论",
         "方法"
       ],
-      "links": []
+      "links": [],
+      "showOnRoadmap": true
     }
   ],
   "otherProjects": [
