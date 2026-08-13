@@ -404,7 +404,7 @@ dialog::backdrop { background: rgba(13, 43, 63, 0.34); backdrop-filter: blur(4px
 .add-row-button { width: 100%; min-height: 44px; margin-top: 10px; border: 1px dashed #acd0e4; border-radius: 10px; color: var(--blue-600); background: var(--blue-50); cursor: pointer; font-size: 13px; font-weight: 700; }
 
 .codes-editor { display: grid; gap: 11px; overflow-y: auto; padding: 24px 27px; }
-.code-editor-row { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(220px, .7fr); gap: 12px; align-items: center; padding: 13px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-soft); }
+.code-editor-row { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(220px, .7fr) minmax(150px, .5fr); gap: 12px; align-items: center; padding: 13px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface-soft); }
 .code-editor-row > span { color: #4f6d80; font-size: 13px; line-height: 1.45; }
 
 .tools-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding: 25px 27px 18px; }

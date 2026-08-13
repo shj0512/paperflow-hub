@@ -37,7 +37,7 @@ for (const expected of ["portfolioOverview", "metrics", "pipelineDistribution", 
 }
 if (!js.includes("saveLocalDraft")) throw new Error("Management persistence is missing.");
 if (!js.includes("buildStatusTransition")) throw new Error("Automatic status timeline persistence is missing.");
-for (const field of ["nextAction", "nextDue", "currentVenue", "priority", "pinned"]) {
+for (const field of ["nextAction", "nextDue", "currentVenue", "priority", "pinned", "showInAttention"]) {
   if (!js.includes(field)) throw new Error(`Missing supported paper field: ${field}`);
 }
 for (const label of ["NEXT ACTION", "REFERENCE PROGRESS", "NEEDS ATTENTION", "PORTFOLIO OVERVIEW", "ALL PAPERS"]) {
@@ -50,6 +50,7 @@ if (js.includes('["accepted", "Accepted",')) throw new Error("Accepted must not 
 if (js.includes('["accepted", "接收"]')) throw new Error("Accepted must not be selectable in the submission workflow.");
 if (!js.includes("data.papers.forEach((paper) => buckets[pipelineBucket(paper)].push(paper))")) throw new Error("Pipeline counts must include every paper.");
 if (!js.includes("reorderPapers")) throw new Error("Custom paper ordering is missing.");
+if (js.includes("Waiting for external decision\", date: `Waiting")) throw new Error("Needs Attention must not display waiting-day counters.");
 if (!css.includes("--blue-100")) throw new Error("Theme variables are missing.");
 
 console.log(`Validated ${data.papers.length} papers, ${ids.size} unique ids, and all interface mounts. Project count may change in management mode.`);
