@@ -3,7 +3,7 @@
     "version": 6,
     "owner": "shj0512",
     "title": "论文进展台",
-    "lastUpdated": "2026-08-13T09:42:04.433Z",
+    "lastUpdated": "2026-08-20T02:06:41.962Z",
     "manualUpdatedAt": "2026-08-13"
   },
   "papers": [
@@ -66,7 +66,7 @@
       "startedAt": "2025-11-05",
       "updatedAt": "2026-08-13",
       "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-08-04",
+      "lastActionAt": "2026-08-13",
       "nextAction": "完成 IJOPM 一轮大修与回应信，2026-10-02 前修回",
       "nextDue": "2026-10-02",
       "currentVenue": "International Journal of Operations & Production Management",
@@ -99,15 +99,13 @@
           "journal": "Journal of Operations Management",
           "status": "rejected",
           "statusStartedAt": "2026-03-05",
-          "statusEndedAt": "2026-05-15",
-          "note": "JOM rejected"
+          "statusEndedAt": "2026-05-15"
         },
         {
           "journal": "International Journal of Operations & Production Management",
           "status": "revision_1",
           "statusStartedAt": "2026-08-04",
-          "statusEndedAt": "",
-          "note": "一轮大修；2026-10-02 前修回"
+          "statusEndedAt": ""
         }
       ],
       "tags": [],
@@ -196,9 +194,33 @@
           "label": "已修回",
           "startedAt": "2026-06-10",
           "endedAt": "2026-08-13"
+        },
+        {
+          "id": "timeline-msrfaapb-c01x9",
+          "stage": "submission",
+          "status": "revision_2",
+          "label": "2nd Revision",
+          "startedAt": "2026-08-13",
+          "endedAt": "2026-08-13"
+        },
+        {
+          "id": "timeline-msrfbf1p-t3bcc",
+          "stage": "submission",
+          "status": "revision_3",
+          "label": "3rd Revision",
+          "startedAt": "2026-08-13",
+          "endedAt": "2026-08-13"
+        },
+        {
+          "id": "timeline-msrfc6fx-iar5z",
+          "stage": "submission",
+          "status": "rejected",
+          "label": "拒稿",
+          "startedAt": "2026-08-13",
+          "endedAt": "2026-08-13"
         }
       ],
-      "progress": 82,
+      "progress": 84,
       "priority": "high",
       "pinned": false,
       "showInAttention": true,
@@ -238,22 +260,19 @@
           "journal": "管理世界",
           "status": "rejected",
           "statusStartedAt": "2023-04-01",
-          "statusEndedAt": "2023-10-05",
-          "note": "2023-10-05 拒稿"
+          "statusEndedAt": "2023-10-05"
         },
         {
           "journal": "管理世界",
           "status": "rejected",
           "statusStartedAt": "2025-04-23",
-          "statusEndedAt": "2025-08-01",
-          "note": "重写后再次投稿；2025 年 8 月拒稿"
+          "statusEndedAt": "2025-08-01"
         },
         {
           "journal": "管理案例研究与评论",
           "status": "revision_2",
           "statusStartedAt": "2026-08-13",
-          "statusEndedAt": "",
-          "note": "二轮小修；2026-09-12 前修回"
+          "statusEndedAt": ""
         }
       ],
       "tags": [
@@ -317,7 +336,7 @@
       "startedAt": "2025-08-26",
       "updatedAt": "2026-08-13",
       "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-04-26",
+      "lastActionAt": "2026-08-13",
       "nextAction": "完成语言与格式润色，确定下一投稿期刊",
       "nextDue": "",
       "currentVenue": "Manuscript polishing",
@@ -425,18 +444,27 @@
       "authors": "SUN Huijie; HOU Tianyu; CHEN Yubo",
       "language": "en",
       "focusStage": "writing",
-      "statusCode": "research_question",
-      "stageLabel": "问题提出中",
-      "statusStartedAt": "2026-06-25",
-      "statusTimeline": [],
+      "statusCode": "data_processing",
+      "stageLabel": "数据处理中",
+      "statusStartedAt": "2026-08-20",
+      "statusTimeline": [
+        {
+          "id": "timeline-mt0vqhpl-uv4jm",
+          "stage": "writing",
+          "status": "research_question",
+          "label": "问题提出中",
+          "startedAt": "2026-06-25",
+          "endedAt": "2026-08-20"
+        }
+      ],
       "progress": 8,
       "priority": "medium",
       "pinned": false,
       "showInAttention": true,
       "startedAt": "2026-06-25",
-      "updatedAt": "2026-08-13",
+      "updatedAt": "2026-08-20",
       "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-08-13",
+      "lastActionAt": "2026-08-20",
       "nextAction": "明确研究问题、核心机制与可检验边界",
       "nextDue": "",
       "currentVenue": "Research question framing",
