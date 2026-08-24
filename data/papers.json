@@ -3,7 +3,7 @@
     "version": 6,
     "owner": "shj0512",
     "title": "论文进展台",
-    "lastUpdated": "2026-08-20T02:06:41.962Z",
+    "lastUpdated": "2026-08-24T02:24:58.592Z",
     "manualUpdatedAt": "2026-08-13"
   },
   "papers": [
@@ -637,10 +637,10 @@
       "title": "Decoding the Opportunity-Capability Nexus: Causal Recipes for Technological Innovation",
       "authors": "SUN Huijie; YANG Chong; LIU Zhiying",
       "language": "en",
-      "focusStage": "submission",
-      "statusCode": "revision_resubmitted",
-      "stageLabel": "已修回",
-      "statusStartedAt": "2026-08-01",
+      "focusStage": "publication",
+      "statusCode": "forthcoming",
+      "stageLabel": "Forthcoming",
+      "statusStartedAt": "2026-08-24",
       "statusTimeline": [
         {
           "id": "opportunity-review",
@@ -673,6 +673,14 @@
           "label": "2nd Revision",
           "startedAt": "2026-07-24",
           "endedAt": "2026-08-01"
+        },
+        {
+          "id": "timeline-mt6m5ejk-eukj4",
+          "stage": "submission",
+          "status": "revision_resubmitted",
+          "label": "已修回",
+          "startedAt": "2026-08-01",
+          "endedAt": "2026-08-24"
         }
       ],
       "progress": 93,
@@ -680,9 +688,9 @@
       "pinned": false,
       "showInAttention": false,
       "startedAt": "2024-09-01",
-      "updatedAt": "2026-08-13",
+      "updatedAt": "2026-08-24",
       "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-08-01",
+      "lastActionAt": "2026-08-24",
       "nextAction": "等待 APJM 编辑决定",
       "nextDue": "",
       "currentVenue": "Asia Pacific Journal of Management",
@@ -715,8 +723,7 @@
           "journal": "Asia Pacific Journal of Management",
           "status": "revision_resubmitted",
           "statusStartedAt": "2026-08-01",
-          "statusEndedAt": "",
-          "note": "二轮小修已修回"
+          "statusEndedAt": ""
         }
       ],
       "tags": [],
