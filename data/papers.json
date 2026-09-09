@@ -3,7 +3,7 @@
     "version": 6,
     "owner": "shj0512",
     "title": "论文进展台",
-    "lastUpdated": "2026-09-09T08:44:11.812Z",
+    "lastUpdated": "2026-09-09T09:39:28.094Z",
     "manualUpdatedAt": "2026-08-13"
   },
   "papers": [
@@ -278,7 +278,7 @@
         },
         {
           "journal": "管理案例研究与评论",
-          "status": "revision_2",
+          "status": "revision_resubmitted",
           "statusStartedAt": "2026-08-13",
           "statusEndedAt": ""
         }
