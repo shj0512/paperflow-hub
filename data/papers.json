@@ -3,7 +3,7 @@
     "version": 6,
     "owner": "shj0512",
     "title": "论文进展台",
-    "lastUpdated": "2026-08-24T02:24:58.592Z",
+    "lastUpdated": "2026-09-09T08:20:09.708Z",
     "manualUpdatedAt": "2026-08-13"
   },
   "papers": [
@@ -119,9 +119,9 @@
       "authors": "刘志迎; 孙慧杰; 张晓凤; 徐毅",
       "language": "zh",
       "focusStage": "submission",
-      "statusCode": "revision_2",
-      "stageLabel": "2nd Revision",
-      "statusStartedAt": "2026-08-13",
+      "statusCode": "revision_resubmitted",
+      "stageLabel": "已修回",
+      "statusStartedAt": "2026-09-09",
       "statusTimeline": [
         {
           "id": "quantum-data",
@@ -218,6 +218,14 @@
           "label": "拒稿",
           "startedAt": "2026-08-13",
           "endedAt": "2026-08-13"
+        },
+        {
+          "id": "timeline-mtttvsz0-ymfpq",
+          "stage": "submission",
+          "status": "revision_2",
+          "label": "2nd Revision",
+          "startedAt": "2026-08-13",
+          "endedAt": "2026-09-09"
         }
       ],
       "progress": 84,
@@ -225,9 +233,9 @@
       "pinned": false,
       "showInAttention": true,
       "startedAt": "2022-08-01",
-      "updatedAt": "2026-08-13",
+      "updatedAt": "2026-09-09",
       "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-08-13",
+      "lastActionAt": "2026-09-09",
       "nextAction": "完成二轮小修与逐条回应，2026-09-12 前修回",
       "nextDue": "2026-09-12",
       "currentVenue": "管理案例研究与评论",
