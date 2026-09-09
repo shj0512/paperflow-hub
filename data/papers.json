@@ -3,7 +3,7 @@
     "version": 6,
     "owner": "shj0512",
     "title": "论文进展台",
-    "lastUpdated": "2026-09-09T08:20:09.708Z",
+    "lastUpdated": "2026-09-09T08:24:44.367Z",
     "manualUpdatedAt": "2026-08-13"
   },
   "papers": [
@@ -604,9 +604,9 @@
       "pinned": false,
       "showInAttention": false,
       "startedAt": "2026-05-25",
-      "updatedAt": "2026-08-13",
+      "updatedAt": "2026-09-09",
       "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-05-25",
+      "lastActionAt": "2026-09-09",
       "nextAction": "明确 MIC2025 success 的研究问题与评价机制",
       "nextDue": "",
       "currentVenue": "Research question framing",
@@ -646,9 +646,9 @@
       "authors": "SUN Huijie; YANG Chong; LIU Zhiying",
       "language": "en",
       "focusStage": "publication",
-      "statusCode": "forthcoming",
-      "stageLabel": "Forthcoming",
-      "statusStartedAt": "2026-08-24",
+      "statusCode": "published",
+      "stageLabel": "已发表",
+      "statusStartedAt": "2026-09-09",
       "statusTimeline": [
         {
           "id": "opportunity-review",
@@ -689,6 +689,14 @@
           "label": "已修回",
           "startedAt": "2026-08-01",
           "endedAt": "2026-08-24"
+        },
+        {
+          "id": "timeline-mttu1i6n-u3sfs",
+          "stage": "publication",
+          "status": "forthcoming",
+          "label": "Forthcoming",
+          "startedAt": "2026-08-24",
+          "endedAt": "2026-09-09"
         }
       ],
       "progress": 93,
@@ -696,9 +704,9 @@
       "pinned": false,
       "showInAttention": false,
       "startedAt": "2024-09-01",
-      "updatedAt": "2026-08-24",
+      "updatedAt": "2026-09-09",
       "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-08-24",
+      "lastActionAt": "2026-09-09",
       "nextAction": "等待 APJM 编辑决定",
       "nextDue": "",
       "currentVenue": "Asia Pacific Journal of Management",
