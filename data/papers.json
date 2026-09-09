@@ -3,7 +3,7 @@
     "version": 6,
     "owner": "shj0512",
     "title": "论文进展台",
-    "lastUpdated": "2026-09-09T08:24:44.367Z",
+    "lastUpdated": "2026-09-09T08:44:11.812Z",
     "manualUpdatedAt": "2026-08-13"
   },
   "papers": [
@@ -229,9 +229,9 @@
         }
       ],
       "progress": 84,
-      "priority": "high",
+      "priority": "low",
       "pinned": false,
-      "showInAttention": true,
+      "showInAttention": false,
       "startedAt": "2022-08-01",
       "updatedAt": "2026-09-09",
       "manualUpdatedAt": "2026-08-13",
@@ -240,7 +240,7 @@
       "nextDue": "2026-09-12",
       "currentVenue": "管理案例研究与评论",
       "venueSummary": "管理案例研究与评论 · 二轮小修",
-      "notes": "2022 年 8 月启动。两次投稿《管理世界》均被拒；2026-04-11 投稿《管理案例研究与评论》，当前为二轮小修。作者名单已去除输入中的重复项。",
+      "notes": "2022 年 8 月启动。两次投稿《管理世界》均被拒；2026-04-11 投稿《管理案例研究与评论》，当前为二轮小修。",
       "writing": [
         {
           "key": "question",
