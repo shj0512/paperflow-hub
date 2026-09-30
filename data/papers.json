@@ -1021,8 +1021,8 @@
       "authors": "刘志迎; 孙慧杰*",
       "language": "zh",
       "focusStage": "publication",
-      "statusCode": "forthcoming",
-      "stageLabel": "Forthcoming",
+      "statusCode": "published",
+      "stageLabel": "已发表",
       "statusStartedAt": "2026-07-16",
       "statusTimeline": [
         {
@@ -1042,11 +1042,11 @@
       "updatedAt": "2026-08-13",
       "manualUpdatedAt": "2026-08-13",
       "lastActionAt": "2026-07-16",
-      "nextAction": "等待卷期、页码等正式出版信息",
+      "nextAction": "",
       "nextDue": "",
       "currentVenue": "技术经济",
-      "venueSummary": "技术经济 · Accepted 2026-07-16",
-      "notes": "2026 年 4 月投稿《技术经济》，2026-07-16 稿件采用。孙慧杰为通讯作者。",
+      "venueSummary": "技术经济 · 2026, 45(9):13–28",
+      "notes": "2026 年 4 月投稿《技术经济》，2026-07-16 稿件采用。孙慧杰为通讯作者。正式出版信息：2026, 45(9):13–28，DOI：10.12404/j.issn.1002-980X.J26062610。",
       "writing": [
         {
           "key": "question",
@@ -1084,7 +1084,12 @@
         "理论",
         "方法"
       ],
-      "links": [],
+      "links": [
+        {
+          "label": "Paper",
+          "url": "https://doi.org/10.12404/j.issn.1002-980X.J26062610"
+        }
+      ],
       "showOnRoadmap": true
     }
   ],
