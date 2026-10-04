@@ -3,7 +3,7 @@
     "version": 6,
     "owner": "shj0512",
     "title": "论文进展台",
-    "lastUpdated": "2026-10-04T06:24:31.617Z",
+    "lastUpdated": "2026-10-04T08:21:53.610Z",
     "manualUpdatedAt": "2026-08-13"
   },
   "papers": [
@@ -560,7 +560,7 @@
       "progress": 45,
       "priority": "medium",
       "pinned": false,
-      "showInAttention": false,
+      "showInAttention": true,
       "startedAt": "2025-03-03",
       "updatedAt": "2026-08-13",
       "manualUpdatedAt": "2026-08-13",
