@@ -3,7 +3,7 @@
     "version": 6,
     "owner": "shj0512",
     "title": "论文进展台",
-    "lastUpdated": "2026-09-09T09:40:29.523Z",
+    "lastUpdated": "2026-10-04T06:20:11.282Z",
     "manualUpdatedAt": "2026-08-13"
   },
   "papers": [
@@ -14,9 +14,9 @@
       "authors": "SUN Huijie; HOU Tianyu; LI Juan",
       "language": "en",
       "focusStage": "submission",
-      "statusCode": "revision_1",
-      "stageLabel": "1st Revision",
-      "statusStartedAt": "2026-08-04",
+      "statusCode": "revision_resubmitted",
+      "stageLabel": "已修回",
+      "statusStartedAt": "2026-10-04",
       "statusTimeline": [
         {
           "id": "human-capital-data",
@@ -57,16 +57,24 @@
           "label": "Under Review",
           "startedAt": "2026-05-22",
           "endedAt": "2026-08-04"
+        },
+        {
+          "id": "timeline-mutfkq68-5t19d",
+          "stage": "submission",
+          "status": "revision_1",
+          "label": "1st Revision",
+          "startedAt": "2026-08-04",
+          "endedAt": "2026-10-04"
         }
       ],
       "progress": 72,
-      "priority": "high",
+      "priority": "low",
       "pinned": true,
       "showInAttention": true,
       "startedAt": "2025-11-05",
-      "updatedAt": "2026-09-09",
+      "updatedAt": "2026-10-04",
       "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-09-09",
+      "lastActionAt": "2026-10-04",
       "nextAction": "完成 IJOPM 一轮大修与回应信，2026-10-02 前修回",
       "nextDue": "2026-10-02",
       "currentVenue": "International Journal of Operations & Production Management",
@@ -392,9 +400,9 @@
       "authors": "SUN Huijie; HOU Tianyu; LI Juan",
       "language": "en",
       "focusStage": "writing",
-      "statusCode": "manuscript_writing",
-      "stageLabel": "文本撰写中",
-      "statusStartedAt": "2026-07-08",
+      "statusCode": "formatting",
+      "stageLabel": "格式修改中",
+      "statusStartedAt": "2026-10-04",
       "statusTimeline": [
         {
           "id": "learning-data",
@@ -403,16 +411,24 @@
           "label": "数据处理中",
           "startedAt": "2026-03-19",
           "endedAt": "2026-07-08"
+        },
+        {
+          "id": "timeline-mutfl6s4-673fk",
+          "stage": "writing",
+          "status": "manuscript_writing",
+          "label": "文本撰写中",
+          "startedAt": "2026-07-08",
+          "endedAt": "2026-10-04"
         }
       ],
       "progress": 32,
-      "priority": "medium",
+      "priority": "high",
       "pinned": false,
       "showInAttention": true,
       "startedAt": "2026-03-19",
-      "updatedAt": "2026-08-13",
+      "updatedAt": "2026-10-04",
       "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-07-08",
+      "lastActionAt": "2026-10-04",
       "nextAction": "完善理论框架并推进完整稿",
       "nextDue": "",
       "currentVenue": "Manuscript writing",
@@ -1021,9 +1037,9 @@
       "authors": "刘志迎; 孙慧杰*",
       "language": "zh",
       "focusStage": "publication",
-      "statusCode": "forthcoming",
-      "stageLabel": "Forthcoming",
-      "statusStartedAt": "2026-07-16",
+      "statusCode": "published",
+      "stageLabel": "已发表",
+      "statusStartedAt": "2026-10-04",
       "statusTimeline": [
         {
           "id": "future-industry-review",
@@ -1032,6 +1048,14 @@
           "label": "Under Review",
           "startedAt": "2026-04-01",
           "endedAt": "2026-07-16"
+        },
+        {
+          "id": "timeline-mutfltaq-2r39m",
+          "stage": "publication",
+          "status": "forthcoming",
+          "label": "Forthcoming",
+          "startedAt": "2026-07-16",
+          "endedAt": "2026-10-04"
         }
       ],
       "progress": 100,
@@ -1039,9 +1063,9 @@
       "pinned": false,
       "showInAttention": false,
       "startedAt": "2026-04-01",
-      "updatedAt": "2026-08-13",
+      "updatedAt": "2026-10-04",
       "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-07-16",
+      "lastActionAt": "2026-10-04",
       "nextAction": "等待卷期、页码等正式出版信息",
       "nextDue": "",
       "currentVenue": "技术经济",
