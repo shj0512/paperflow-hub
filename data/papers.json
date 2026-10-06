@@ -3,7 +3,7 @@
     "version": 6,
     "owner": "shj0512",
     "title": "论文进展台",
-    "lastUpdated": "2026-09-09T09:40:29.523Z",
+    "lastUpdated": "2026-10-04T08:21:53.610Z",
     "manualUpdatedAt": "2026-08-13"
   },
   "papers": [
@@ -14,9 +14,9 @@
       "authors": "SUN Huijie; HOU Tianyu; LI Juan",
       "language": "en",
       "focusStage": "submission",
-      "statusCode": "revision_1",
-      "stageLabel": "1st Revision",
-      "statusStartedAt": "2026-08-04",
+      "statusCode": "revision_resubmitted",
+      "stageLabel": "已修回",
+      "statusStartedAt": "2026-10-04",
       "statusTimeline": [
         {
           "id": "human-capital-data",
@@ -57,18 +57,26 @@
           "label": "Under Review",
           "startedAt": "2026-05-22",
           "endedAt": "2026-08-04"
+        },
+        {
+          "id": "timeline-mutfkq68-5t19d",
+          "stage": "submission",
+          "status": "revision_1",
+          "label": "1st Revision",
+          "startedAt": "2026-08-04",
+          "endedAt": "2026-09-30"
         }
       ],
       "progress": 72,
-      "priority": "high",
-      "pinned": true,
-      "showInAttention": true,
+      "priority": "low",
+      "pinned": false,
+      "showInAttention": false,
       "startedAt": "2025-11-05",
-      "updatedAt": "2026-09-09",
+      "updatedAt": "2026-10-04",
       "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-09-09",
-      "nextAction": "完成 IJOPM 一轮大修与回应信，2026-10-02 前修回",
-      "nextDue": "2026-10-02",
+      "lastActionAt": "2026-10-04",
+      "nextAction": "已修回，等到审稿人反馈",
+      "nextDue": "2026-10-25",
       "currentVenue": "International Journal of Operations & Production Management",
       "venueSummary": "IJOPM · R1 Major Revision",
       "notes": "JOM 拒稿后于 2026-05-22 转投 IJOPM；2026-08-04 收到一轮大修，10 月 2 日前修回。",
@@ -233,11 +241,11 @@
       "pinned": false,
       "showInAttention": false,
       "startedAt": "2022-08-01",
-      "updatedAt": "2026-09-09",
+      "updatedAt": "2026-10-04",
       "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-09-09",
-      "nextAction": "完成二轮小修与逐条回应，2026-09-12 前修回",
-      "nextDue": "2026-09-12",
+      "lastActionAt": "2026-10-04",
+      "nextAction": "已修回，等待编辑反馈",
+      "nextDue": "2026-10-25",
       "currentVenue": "管理案例研究与评论",
       "venueSummary": "管理案例研究与评论 · 二轮小修",
       "notes": "2022 年 8 月启动。两次投稿《管理世界》均被拒；2026-04-11 投稿《管理案例研究与评论》，当前为二轮小修。",
@@ -392,9 +400,9 @@
       "authors": "SUN Huijie; HOU Tianyu; LI Juan",
       "language": "en",
       "focusStage": "writing",
-      "statusCode": "manuscript_writing",
-      "stageLabel": "文本撰写中",
-      "statusStartedAt": "2026-07-08",
+      "statusCode": "formatting",
+      "stageLabel": "格式修改中",
+      "statusStartedAt": "2026-10-04",
       "statusTimeline": [
         {
           "id": "learning-data",
@@ -403,17 +411,25 @@
           "label": "数据处理中",
           "startedAt": "2026-03-19",
           "endedAt": "2026-07-08"
+        },
+        {
+          "id": "timeline-mutfl6s4-673fk",
+          "stage": "writing",
+          "status": "manuscript_writing",
+          "label": "文本撰写中",
+          "startedAt": "2026-07-08",
+          "endedAt": "2026-10-04"
         }
       ],
       "progress": 32,
-      "priority": "medium",
-      "pinned": false,
+      "priority": "high",
+      "pinned": true,
       "showInAttention": true,
       "startedAt": "2026-03-19",
-      "updatedAt": "2026-08-13",
+      "updatedAt": "2026-10-04",
       "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-07-08",
-      "nextAction": "完善理论框架并推进完整稿",
+      "lastActionAt": "2026-10-04",
+      "nextAction": "格式修改，准备投稿",
       "nextDue": "",
       "currentVenue": "Manuscript writing",
       "venueSummary": "Initial draft formed 2026-07-08",
@@ -544,7 +560,7 @@
       "progress": 45,
       "priority": "medium",
       "pinned": false,
-      "showInAttention": false,
+      "showInAttention": true,
       "startedAt": "2025-03-03",
       "updatedAt": "2026-08-13",
       "manualUpdatedAt": "2026-08-13",
@@ -642,7 +658,7 @@
     {
       "id": "opportunity-capability-nexus",
       "shortCode": "Opportunity-Capability",
-      "title": "Decoding the Opportunity-Capability Nexus: Causal Recipes for Technological Innovation",
+      "title": "Decoding the Capability–Opportunity Nexus: Causal Recipes for Technological Innovation",
       "authors": "SUN Huijie; YANG Chong; LIU Zhiying",
       "language": "en",
       "focusStage": "publication",
@@ -707,11 +723,11 @@
       "updatedAt": "2026-09-09",
       "manualUpdatedAt": "2026-08-13",
       "lastActionAt": "2026-09-09",
-      "nextAction": "等待 APJM 编辑决定",
+      "nextAction": "",
       "nextDue": "",
       "currentVenue": "Asia Pacific Journal of Management",
-      "venueSummary": "Asia Pacific Journal of Management · R2 returned",
-      "notes": "依据节点先后关系，将输入中的“0730 第一次大修”记录为 2025-07-30；二轮小修已于 2026-08-01 修回。",
+      "venueSummary": "Asia Pacific Journal of Management · Published online 2026-09-01",
+      "notes": "依据节点先后关系，将输入中的“0730 第一次大修”记录为 2025-07-30；二轮小修已于 2026-08-01 修回。已于 2026-09-01 在线发表，DOI：10.1007/s10490-026-10179-w；出版社尚未列出卷期和页码。",
       "writing": [
         {
           "key": "question",
@@ -743,7 +759,12 @@
         }
       ],
       "tags": [],
-      "links": [],
+      "links": [
+        {
+          "label": "Paper",
+          "url": "https://doi.org/10.1007/s10490-026-10179-w"
+        }
+      ],
       "showOnRoadmap": true
     },
     {
@@ -960,7 +981,7 @@
       "id": "resource-reconstruction",
       "shortCode": "Divestiture–Acquisition",
       "title": "Reconstructing Resources for Breakthrough Innovation: The Role of Divestiture–Acquisition Configurations Under Windows of Opportunity",
-      "authors": "SUN Huijie; ZHOU Yang; LIU Zhiying",
+      "authors": "SUN Huijie; ZHOU Yang; ZHOU Ziyu; LIU Zhiying",
       "language": "en",
       "focusStage": "publication",
       "statusCode": "published",
@@ -975,11 +996,11 @@
       "updatedAt": "2026-08-13",
       "manualUpdatedAt": "2026-08-13",
       "lastActionAt": "2026-08-13",
-      "nextAction": "补充卷期、页码与 DOI 后归档",
+      "nextAction": "",
       "nextDue": "",
       "currentVenue": "IEEE Transactions on Engineering Management",
-      "venueSummary": "IEEE Transactions on Engineering Management · Published 2026",
-      "notes": "2026 年发表于 IEEE Transactions on Engineering Management。",
+      "venueSummary": "IEEE Transactions on Engineering Management · 2026, 73:2950–2961",
+      "notes": "2026 年发表于 IEEE Transactions on Engineering Management。正式出版信息：2026, 73:2950–2961，DOI：10.1109/TEM.2026.3680309。",
       "writing": [
         {
           "key": "question",
@@ -1011,7 +1032,12 @@
         }
       ],
       "tags": [],
-      "links": [],
+      "links": [
+        {
+          "label": "Paper",
+          "url": "https://doi.org/10.1109/TEM.2026.3680309"
+        }
+      ],
       "showOnRoadmap": true
     },
     {
@@ -1023,7 +1049,7 @@
       "focusStage": "publication",
       "statusCode": "published",
       "stageLabel": "已发表",
-      "statusStartedAt": "2026-07-16",
+      "statusStartedAt": "2026-10-04",
       "statusTimeline": [
         {
           "id": "future-industry-review",
@@ -1032,6 +1058,14 @@
           "label": "Under Review",
           "startedAt": "2026-04-01",
           "endedAt": "2026-07-16"
+        },
+        {
+          "id": "timeline-mutfltaq-2r39m",
+          "stage": "publication",
+          "status": "forthcoming",
+          "label": "Forthcoming",
+          "startedAt": "2026-07-16",
+          "endedAt": "2026-10-04"
         }
       ],
       "progress": 100,
@@ -1039,9 +1073,9 @@
       "pinned": false,
       "showInAttention": false,
       "startedAt": "2026-04-01",
-      "updatedAt": "2026-08-13",
+      "updatedAt": "2026-10-04",
       "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-07-16",
+      "lastActionAt": "2026-10-04",
       "nextAction": "",
       "nextDue": "",
       "currentVenue": "技术经济",
