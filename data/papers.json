@@ -16,7 +16,7 @@
       "focusStage": "submission",
       "statusCode": "revision_resubmitted",
       "stageLabel": "已修回",
-      "statusStartedAt": "2026-10-04",
+      "statusStartedAt": "2026-09-30",
       "statusTimeline": [
         {
           "id": "human-capital-data",
@@ -78,8 +78,8 @@
       "nextAction": "已修回，等到审稿人反馈",
       "nextDue": "2026-10-25",
       "currentVenue": "International Journal of Operations & Production Management",
-      "venueSummary": "IJOPM · R1 Major Revision",
-      "notes": "JOM 拒稿后于 2026-05-22 转投 IJOPM；2026-08-04 收到一轮大修，10 月 2 日前修回。",
+      "venueSummary": "IJOPM · R1 已修回",
+      "notes": "JOM 拒稿后于 2026-05-22 转投 IJOPM；2026-08-04 收到一轮大修；2026-09-30 已修回，等待审稿人反馈。",
       "writing": [
         {
           "key": "question",
@@ -111,8 +111,8 @@
         },
         {
           "journal": "International Journal of Operations & Production Management",
-          "status": "revision_1",
-          "statusStartedAt": "2026-08-04",
+          "status": "revision_resubmitted",
+          "statusStartedAt": "2026-09-30",
           "statusEndedAt": ""
         }
       ],
