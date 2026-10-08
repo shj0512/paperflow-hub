@@ -3,7 +3,7 @@
     "version": 6,
     "owner": "shj0512",
     "title": "论文进展台",
-    "lastUpdated": "2026-10-04T08:21:53.610Z",
+    "lastUpdated": "2026-10-08T00:29:20.857Z",
     "manualUpdatedAt": "2026-08-13"
   },
   "papers": [
@@ -399,10 +399,10 @@
       "title": "Where Firms Learn and How They Learn: A Theory of Learning Pathways in Supply Networks",
       "authors": "SUN Huijie; HOU Tianyu; LI Juan",
       "language": "en",
-      "focusStage": "writing",
-      "statusCode": "formatting",
-      "stageLabel": "格式修改中",
-      "statusStartedAt": "2026-10-04",
+      "focusStage": "submission",
+      "statusCode": "under_review",
+      "stageLabel": "Under Review",
+      "statusStartedAt": "2026-10-07",
       "statusTimeline": [
         {
           "id": "learning-data",
@@ -419,16 +419,24 @@
           "label": "文本撰写中",
           "startedAt": "2026-07-08",
           "endedAt": "2026-10-04"
+        },
+        {
+          "id": "timeline-muysu1cp-ndspa",
+          "stage": "writing",
+          "status": "formatting",
+          "label": "格式修改中",
+          "startedAt": "2026-10-04",
+          "endedAt": "2026-10-07"
         }
       ],
       "progress": 32,
-      "priority": "high",
+      "priority": "medium",
       "pinned": true,
       "showInAttention": true,
       "startedAt": "2026-03-19",
-      "updatedAt": "2026-10-04",
+      "updatedAt": "2026-10-08",
       "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-10-04",
+      "lastActionAt": "2026-10-08",
       "nextAction": "格式修改，准备投稿",
       "nextDue": "",
       "currentVenue": "Manuscript writing",
@@ -658,7 +666,7 @@
     {
       "id": "opportunity-capability-nexus",
       "shortCode": "Opportunity-Capability",
-      "title": "Decoding the Capability–Opportunity Nexus: Causal Recipes for Technological Innovation",
+      "title": "Decoding the Opportunity-Capability Nexus: Causal Recipes for Technological Innovation",
       "authors": "SUN Huijie; YANG Chong; LIU Zhiying",
       "language": "en",
       "focusStage": "publication",
@@ -723,11 +731,11 @@
       "updatedAt": "2026-09-09",
       "manualUpdatedAt": "2026-08-13",
       "lastActionAt": "2026-09-09",
-      "nextAction": "",
+      "nextAction": "等待 APJM 编辑决定",
       "nextDue": "",
       "currentVenue": "Asia Pacific Journal of Management",
-      "venueSummary": "Asia Pacific Journal of Management · Published online 2026-09-01",
-      "notes": "依据节点先后关系，将输入中的“0730 第一次大修”记录为 2025-07-30；二轮小修已于 2026-08-01 修回。已于 2026-09-01 在线发表，DOI：10.1007/s10490-026-10179-w；出版社尚未列出卷期和页码。",
+      "venueSummary": "Asia Pacific Journal of Management · R2 returned",
+      "notes": "依据节点先后关系，将输入中的“0730 第一次大修”记录为 2025-07-30；二轮小修已于 2026-08-01 修回。",
       "writing": [
         {
           "key": "question",
@@ -759,12 +767,7 @@
         }
       ],
       "tags": [],
-      "links": [
-        {
-          "label": "Paper",
-          "url": "https://doi.org/10.1007/s10490-026-10179-w"
-        }
-      ],
+      "links": [],
       "showOnRoadmap": true
     },
     {
@@ -981,7 +984,7 @@
       "id": "resource-reconstruction",
       "shortCode": "Divestiture–Acquisition",
       "title": "Reconstructing Resources for Breakthrough Innovation: The Role of Divestiture–Acquisition Configurations Under Windows of Opportunity",
-      "authors": "SUN Huijie; ZHOU Yang; ZHOU Ziyu; LIU Zhiying",
+      "authors": "SUN Huijie; ZHOU Yang; LIU Zhiying",
       "language": "en",
       "focusStage": "publication",
       "statusCode": "published",
@@ -996,11 +999,11 @@
       "updatedAt": "2026-08-13",
       "manualUpdatedAt": "2026-08-13",
       "lastActionAt": "2026-08-13",
-      "nextAction": "",
+      "nextAction": "补充卷期、页码与 DOI 后归档",
       "nextDue": "",
       "currentVenue": "IEEE Transactions on Engineering Management",
-      "venueSummary": "IEEE Transactions on Engineering Management · 2026, 73:2950–2961",
-      "notes": "2026 年发表于 IEEE Transactions on Engineering Management。正式出版信息：2026, 73:2950–2961，DOI：10.1109/TEM.2026.3680309。",
+      "venueSummary": "IEEE Transactions on Engineering Management · Published 2026",
+      "notes": "2026 年发表于 IEEE Transactions on Engineering Management。",
       "writing": [
         {
           "key": "question",
@@ -1032,12 +1035,7 @@
         }
       ],
       "tags": [],
-      "links": [
-        {
-          "label": "Paper",
-          "url": "https://doi.org/10.1109/TEM.2026.3680309"
-        }
-      ],
+      "links": [],
       "showOnRoadmap": true
     },
     {
@@ -1076,11 +1074,11 @@
       "updatedAt": "2026-10-04",
       "manualUpdatedAt": "2026-08-13",
       "lastActionAt": "2026-10-04",
-      "nextAction": "",
+      "nextAction": "等待卷期、页码等正式出版信息",
       "nextDue": "",
       "currentVenue": "技术经济",
-      "venueSummary": "技术经济 · 2026, 45(9):13–28",
-      "notes": "2026 年 4 月投稿《技术经济》，2026-07-16 稿件采用。孙慧杰为通讯作者。正式出版信息：2026, 45(9):13–28，DOI：10.12404/j.issn.1002-980X.J26062610。",
+      "venueSummary": "技术经济 · Accepted 2026-07-16",
+      "notes": "2026 年 4 月投稿《技术经济》，2026-07-16 稿件采用。孙慧杰为通讯作者。",
       "writing": [
         {
           "key": "question",
@@ -1118,12 +1116,7 @@
         "理论",
         "方法"
       ],
-      "links": [
-        {
-          "label": "Paper",
-          "url": "https://doi.org/10.12404/j.issn.1002-980X.J26062610"
-        }
-      ],
+      "links": [],
       "showOnRoadmap": true
     }
   ],
