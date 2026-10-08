@@ -32,7 +32,7 @@ const html = await readFile(new URL("../index.html", import.meta.url), "utf8");
 const js = await readFile(new URL("../app.js", import.meta.url), "utf8");
 const css = await readFile(new URL("../styles.css", import.meta.url), "utf8");
 
-for (const expected of ["portfolioOverview", "metrics", "pipelineDistribution", "overviewPipelineSelection", "needsAttention", "paperList", "otherProjectsList", "allPapersDialog", "allPapersList", "quickDialog", "paperDialog", "toolsDialog"]) {
+for (const expected of ["portfolioOverview", "metrics", "pipelineDistribution", "overviewPipelineSelection", "needsAttention", "paperList", "otherProjectsList", "allPapersDialog", "allPapersList", "paperDialog", "toolsDialog"]) {
   if (!html.includes(`id=\"${expected}\"`)) throw new Error(`Missing interface mount: ${expected}`);
 }
 if (!js.includes("saveLocalDraft")) throw new Error("Management persistence is missing.");

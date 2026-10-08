@@ -1,0 +1,33 @@
+name: Paperflow regression
+on:
+  push:
+    branches: [main, codex/paperflow-ux-workflow]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Validate data and workflow rules
+        run: |
+          node scripts/validate.mjs
+          node scripts/test-status-engine.mjs
+          node scripts/test-project-order.mjs
+          node scripts/test-action-rules.mjs
+      - name: Install browser test runtime
+        run: |
+          npm install --no-save --package-lock=false playwright
+          npx playwright install --with-deps chromium
+      - name: Test actual page interactions
+        run: node scripts/test-ui.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: paperflow-browser-evidence
+          path: test-artifacts
+          if-no-files-found: ignore
