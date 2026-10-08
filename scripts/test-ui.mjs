@@ -163,5 +163,26 @@ try {
   await page.locator('#toggleManageButton').click(); await open('test-0');
   assert.equal(await field('focusStage').count(),0); assert.equal(await page.locator('#savePaperButton').isVisible(),false);
   assert.deepEqual(errors,[],'No unhandled page errors');
+  const realContext = await browser.newContext({viewport:{width:1440,height:1000},timezoneId:'Asia/Shanghai'});
+  await realContext.route(/fonts\.(googleapis|gstatic)\.com/,route=>route.abort());
+  const realPage = await realContext.newPage();
+  realPage.on('pageerror',e=>errors.push(e.message));
+  await realPage.goto(url); await realPage.waitForSelector('.paper-card');
+  await realPage.locator('#projects').scrollIntoViewIfNeeded();
+  await realPage.screenshot({path:resolve(output,'real-desktop-projects.png')});
+  await realPage.locator('#toggleManageButton').click();
+  await realPage.locator('.paper-title-button').first().click();
+  await realPage.screenshot({path:resolve(output,'real-desktop-panel.png')});
+  await realPage.setViewportSize({width:390,height:844});
+  await realPage.screenshot({path:resolve(output,'real-mobile-panel.png')});
+  assert.ok(await realPage.locator('#paperDialog').evaluate(el=>el.scrollWidth<=el.clientWidth));
+  await realPage.keyboard.press('Escape');
+  await realPage.setViewportSize({width:320,height:844});
+  assert.ok(await realPage.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Real data at 320px must not overflow');
+  await realPage.locator('#paperList').scrollIntoViewIfNeeded();
+  await realPage.screenshot({path:resolve(output,'real-mobile-projects.png')});
+  assert.equal(await realPage.evaluate(()=>localStorage.getItem('paperflow-draft-v1')),null,'Visual QA must not modify real data');
+  assert.deepEqual(errors,[]);
+  await realContext.close();
   console.log('Browser regression passed: rendered sorting/filtering, drag/draft/reload, unified cross-stage editing, recommendations/manual protection, history/CRUD, import/export/publish preparation, keyboard, desktop/tablet/phone layouts and Reading Mode.');
 } catch(error) { if(activePage) { await activePage.screenshot({path:resolve(output,'failure.png'),fullPage:true}).catch(()=>{}); console.log('PAGE ERRORS:',errors); } throw error; } finally { await browser?.close(); await new Promise(r=>server.close(r)); }
