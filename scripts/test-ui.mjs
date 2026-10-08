@@ -24,6 +24,7 @@ const server=createServer(async(req,res)=>{
 await new Promise(r=>server.listen(0,'127.0.0.1',r));
 const url=`http://127.0.0.1:${server.address().port}/`;
 let browser;
+let activePage;
 const errors=[];
 const output=process.env.TEST_ARTIFACTS_PATH || resolve(root,'test-artifacts');
 await mkdir(output,{recursive:true});
@@ -32,6 +33,7 @@ try {
   const context=await browser.newContext({viewport:{width:1440,height:1000},timezoneId:'Asia/Shanghai',permissions:['clipboard-read','clipboard-write']});
   await context.route(/fonts\.(googleapis|gstatic)\.com/,route=>route.abort());
   const page=await context.newPage();
+  activePage=page;
   page.on('pageerror',e=>errors.push(e.message));
   await page.clock.install({time:new Date('2026-10-08T04:30:00Z')});
   await page.goto(url); await page.waitForSelector('.paper-card');
@@ -65,8 +67,11 @@ try {
   await page.locator('#searchInput').fill(''); await page.locator('#stageFilter').selectOption('all');
   await page.locator('#toggleManageButton').click(); await page.locator('#sortSelect').selectOption('custom');
   // Native browser drag: before target; then verify local draft, sorting and reload.
-  await page.locator('[data-paper-id="test-4"]').dragTo(page.locator('[data-paper-id="test-0"]'),{targetPosition:{x:30,y:10}});
-  assert.deepEqual(await displayed(),['test-4','test-0','test-1','test-2','test-3']);
+  const targetCard = page.locator('[data-paper-id="test-3"]');
+  await targetCard.scrollIntoViewIfNeeded();
+  const targetBox = await targetCard.boundingBox();
+  await page.locator('[data-paper-id="test-4"] .drag-handle').dragTo(targetCard,{targetPosition:{x:targetBox.width/2,y:targetBox.height/3}});
+  assert.deepEqual(await displayed(),['test-0','test-1','test-2','test-4','test-3']);
   const custom=await displayed();
   await page.locator('#sortSelect').selectOption('updated'); await page.locator('#sortSelect').selectOption('custom');
   assert.deepEqual(await displayed(),custom);
@@ -74,7 +79,7 @@ try {
   await page.locator('#toggleManageButton').click();
   await page.locator('#sortSelect').selectOption('priority');
   await page.locator('[data-priority-id="test-0"]').selectOption('high');
-  assert.deepEqual(await displayed(),['test-4','test-0','test-2','test-1','test-3']);
+  assert.deepEqual(await displayed(),['test-0','test-2','test-4','test-1','test-3']);
   await open('test-0');
   assert.equal(await field('nextAction').inputValue(),recommendNextAction('writing','manuscript_writing'));
   await field('focusStage').selectOption('submission');
@@ -156,4 +161,4 @@ try {
   assert.equal(await field('focusStage').count(),0); assert.equal(await page.locator('#savePaperButton').isVisible(),false);
   assert.deepEqual(errors,[],'No unhandled page errors');
   console.log('Browser regression passed: rendered sorting/filtering, drag/draft/reload, unified cross-stage editing, recommendations/manual protection, history/CRUD, import/export/publish preparation, keyboard, desktop/tablet/phone layouts and Reading Mode.');
-} finally { await browser?.close(); await new Promise(r=>server.close(r)); }
+} catch(error) { if(activePage) { await activePage.screenshot({path:resolve(output,'failure.png'),fullPage:true}).catch(()=>{}); console.log('PAGE ERRORS:',errors); } throw error; } finally { await browser?.close(); await new Promise(r=>server.close(r)); }

@@ -635,7 +635,7 @@ function renderPaperCard(paper) {
   return `
     <article class="paper-card ${sortable ? "is-sortable" : ""}" data-paper-id="${escapeHTML(paper.id)}" data-sort-paper-id="${escapeHTML(paper.id)}" draggable="${sortable}">
       <div class="paper-info">
-        <div class="paper-topline">${sortable ? `<span class="drag-handle" title="拖动排序" aria-hidden="true">⠿</span>` : ""}<span class="paper-code">${escapeHTML(paper.shortCode)}</span><span class="status-badge ${statusTone(paper)}">${escapeHTML(statusLabel(paper.focusStage, paper.statusCode))}</span></div>
+        <div class="paper-topline">${sortable ? `<span class="drag-handle" draggable="true" title="拖动排序" aria-hidden="true">⠿</span>` : ""}<span class="paper-code">${escapeHTML(paper.shortCode)}</span><span class="status-badge ${statusTone(paper)}">${escapeHTML(statusLabel(paper.focusStage, paper.statusCode))}</span></div>
         <h3><button class="paper-title-button" type="button" data-open-paper-id="${escapeHTML(paper.id)}">${escapeHTML(paper.title)}</button></h3>
         <p class="paper-stage">${escapeHTML(stageNames[paper.focusStage])}</p>
         <p class="paper-venue">${escapeHTML(paper.currentVenue || "Venue not set")}</p>
@@ -701,7 +701,7 @@ function renderAllPapersList() {
   els.allPapersList.innerHTML = data.papers.map((paper, index) => `
     <article class="all-paper-item ${isManageMode ? "is-sortable" : ""}" data-sort-paper-id="${escapeHTML(paper.id)}" draggable="${isManageMode}">
       <span class="all-paper-index">${String(index + 1).padStart(2, "0")}</span>
-      ${isManageMode ? `<span class="drag-handle" title="拖动排序" aria-hidden="true">⠿</span>` : ""}
+      ${isManageMode ? `<span class="drag-handle" draggable="true" title="拖动排序" aria-hidden="true">⠿</span>` : ""}
       <button class="all-paper-open" type="button" data-all-paper-id="${escapeHTML(paper.id)}">
         <strong>${escapeHTML(paper.shortCode)}</strong>
         <span>${escapeHTML(paper.title)}</span>
@@ -746,7 +746,7 @@ function bindSortable(container, allowProjectSort = false) {
   });
   container.addEventListener("drop", (event) => {
     const item = event.target.closest("[data-sort-paper-id]");
-    if (!draggedPaperId || !item) return;
+    if (!isManageMode || (allowProjectSort && els.sortSelect.value !== "custom") || !draggedPaperId || !item) return;
     event.preventDefault();
     reorderPapers(draggedPaperId, item.dataset.sortPaperId, item.classList.contains("drop-after"));
   });
@@ -1286,6 +1286,11 @@ function bindEvents() {
   bindSortable(els.paperList, true);
   bindSortable(els.allPapersList);
   els.paperForm.addEventListener("submit", saveFullPaper);
+  els.paperDialog.addEventListener("close", () => {
+    if (document.querySelector("dialog[open]")) return;
+    const opener = els.paperList.querySelector(`[data-open-paper-id="${CSS.escape(activePaperId || "")}"]`);
+    (opener || els.toggleManageButton).focus({ preventScroll: true });
+  });
   els.paperForm.addEventListener("invalid", event => {
     const disclosure = event.target.closest("details");
     if (disclosure) disclosure.open = true;
