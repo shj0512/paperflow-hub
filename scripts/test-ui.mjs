@@ -144,7 +144,10 @@ try {
   // Tablet and phone layout; real browser measurements and interactions.
   for (const width of [768,390,320]) {
     await page.setViewportSize({width,height:844});
-    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`Page overflow at ${width}`);
+    const overflow = await page.evaluate(() => [...document.querySelectorAll('body *')].filter(el => {
+      const box=el.getBoundingClientRect();return box.width && (box.right>innerWidth+1 || box.left < -1) && getComputedStyle(el).visibility!=='hidden';
+    }).map(el=>`${el.tagName}.${el.className}`).slice(0,20));
+    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),`Page overflow at ${width}: ${overflow.join(', ')}`);
     await page.locator('#sortSelect').selectOption('custom');
     const before=await displayed(); await page.locator(`[data-move-id="${before[1]}"][data-move-direction="-1"]`).click();
     assert.equal((await displayed())[0],before[1]);
