@@ -48,7 +48,7 @@
         </div>
         <div class="pipeline-selection" id="overviewPipelineSelection" hidden></div>
         <section class="attention-section" aria-labelledby="attentionTitle">
-          <div class="section-label-row"><span class="section-kicker" id="attentionTitle">NEEDS ATTENTION</span><small>按 Priority 排序 · 可在 View options 自行选择显示项目</small></div>
+          <div class="section-label-row"><span class="section-kicker" id="attentionTitle">NEEDS ATTENTION</span><small>按 Priority 排序 · 在项目 Advanced Settings 中选择显示项目</small></div>
           <div class="attention-list" id="needsAttention"></div>
         </section>
       </section>
@@ -60,10 +60,10 @@
         </div>
         <div class="project-toolbar">
           <label class="search-box"><span aria-hidden="true">⌕</span><input id="searchInput" type="search" placeholder="Search projects..." aria-label="搜索论文项目" /></label>
-          <label class="toolbar-select"><span>Stage</span><select id="stageFilter"><option value="all">All</option><option value="writing">Writing</option><option value="review">Under Review</option><option value="revision">Revision</option><option value="publication">Published</option></select></label>
-          <label class="toolbar-select"><span>Sort</span><select id="sortSelect"><option value="custom">Custom Order</option><option value="priority">Priority</option><option value="deadline">Deadline</option><option value="updated">Last Updated</option><option value="started">Start Date</option></select></label>
-          <button class="button" id="editCodesButton" type="button">View options</button>
+          <label class="toolbar-select"><span>Stage</span><select id="stageFilter"><option value="all">All</option><option value="writing">Writing</option><option value="submission">Submission · 全部投稿</option><option value="review">Under Review</option><option value="revision">Revision</option><option value="publication">Published</option></select></label>
+          <label class="toolbar-select"><span>Sort · Projects</span><select id="sortSelect" aria-describedby="projectListHint"><option value="custom">Custom Order</option><option value="priority">Priority</option><option value="deadline">Deadline</option><option value="updated">Last Updated</option><option value="started">Start Date</option></select></label>
         </div>
+        <p class="project-list-hint" id="projectListHint"></p>
         <div class="paper-list" id="paperList" aria-live="polite"></div>
       </section>
 
@@ -80,14 +80,6 @@
       <a href="https://github.com/shj0512/paperflow-hub" target="_blank" rel="noreferrer">GitHub · paperflow-hub ↗</a>
     </footer>
 
-    <dialog class="quick-dialog" id="quickDialog">
-      <form method="dialog" class="dialog-shell" id="quickForm">
-        <div class="dialog-header"><div><span class="section-kicker">QUICK UPDATE</span><h2 id="quickTitle">更新论文</h2></div><button class="close-button" value="cancel" aria-label="关闭">×</button></div>
-        <div class="dialog-body" id="quickBody"></div>
-        <div class="dialog-footer"><span>保存后自动更新时间；状态变更会归档上一段时间线。</span><div><button class="button" value="cancel">关闭</button><button class="button button-primary" type="submit">保存更新</button></div></div>
-      </form>
-    </dialog>
-
     <dialog class="all-papers-dialog" id="allPapersDialog">
       <div class="dialog-shell">
         <div class="dialog-header"><div><span class="section-kicker">ALL PAPERS</span><h2>全部论文 · 快捷导航</h2></div><button class="close-button" id="closeAllPapersButton" type="button" aria-label="关闭">×</button></div>
@@ -96,19 +88,19 @@
       </div>
     </dialog>
 
-    <dialog class="paper-dialog" id="paperDialog">
+    <dialog class="paper-dialog" id="paperDialog" aria-labelledby="dialogTitle">
       <form method="dialog" class="dialog-shell" id="paperForm">
-        <div class="dialog-header"><div><span class="section-kicker" id="dialogKicker">PAPER DETAILS</span><h2 id="dialogTitle">论文详情</h2></div><button class="close-button" value="cancel" aria-label="关闭">×</button></div>
+        <div class="dialog-header"><div><span class="section-kicker" id="dialogKicker">PAPER DETAILS</span><h2 id="dialogTitle">论文详情</h2></div><button class="close-button" type="button" data-close-paper aria-label="关闭">×</button></div>
         <div id="dialogBody" class="dialog-body"></div>
-        <div class="dialog-footer" id="dialogFooter"><div class="dialog-footer-left"><button class="button button-danger" id="deletePaperButton" type="button">删除项目</button><span id="dialogHint">阅读模式</span></div><div><button class="button" value="cancel">关闭</button><button class="button button-primary" id="savePaperButton" type="submit">保存完整信息</button></div></div>
+        <div class="dialog-footer" id="dialogFooter"><div class="dialog-footer-left"><span id="dialogHint">阅读模式</span></div><div><button class="button" type="button" data-close-paper>关闭</button><button class="button button-primary" id="savePaperButton" type="submit">保存项目</button></div></div>
       </form>
     </dialog>
 
     <dialog class="codes-dialog" id="codesDialog">
       <form method="dialog" class="dialog-shell" id="codesForm">
-        <div class="dialog-header"><div><span class="section-kicker">VIEW OPTIONS</span><h2>项目显示设置</h2></div><button class="close-button" value="cancel" aria-label="关闭">×</button></div>
+        <div class="dialog-header"><div><span class="section-kicker">VIEW OPTIONS</span><h2>项目显示设置</h2></div><button class="close-button" value="cancel" formnovalidate aria-label="关闭">×</button></div>
         <div class="codes-editor" id="codesEditor"></div>
-        <div class="dialog-footer"><span>修改论文简称，并选择哪些项目显示在 Needs Attention；项目顺序可直接拖动。</span><div><button class="button" value="cancel">关闭</button><button class="button button-primary" type="submit">保存显示设置</button></div></div>
+        <div class="dialog-footer"><span>修改论文简称，并选择哪些项目显示在 Needs Attention；项目顺序可直接拖动。</span><div><button class="button" value="cancel" formnovalidate>关闭</button><button class="button button-primary" type="submit">保存显示设置</button></div></div>
       </form>
     </dialog>
 
@@ -116,6 +108,7 @@
       <div class="dialog-shell">
         <div class="dialog-header"><div><span class="section-kicker">DATA</span><h2>数据与发布工具</h2></div><button class="close-button" id="closeToolsButton" type="button" aria-label="关闭">×</button></div>
         <div class="tools-grid">
+          <button class="tool-card" id="editCodesButton" type="button"><span>☷</span><strong>批量显示设置</strong><small>简称与 Needs Attention</small></button>
           <button class="tool-card" id="exportButton" type="button"><span>↓</span><strong>导出 JSON</strong><small>保存完整数据备份</small></button>
           <label class="tool-card" for="importInput"><span>↑</span><strong>导入 JSON</strong><small>从备份恢复本机草稿</small></label><input id="importInput" type="file" accept="application/json,.json" hidden />
           <button class="tool-card" id="publishButton" type="button"><span>↗</span><strong>发布到 GitHub</strong><small>复制数据并打开安全编辑页</small></button>
