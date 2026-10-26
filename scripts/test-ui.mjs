@@ -45,6 +45,40 @@ try {
   assert.equal(await page.evaluate(()=>localStorage.getItem('paperflow-draft-v1')),null);
   await page.route('**/data/papers.json',route=>route.fulfill({json:fixture}));
   await page.reload(); await page.waitForSelector('.paper-card');
+  // Daily project to-dos remain local and independent from the published portfolio draft.
+  const dailyStore=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('paperflow-daily-todos-v1')));
+  await page.locator('#todoProjectSelect').selectOption('test-0');
+  await page.locator('#todoTaskInput').fill('清理数据'); await page.locator('#todoTaskInput').press('Enter');
+  await page.locator('#todoProjectSelect').selectOption('test-1');
+  await page.locator('#todoTaskInput').fill('起草摘要'); await page.locator('#todoTaskInput').press('Enter');
+  assert.equal((await dailyStore()).items.length,2);
+  assert.equal(await page.locator('.todo-group').count(),2);
+  await page.locator('[data-todo-filter="test-0"]').click();
+  assert.equal(await page.locator('.todo-item').count(),1);
+  await page.locator('[data-todo-filter="all"]').click();
+  await page.locator('.todo-item').filter({hasText:'清理数据'}).locator('[data-todo-toggle]').click();
+  assert.match(await page.locator('#todoProgressText').innerText(),/1 \/ 2/);
+  await page.locator('.todo-item').filter({hasText:'起草摘要'}).locator('[data-todo-edit]').click();
+  await page.locator('[data-todo-edit-form] input').fill('修改后的摘要');
+  await page.locator('[data-todo-edit-form] input').press('Enter');
+  assert.equal((await dailyStore()).items.some(item=>item.text==='修改后的摘要'),true);
+  await page.locator('.todo-item').filter({hasText:'修改后的摘要'}).locator('[data-todo-move]').click();
+  assert.equal((await dailyStore()).items.find(item=>item.text==='修改后的摘要').date,'2026-10-09');
+  await page.locator('#todoDateInput').fill('2026-10-07');
+  await page.locator('#todoTaskInput').fill('延续研究计划'); await page.locator('#todoTaskInput').press('Enter');
+  await page.locator('#todoDateInput').fill('2026-10-08');
+  await page.locator('#todoCarryButton').click();
+  assert.equal((await dailyStore()).items.filter(item=>item.text==='延续研究计划'&&item.date==='2026-10-08').length,1);
+  assert.equal(await page.locator('#todoCarryButton').isDisabled(),true,'Carry forward must not duplicate a task');
+  await page.locator('#todoHideCompleted').check();
+  assert.equal(await page.locator('.todo-item').count(),1);
+  await page.locator('#todoHideCompleted').uncheck();
+  assert.equal(await page.evaluate(()=>localStorage.getItem('paperflow-draft-v1')),null);
+  await page.locator('#dailyTodoBoard').scrollIntoViewIfNeeded();
+  await page.screenshot({path:resolve(output,'desktop-daily-todos.png')});
+  await page.reload(); await page.waitForSelector('.paper-card');
+  assert.equal((await dailyStore()).items.length,4);
+  assert.equal(await page.locator('.todo-item').count(),2);
   const displayed=()=>page.locator('#paperList .paper-card').evaluateAll(nodes=>nodes.map(n=>n.dataset.paperId));
   const draft=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('paperflow-draft-v1')));
   const open=id=>page.locator(`[data-paper-id="${id}"] .paper-title-button`).click();
@@ -144,6 +178,7 @@ try {
   // Tablet and phone layout; real browser measurements and interactions.
   for (const width of [768,390,320]) {
     await page.setViewportSize({width,height:844});
+    if(width===390) { await page.locator('#dailyTodoBoard').scrollIntoViewIfNeeded(); await page.screenshot({path:resolve(output,'mobile-daily-todos.png')}); }
     const overflow = await page.evaluate(() => [...document.querySelectorAll('body *')].filter(el => {
       const box=el.getBoundingClientRect();return box.width && (box.right>innerWidth+1 || box.left < -1) && getComputedStyle(el).visibility!=='hidden';
     }).map(el=>`${el.tagName}.${el.className}`).slice(0,20));

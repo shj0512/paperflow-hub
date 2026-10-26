@@ -1,6 +1,7 @@
 import { selectProjects, moveProject } from "./scripts/project-order.mjs";
 import { recommendNextAction, resolveActionRecommendation } from "./scripts/action-rules.mjs";
 import { buildStatusTransition } from "./scripts/status-engine.mjs";
+import { initTodoBoard } from "./scripts/todo-board.mjs";
 
 const DATA_URL = "./data/papers.json";
 const STORAGE_KEY = "paperflow-draft-v1";
@@ -110,6 +111,7 @@ let newPaperDraft = null;
 let toastTimer;
 let selectedPipelineBucket = null;
 let draggedPaperId = null;
+let todoBoard;
 
 function escapeHTML(value = "") {
   return String(value)
@@ -369,6 +371,13 @@ async function loadData() {
     }
   }
   if (!data) data = deepClone(publishedData);
+  if (!todoBoard) {
+    todoBoard = initTodoBoard({
+      root: document.querySelector("#dailyTodoBoard"),
+      getPortfolio: () => data,
+      notify: showToast
+    });
+  }
   renderAll();
 }
 
@@ -440,6 +449,7 @@ function renderAll() {
   renderHero();
   renderOverview();
   renderAttention();
+  todoBoard?.render();
   renderPaperList();
   renderOtherProjects();
   renderAllPapersList();

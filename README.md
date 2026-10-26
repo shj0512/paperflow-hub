@@ -9,6 +9,8 @@
 - 按 Priority、Pinned、Deadline、返修与等待时间自动选择 Current Focus
 - Writing、Submitted、Revision、Published 四项互斥组合概览与轻量 Pipeline Distribution；所有统计始终覆盖全部论文
 - Needs Attention 按 Priority 排序，不显示 waiting days；可在统一项目面板的 Advanced Settings 中逐篇选择是否展示；Data 提供批量显示设置
+- Needs Attention 下的 Daily To-do 独立支持每日多个 Project 的任务清单：日期切换、快速添加、Project 筛选、完成进度、双击或点击编辑、移到后一天、复制前一天未完成项
+- Daily To-do 自动保存在当前浏览器的 `paperflow-daily-todos-v1`，与公开的论文数据、Manage Mode 草稿和 Publish 流程相互独立；面板底部可导出、导入待办 JSON 备份。在其他设备或浏览器使用时需手动导入备份
 - 点击组合概览数字或 Distribution 分段可展开对应论文，不再设置重复的独立 Research Pipeline 区块
 - Project Card 重点显示 Next Action、Due Date、Reference Progress 与 Priority
 - 点击卡片、标题或其他区域的项目入口，打开同一个详情/管理 Drawer；常用字段直接编辑，资料、历史、投稿线程与 Advanced Settings 折叠展示
@@ -37,6 +39,7 @@ node scripts/validate.mjs
 node scripts/test-status-engine.mjs
 node scripts/test-project-order.mjs
 node scripts/test-action-rules.mjs
+node scripts/test-daily-todos.mjs
 ```
 
 真实浏览器回归可单独运行，Playwright 仅用于测试，不是网站运行依赖：

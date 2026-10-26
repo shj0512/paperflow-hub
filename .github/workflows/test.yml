@@ -19,6 +19,7 @@ jobs:
           node scripts/test-status-engine.mjs
           node scripts/test-project-order.mjs
           node scripts/test-action-rules.mjs
+          node scripts/test-daily-todos.mjs
       - name: Install browser test runtime
         run: |
           npm install --no-save --package-lock=false playwright

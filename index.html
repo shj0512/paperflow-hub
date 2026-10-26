@@ -50,6 +50,43 @@
         <section class="attention-section" aria-labelledby="attentionTitle">
           <div class="section-label-row"><span class="section-kicker" id="attentionTitle">NEEDS ATTENTION</span><small>按 Priority 排序 · 在项目 Advanced Settings 中选择显示项目</small></div>
           <div class="attention-list" id="needsAttention"></div>
+          <section class="todo-board" id="dailyTodoBoard" aria-labelledby="todoBoardTitle">
+            <div class="todo-board-head">
+              <div class="todo-board-intro">
+                <span class="todo-eyebrow"><span class="todo-live-dot" aria-hidden="true"></span> DAILY TO-DO</span>
+                <h3 id="todoBoardTitle">每天的小目标，稳步推进<span class="todo-date-caption" id="todoDateCaption"></span></h3>
+                <p>按日期和 Project 安排任务，随时勾选、修改或延续到明天。</p>
+              </div>
+              <div class="todo-progress-summary" aria-live="polite">
+                <strong id="todoProgressText">0 / 0 <span>完成</span></strong>
+                <div class="todo-progress-track" role="progressbar" aria-label="当日待办完成进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="todoProgressTrack"><span id="todoProgressFill"></span></div>
+              </div>
+            </div>
+            <div class="todo-toolbar">
+              <div class="todo-date-controls" aria-label="切换待办日期">
+                <button class="todo-icon-button" type="button" data-todo-shift="-1" aria-label="前一天">‹</button>
+                <label class="visually-hidden" for="todoDateInput">待办日期</label>
+                <input id="todoDateInput" type="date" aria-label="待办日期" />
+                <button class="todo-icon-button" type="button" data-todo-shift="1" aria-label="后一天">›</button>
+                <button class="todo-today-button" id="todoTodayButton" type="button">Today</button>
+              </div>
+              <button class="todo-carry-button" id="todoCarryButton" type="button">↪ 延续昨日未完成</button>
+            </div>
+            <form class="todo-add-form" id="todoAddForm">
+              <label class="todo-task-input"><span aria-hidden="true">＋</span><input id="todoTaskInput" type="text" maxlength="240" required placeholder="写下接下来要做的一件事…" aria-label="新增待办事项" autocomplete="off" /></label>
+              <label class="todo-project-select"><span class="visually-hidden">选择 Project</span><select id="todoProjectSelect" aria-label="为待办选择 Project"></select></label>
+              <button class="todo-add-button" type="submit">添加任务 <span aria-hidden="true">↵</span></button>
+            </form>
+            <div class="todo-filter-bar">
+              <div class="todo-filters" id="todoFilters" aria-label="筛选 Project"></div>
+              <label class="todo-completed-toggle"><input id="todoHideCompleted" type="checkbox" />隐藏已完成</label>
+            </div>
+            <div class="todo-content" id="todoContent" aria-live="polite"></div>
+            <div class="todo-board-foot">
+              <span>仅保存在此浏览器 · 不随论文数据发布</span>
+              <div><button id="todoExportButton" type="button">↓ 导出待办</button><label for="todoImportInput" class="todo-import-label">↑ 导入备份</label><input id="todoImportInput" type="file" accept="application/json,.json" hidden /></div>
+            </div>
+          </section>
         </section>
       </section>
 
