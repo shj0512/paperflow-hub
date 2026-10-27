@@ -85,7 +85,11 @@ export function initTodoBoard({ root, getPortfolio, notify }) {
       seen.add(project.id);
       return [{ id: String(project.id), label: String(project.shortCode || project.title || project.id), kind }];
     });
-    return [...collect(portfolio.papers, "paper"), ...collect(portfolio.otherProjects, "other")];
+    const activePapers = (portfolio.papers || []).filter(project => project.archived !== true &&
+      !(project.focusStage === "publication" && ["published", "archived"].includes(project.statusCode)));
+    const activeCollaborations = (portfolio.otherProjects || []).filter(project => project.status !== "published");
+    // Archived papers keep their historical to-dos, but no longer appear when planning new work.
+    return [...collect(activePapers, "paper"), ...collect(activeCollaborations, "other")];
   }
 
   function projectInfo(projectId, task, known) {

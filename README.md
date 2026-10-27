@@ -21,11 +21,19 @@
 - 可增减项目；在 Manage Mode 的 Custom Order 下拖动项目保存顺序，↑ ↓ 按钮同时支持触屏和键盘；卡片可直接修改 Priority
 - Header 的 All Papers 在单一弹窗内列出全部论文，点击即可查看或更新，无需滚动整页
 - 独立 Other Projects 展示共同参与但非主导的项目，不计入 Portfolio Overview、Pipeline Distribution 或 Needs Attention
+- 独立 Publications / 已发表成果：把已发表的 3 篇主导论文与 2 篇合作论文按年份统一归档，提供正式引用信息、DOI / 期刊链接、角色筛选和复制引用；日常 Projects 及 Daily To-do 不再混入已归档论文
+- 新增 Research Milestones：在项目详情中记录项目启动、数据处理、初稿形成及后续迭代等独立时间节点，带“文件记录 / 日期待确认 / 已确认”标签，可在 Manage Mode 编辑
 - JSON 导入导出、当前设备草稿与 GitHub 安全发布流程
 
 ## 数据字段
 
 主组合论文保存在 `papers`，共同参与项目单独保存在 `otherProjects`。每篇主组合论文支持 `focusStage`、`statusCode`、`statusStartedAt`、`statusTimeline`、`progress`、`priority`、`pinned`、`showInAttention`、`nextAction`、`nextDue`、`currentVenue`、`lastActionAt`、`startedAt`、`updatedAt`、`submissions`、`tags`、`links` 与 `notes`。
+
+已发表论文可以使用 `archived` 和 `publication`（`year`、`citation`、`doi`、`url`）保存可核实的书目信息。方法研究项目可以用 `milestones` 保存独立于状态切换的研究过程，并用 `startDateEstimated` 标记尚未确认的项目启动日。
+
+2026-10-27 更新：删除 MIC2025，新增暂名“曲线中介效应研究”的项目。其时间线来自用户提供的文件列表截图：2026-09-12 是最早可见文件夹命名日期，数据 / Monte Carlo 文件出现在 9 月中下旬，9 月 24 日有可见初稿文件。**这些日期是文件证据或暂定线索，不等同于正式立项日、数据处理完成日或初稿首次完成日。**
+
+数据版本升级至 v7 时，会先把旧版浏览器草稿备份到 `paperflow-draft-pre-20261027-backup`，再保留既有研究进度、移除 MIC2025、补充新的曲线中介项目及正式出版信息，避免旧草稿把已移除项目重新带回页面。
 
 ## 修改与发布
 

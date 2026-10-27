@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="./styles.css?v=20261026-daily-todo" />
+    <link rel="stylesheet" href="./styles.css?v=20261027-publications" />
   </head>
   <body>
     <header class="site-header">
@@ -18,7 +18,7 @@
         <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M10 10.5h20v19H10z" fill="none" stroke="currentColor" stroke-width="2" /><path d="M15 15h10M15 20h10M15 25h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" /><circle cx="30" cy="10" r="5" fill="#8fd0ff" /></svg></span>
         <strong>Paperflow</strong>
       </a>
-      <nav class="top-nav" aria-label="主要导航"><a href="#overview">Overview</a><a href="#portfolioOverview">Pipeline</a><a href="#projects">Projects</a><a href="#other-projects">Other Projects</a></nav>
+      <nav class="top-nav" aria-label="主要导航"><a href="#overview">Overview</a><a href="#portfolioOverview">Pipeline</a><a href="#projects">Projects</a><a href="#publications">Publications</a><a href="#other-projects">Other Projects</a></nav>
       <div class="header-actions">
         <button class="button" id="openAllPapersButton" type="button">All Papers</button>
         <button class="button header-manage-only" id="headerAddPaperButton" type="button">＋ Add Paper</button>
@@ -92,21 +92,37 @@
 
       <section class="section shell" id="projects">
         <div class="section-heading project-heading">
-          <div><span class="section-kicker">PROJECTS</span><h2>论文项目</h2></div>
+          <div><span class="section-kicker">ACTIVE RESEARCH</span><h2>在研论文项目</h2><p>集中管理撰写、投稿与返修；已发表成果在下方独立归档。</p></div>
           <button class="button button-primary project-add-button" id="addPaperButton" type="button">＋ Add Paper</button>
         </div>
         <div class="project-toolbar">
           <label class="search-box"><span aria-hidden="true">⌕</span><input id="searchInput" type="search" placeholder="Search projects..." aria-label="搜索论文项目" /></label>
-          <label class="toolbar-select"><span>Stage</span><select id="stageFilter"><option value="all">All</option><option value="writing">Writing</option><option value="submission">Submission · 全部投稿</option><option value="review">Under Review</option><option value="revision">Revision</option><option value="publication">Published</option></select></label>
+          <label class="toolbar-select"><span>Stage</span><select id="stageFilter"><option value="all">All</option><option value="writing">Writing</option><option value="submission">Submission · 全部投稿</option><option value="review">Under Review</option><option value="revision">Revision</option><option value="publication">Published · 归档</option></select></label>
           <label class="toolbar-select"><span>Sort · Projects</span><select id="sortSelect" aria-describedby="projectListHint"><option value="custom">Custom Order</option><option value="priority">Priority</option><option value="deadline">Deadline</option><option value="updated">Last Updated</option><option value="started">Start Date</option></select></label>
         </div>
         <p class="project-list-hint" id="projectListHint"></p>
         <div class="paper-list" id="paperList" aria-live="polite"></div>
       </section>
 
+      <section class="section shell publications-section" id="publications" aria-labelledby="publicationsHeading">
+        <div class="publications-banner">
+          <div>
+            <span class="section-kicker">PUBLICATION ARCHIVE</span>
+            <h2 id="publicationsHeading">已发表成果</h2>
+            <p>发表之后，成果继续留在这里。主导论文与合作成果集中展示，附上可核验的正式来源。</p>
+          </div>
+          <div class="publication-counter"><strong id="publicationCount">—</strong><span>Published works</span></div>
+        </div>
+        <div class="publication-toolbar">
+          <div class="publication-filters" id="publicationFilters" role="group" aria-label="按研究角色筛选已发表成果"></div>
+          <span class="publication-hint">按发表年份归档 · 点击 DOI / 期刊页面查看原文</span>
+        </div>
+        <div class="publication-years" id="publicationArchive" aria-live="polite"></div>
+      </section>
+
       <section class="section shell other-projects-section" id="other-projects">
         <div class="section-heading other-projects-heading">
-          <div><span class="section-kicker">OTHER PROJECTS</span><h2>共同参与项目</h2></div>
+          <div><span class="section-kicker">OTHER PROJECTS</span><h2>进行中的合作项目</h2><p>已发表的合作论文统一列入上方的 Publications 归档。</p></div>
         </div>
         <div class="other-projects-grid" id="otherProjectsList" aria-live="polite"></div>
       </section>
@@ -165,6 +181,6 @@
 
     <div class="draft-banner" id="draftBanner" hidden><span>当前显示这台设备上的未发布草稿</span><button id="draftPublishButton" type="button">发布更新</button></div>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script type="module" src="./app.js?v=20261026-daily-todo"></script>
+    <script type="module" src="./app.js?v=20261027-publications"></script>
   </body>
 </html>

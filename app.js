@@ -5,6 +5,7 @@ import { initTodoBoard } from "./scripts/todo-board.mjs";
 
 const DATA_URL = "./data/papers.json";
 const STORAGE_KEY = "paperflow-draft-v1";
+const MIGRATION_BACKUP_KEY = "paperflow-draft-pre-20261027-backup";
 const REPO_EDIT_URL = "https://github.com/shj0512/paperflow-hub/edit/main/data/papers.json";
 
 const defaultWritingSteps = [
@@ -59,6 +60,9 @@ const els = {
   overviewPipelineSelection: document.querySelector("#overviewPipelineSelection"),
   needsAttention: document.querySelector("#needsAttention"),
   paperList: document.querySelector("#paperList"),
+  publicationArchive: document.querySelector("#publicationArchive"),
+  publicationFilters: document.querySelector("#publicationFilters"),
+  publicationCount: document.querySelector("#publicationCount"),
   otherProjectsList: document.querySelector("#otherProjectsList"),
   searchInput: document.querySelector("#searchInput"),
   stageFilter: document.querySelector("#stageFilter"),
@@ -112,6 +116,7 @@ let toastTimer;
 let selectedPipelineBucket = null;
 let draggedPaperId = null;
 let todoBoard;
+let publicationFilter = "all";
 
 function escapeHTML(value = "") {
   return String(value)
@@ -286,6 +291,9 @@ function normalizePaper(paper) {
     updatedAt: paper.updatedAt || todayISO(),
     showOnRoadmap: paper.showOnRoadmap !== false,
     showInAttention: paper.showInAttention !== false,
+    archived: paper.archived === true,
+    milestones: Array.isArray(paper.milestones) ? paper.milestones : [],
+    publication: paper.publication || null,
     tags: Array.isArray(paper.tags) ? paper.tags : [],
     links: Array.isArray(paper.links) ? paper.links : [],
     notes: paper.notes || "",
@@ -295,24 +303,38 @@ function normalizePaper(paper) {
 }
 
 function normalizePortfolio(value) {
-  return { ...value, meta: { ...value.meta, version: Math.max(6, Number(value.meta?.version || 0)) }, papers: (value.papers || []).map(normalizePaper) };
+  return { ...value, meta: { ...value.meta, version: Math.max(7, Number(value.meta?.version || 0)) }, papers: (value.papers || []).map(normalizePaper) };
 }
 
 function mergePublishedFields(draft, published) {
   const publishedById = new Map((published.papers || []).map((paper) => [paper.id, paper]));
+  const removedIds = new Set(published.meta?.removedPaperIds || []);
+  const existing = (draft.papers || []).filter((paper) => !removedIds.has(paper.id));
+  const existingIds = new Set(existing.map((paper) => paper.id));
+  // 旧版本草稿不丢弃：保留工作进度，只补入这一版正式新增的项目。
+  for (const id of published.meta?.addedPaperIds || []) {
+    if (!existingIds.has(id) && publishedById.has(id)) existing.push(deepClone(publishedById.get(id)));
+  }
+  const originalOther = new Map((draft.otherProjects || []).map((project) => [project.id, project]));
   return {
     ...draft,
-    papers: (draft.papers || []).map((paper) => {
+    meta: { ...draft.meta, ...published.meta, lastUpdated: draft.meta?.lastUpdated || published.meta.lastUpdated },
+    papers: existing.map((paper) => {
       const source = publishedById.get(paper.id) || {};
       return {
         ...paper,
-        nextAction: paper.nextAction ?? source.nextAction ?? "",
+        // 正式出版信息以核实过的站点数据为准，其余本机工作记录仍然保留。
+        ...(source.archived ? { title: source.title, authors: source.authors, archived: true, publication: source.publication,
+          links: source.links, currentVenue: source.currentVenue, venueSummary: source.venueSummary } : {}),
+        nextAction: source.archived ? "" : paper.nextAction ?? source.nextAction ?? "",
         nextDue: paper.nextDue ?? source.nextDue ?? "",
-        venueSummary: paper.venueSummary ?? source.venueSummary ?? "",
-        currentVenue: paper.currentVenue ?? venueFromLegacy(source),
+        venueSummary: source.archived ? source.venueSummary : paper.venueSummary ?? source.venueSummary ?? "",
+        currentVenue: source.archived ? source.currentVenue : paper.currentVenue ?? venueFromLegacy(source),
         notes: paper.notes ?? source.notes ?? ""
       };
-    })
+    }),
+    otherProjects: [...(published.otherProjects || []).map((project) => project.archived ? project : originalOther.get(project.id) || project),
+      ...(draft.otherProjects || []).filter((project) => !(published.otherProjects || []).some((source) => source.id === project.id))]
   };
 }
 
@@ -328,7 +350,7 @@ function createPaperId() {
 function createBlankPaper() {
   return normalizePaper({
     id: createPaperId(), title: "", shortCode: "", authors: "", focusStage: "writing", statusCode: "research_question",
-    statusStartedAt: todayISO(), statusTimeline: [], progress: 0, priority: "medium", pinned: false, nextAction: "", nextDue: "",
+    statusStartedAt: todayISO(), statusTimeline: [], milestones: [], progress: 0, priority: "medium", pinned: false, nextAction: "", nextDue: "",
     currentVenue: "", lastActionAt: todayISO(), startedAt: todayISO(), updatedAt: todayISO(), showOnRoadmap: true, showInAttention: true,
     submissions: [], writing: deepClone(defaultWritingSteps), tags: [], links: [], notes: ""
   });
@@ -360,8 +382,13 @@ async function loadData() {
   if (localDraft) {
     try {
       const parsed = JSON.parse(localDraft);
-      if (isValidData(parsed) && Number(parsed.meta.version || 0) >= Number(publishedData.meta.version || 0)) {
-        data = normalizePortfolio(mergePublishedFields(parsed, publishedData));
+      if (isValidData(parsed) && Number(parsed.meta.version || 0) >= 6) {
+        const needsMigration = Number(parsed.meta.version || 0) < Number(publishedData.meta.version || 0);
+        if (needsMigration && !localStorage.getItem(MIGRATION_BACKUP_KEY)) {
+          localStorage.setItem(MIGRATION_BACKUP_KEY, localDraft);
+        }
+        data = normalizePortfolio(needsMigration ? mergePublishedFields(parsed, publishedData) : parsed);
+        if (needsMigration) localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
         setDraftState(true);
       } else {
         localStorage.removeItem(STORAGE_KEY);
@@ -434,7 +461,11 @@ function compareScore(a, b) {
 }
 
 function getFocusPaper() {
-  return [...data.papers].sort(compareScore)[0] || null;
+  return data.papers.filter((paper) => !isArchivedPaper(paper)).sort(compareScore)[0] || null;
+}
+
+function isArchivedPaper(paper) {
+  return paper.archived === true || (paper.focusStage === "publication" && ["published", "archived"].includes(paper.statusCode));
 }
 
 // Needs Attention retains its own ranking; Projects uses project-order.mjs.
@@ -451,6 +482,7 @@ function renderAll() {
   renderAttention();
   todoBoard?.render();
   renderPaperList();
+  renderPublicationArchive();
   renderOtherProjects();
   renderAllPapersList();
   renderManageState();
@@ -602,7 +634,8 @@ function togglePipelineSelection(bucket) {
 }
 
 function getFilteredPapers() {
-  return selectProjects(data.papers, {
+  const source = data.papers.filter((paper) => els.stageFilter.value === "publication" ? paper.focusStage === "publication" : !isArchivedPaper(paper));
+  return selectProjects(source, {
     query: els.searchInput.value, stage: els.stageFilter.value, sort: els.sortSelect.value, statusLabel
   });
 }
@@ -630,7 +663,8 @@ function deadlineText(paper, withHint = false) {
 
 function renderPaperList() {
   const papers = getFilteredPapers();
-  document.querySelector("#projectListHint").textContent = `${papers.length} / ${data.papers.length} projects · Sort 仅影响 Projects；Current Focus 与 Needs Attention 使用各自规则。${isManageMode && els.sortSelect.value === "custom" ? " 拖动卡片或使用 ↑ ↓ 保存自定义顺序。" : ""}`;
+  const activeCount = data.papers.filter((paper) => !isArchivedPaper(paper)).length;
+  document.querySelector("#projectListHint").textContent = `${papers.length} / ${els.stageFilter.value === "publication" ? data.papers.filter((paper) => paper.focusStage === "publication").length : activeCount} projects · 已发表论文收录于 Publications；Sort 仅影响 Projects。${isManageMode && els.sortSelect.value === "custom" ? " 拖动卡片或使用 ↑ ↓ 保存自定义顺序。" : ""}`;
   if (!papers.length) {
     els.paperList.innerHTML = `<div class="empty-state">没有找到匹配的论文项目。</div>`;
     return;
@@ -648,7 +682,8 @@ function renderPaperCard(paper) {
         <div class="paper-topline">${sortable ? `<span class="drag-handle" draggable="true" title="拖动排序" aria-hidden="true">⠿</span>` : ""}<span class="paper-code">${escapeHTML(paper.shortCode)}</span><span class="status-badge ${statusTone(paper)}">${escapeHTML(statusLabel(paper.focusStage, paper.statusCode))}</span></div>
         <h3><button class="paper-title-button" type="button" data-open-paper-id="${escapeHTML(paper.id)}">${escapeHTML(paper.title)}</button></h3>
         <p class="paper-stage">${escapeHTML(stageNames[paper.focusStage])}</p>
-        <p class="paper-venue">${escapeHTML(paper.currentVenue || "Venue not set")}</p>
+        <p class="paper-venue">${escapeHTML(paper.currentVenue || "研究进行中")}</p>
+        ${paper.milestones?.length ? `<p class="paper-milestone-quick">◷ ${escapeHTML(paper.milestones.length)} 个研究节点 · ${escapeHTML(paper.milestones.at(-1).label)}</p>` : ""}
       </div>
       <div class="paper-action">
         <span class="card-label">NEXT ACTION</span>
@@ -683,10 +718,71 @@ function otherProjectStatus(project) {
   return { published: "Published", minor_revision: "Minor Revision", under_review: "Under Review" }[project.status] || "In Progress";
 }
 
+function getPublicationRecords() {
+  const leads = data.papers.filter(isArchivedPaper).map((paper) => ({
+    id: paper.id, role: "lead", year: Number(paper.publication?.year) || 0,
+    title: paper.title, authors: paper.authors, venue: paper.currentVenue,
+    citation: paper.publication?.citation || paper.venueSummary || "出版信息待补充",
+    doi: paper.publication?.doi || "", url: paper.publication?.url || ""
+  }));
+  const collaborations = (data.otherProjects || []).filter((project) => project.status === "published").map((project) => ({
+    id: project.id, role: "collaboration", year: Number(project.year) || 0,
+    title: project.title, authors: project.authors, venue: project.venue,
+    citation: project.citation || "出版信息待补充", doi: project.doi || "", url: project.url || ""
+  }));
+  return [...leads, ...collaborations].sort((a, b) => b.year - a.year || (a.role === "lead" ? -1 : 1) - (b.role === "lead" ? -1 : 1) || a.title.localeCompare(b.title, "zh-CN"));
+}
+
+function safeExternalUrl(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" || url.protocol === "http:" ? escapeHTML(url.href) : "";
+  } catch { return ""; }
+}
+
+function citationText(paper) {
+  const source = paper.citation.toLocaleLowerCase().includes(paper.venue.toLocaleLowerCase())
+    ? paper.citation : `${paper.venue}, ${paper.citation}`;
+  return `${paper.authors}. ${paper.title}. ${source}.${paper.doi ? ` DOI: ${paper.doi}` : ""}`;
+}
+
+function renderPublicationArchive() {
+  const all = getPublicationRecords();
+  const filterOptions = [["all", "全部成果", all.length], ["lead", "主导研究", all.filter((item) => item.role === "lead").length],
+    ["collaboration", "合作研究", all.filter((item) => item.role === "collaboration").length]];
+  els.publicationCount.textContent = String(all.length).padStart(2, "0");
+  els.publicationFilters.innerHTML = filterOptions.map(([value, label, count]) => `
+    <button type="button" class="publication-filter ${publicationFilter === value ? "active" : ""}" data-archive-filter="${value}" aria-pressed="${publicationFilter === value}">${label} <span>${count}</span></button>
+  `).join("");
+  const visible = all.filter((item) => publicationFilter === "all" || item.role === publicationFilter);
+  if (!visible.length) {
+    els.publicationArchive.innerHTML = `<div class="empty-state">此分类暂无已发表成果。</div>`;
+    return;
+  }
+  const years = [...new Set(visible.map((item) => item.year))];
+  els.publicationArchive.innerHTML = years.map((year) => {
+    const entries = visible.filter((item) => item.year === year);
+    return `<section class="publication-year-group" aria-label="${year || "待补充年份"} 年成果">
+      <div class="publication-year-heading"><h3>${year || "年份待补充"}</h3><span>${entries.length} papers</span></div>
+      <div class="publication-grid">${entries.map((item) => {
+        const url = safeExternalUrl(item.url);
+        const articleLink = url ? `<a class="publication-link" href="${url}" target="_blank" rel="noopener noreferrer">${item.doi ? "查看 DOI / 原文" : "期刊页面"} <span aria-hidden="true">↗</span></a>` : "";
+        return `<article class="publication-card">
+          <div class="publication-card-top"><span class="publication-role ${item.role}">${item.role === "lead" ? "主导研究" : "合作研究"}</span><span class="publication-card-year">${year || "—"}</span></div>
+          <h4>${escapeHTML(item.title)}</h4>
+          <p class="publication-authors">${escapeHTML(item.authors)}</p>
+          <div class="publication-bibliography"><strong>${escapeHTML(item.venue || "期刊待补充")}</strong><span>${escapeHTML(item.citation)}</span>${item.doi ? `<small>DOI: ${escapeHTML(item.doi)}</small>` : ""}</div>
+          <div class="publication-actions">${articleLink}${item.role === "lead" ? `<button type="button" data-archive-open="${escapeHTML(item.id)}">研究历程</button>` : ""}<button type="button" data-archive-copy="${escapeHTML(item.id)}">复制引用</button></div>
+        </article>`;
+      }).join("")}</div>
+    </section>`;
+  }).join("");
+}
+
 function renderOtherProjects() {
-  const projects = Array.isArray(data.otherProjects) ? data.otherProjects : [];
+  const projects = Array.isArray(data.otherProjects) ? data.otherProjects.filter((project) => project.status !== "published") : [];
   if (!projects.length) {
-    els.otherProjectsList.innerHTML = `<div class="empty-state">暂无共同参与项目。</div>`;
+    els.otherProjectsList.innerHTML = `<div class="empty-state">当前没有进行中的合作项目；已发表合作论文已移至 Publications。</div>`;
     return;
   }
   els.otherProjectsList.innerHTML = projects.map((project, index) => `
@@ -793,6 +889,19 @@ function renderStatusTimeline(paper) {
   `).join("");
 }
 
+function renderResearchMilestones(paper) {
+  if (!paper.milestones?.length) return "";
+  return `<section class="detail-section"><div class="milestone-section-title"><h3>研究里程碑</h3><span>以文件时间线为线索，可在 Manage Mode 校正</span></div>
+    <div class="research-milestones">${paper.milestones.map((item, index) => `
+      <div class="research-milestone">
+        <span class="research-milestone-index">${String(index + 1).padStart(2, "0")}</span>
+        <div><div class="research-milestone-head"><strong>${escapeHTML(item.label)}</strong><span class="milestone-evidence ${item.evidence === "estimated" ? "estimated" : ""}">${item.evidence === "estimated" ? "日期待确认" : item.evidence === "confirmed" ? "已确认" : "文件记录"}</span></div>
+        <time>${formatDate(item.date)}${item.endDate ? ` — ${formatDate(item.endDate)}` : ""}</time>
+        ${item.detail ? `<p>${escapeHTML(item.detail)}</p>` : ""}</div>
+      </div>
+    `).join("")}</div></section>`;
+}
+
 function statusWasUsed(paper, stage, status, index) {
   if (paper.focusStage === stage && paper.statusCode === status) return "current";
   if ((paper.statusTimeline || []).some((item) => item.stage === stage && item.status === status)) return "complete";
@@ -822,18 +931,20 @@ function renderLinks(links) {
 function renderPaperDetails(paper) {
   const due = deadlineInfo(paper);
   return `
-    <section class="detail-section detail-action-panel">
+    ${isArchivedPaper(paper) && paper.publication ? `<section class="detail-section publication-detail"><span class="section-kicker">PUBLICATION RECORD</span><strong>${escapeHTML(paper.currentVenue)}</strong><p>${escapeHTML(paper.publication.citation || "")}</p>${paper.publication.doi ? `<small>DOI: ${escapeHTML(paper.publication.doi)}</small>` : ""}</section>` : ""}
+    ${!isArchivedPaper(paper) ? `<section class="detail-section detail-action-panel">
       <div><span class="card-label">NEXT ACTION</span><strong>${escapeHTML(cardActionText(paper))}</strong><p class="deadline ${due.tone}">${paper.nextDue ? `Due ${formatEnglishDate(paper.nextDue)} · ${due.label}` : "Deadline not set"}</p></div>
       <div><span class="card-label">REFERENCE PROGRESS</span><strong class="detail-progress-value">${clamp(paper.progress, 0, 100)}%</strong></div>
-    </section>
+    </section>` : ""}
     <section class="detail-section"><div class="detail-grid">
       <div class="detail-row"><span>当前状态</span><strong>${escapeHTML(statusLabel(paper.focusStage, paper.statusCode))}</strong></div>
       <div class="detail-row"><span>Priority</span><strong>${escapeHTML(priorityNames[paper.priority])}${paper.pinned ? " · Pinned" : ""}</strong></div>
       <div class="detail-row"><span>Current Venue</span><strong>${escapeHTML(paper.currentVenue || "待补充")}</strong></div>
       <div class="detail-row"><span>作者</span><strong>${escapeHTML(paper.authors || "待补充")}</strong></div>
-      <div class="detail-row"><span>起始日</span><strong>${formatDate(paper.startedAt)}</strong></div>
+      <div class="detail-row"><span>起始日</span><strong>${formatDate(paper.startedAt)}${paper.startDateEstimated ? "（待确认）" : ""}</strong></div>
       <div class="detail-row"><span>项目历时</span><strong>${durationText(paper.startedAt)}</strong></div>
     </div></section>
+    ${renderResearchMilestones(paper)}
     <section class="detail-section"><h3>撰写阶段追踪</h3>${renderStageTracker(paper, "writing")}</section>
     <section class="detail-section"><h3>投稿阶段追踪</h3>${renderStageTracker(paper, "submission")}</section>
     <section class="detail-section"><h3>阶段时间线</h3><div class="status-timeline">${renderStatusTimeline(paper)}</div></section>
@@ -848,6 +959,17 @@ function renderTimelineEditRow(item = {}, index = -1) {
     <label><span>开始日</span><input data-field="startedAt" type="date" value="${escapeHTML(item.startedAt || "")}" /></label>
     <label><span>结束日</span><input data-field="endedAt" type="date" value="${escapeHTML(item.endedAt || "")}" /></label>
     <button class="remove-item" type="button" aria-label="删除状态记录">×</button>
+  </div>`;
+}
+
+function renderMilestoneEditRow(item = {}, index = -1) {
+  return `<div class="editable-item milestone-edit-row" data-milestone-row data-milestone-index="${index}" data-milestone-id="${escapeHTML(item.id || "")}">
+    <label><span>日期</span><input data-field="date" type="date" value="${escapeHTML(item.date || "")}" required /></label>
+    <label><span>结束日（可选）</span><input data-field="endDate" type="date" value="${escapeHTML(item.endDate || "")}" /></label>
+    <label class="milestone-wide"><span>节点名称</span><input data-field="label" maxlength="100" value="${escapeHTML(item.label || "")}" required /></label>
+    <label><span>记录性质</span><select data-field="evidence">${[["estimated", "日期待确认"], ["file", "文件记录"], ["confirmed", "已确认"]].map(([value, label]) => `<option value="${value}" ${item.evidence === value ? "selected" : ""}>${label}</option>`).join("")}</select></label>
+    <label class="milestone-wide"><span>来源 / 说明</span><input data-field="detail" maxlength="420" value="${escapeHTML(item.detail || "")}" placeholder="这一天有哪份文件或哪项进展？" /></label>
+    <button class="remove-item" type="button" aria-label="删除里程碑">×</button>
   </div>`;
 }
 
@@ -877,6 +999,7 @@ function parseLinks(value) {
 
 function renderEditForm(paper) {
   const timelineRows = (paper.statusTimeline || []).map(renderTimelineEditRow).join("");
+  const milestoneRows = (paper.milestones || []).map(renderMilestoneEditRow).join("");
   const submissionRows = (paper.submissions || []).map(renderSubmissionRow).join("");
   return `
     <section class="detail-section daily-update"><h3>项目更新</h3>
@@ -898,10 +1021,22 @@ function renderEditForm(paper) {
       <label class="form-field full"><span>Authors · 用分号分隔</span><input name="authors" value="${escapeHTML(paper.authors || "")}" /></label>
       <label class="form-field"><span>Short Code · 最多 50 字符</span><input name="shortCode" maxlength="50" required value="${escapeHTML(paper.shortCode)}" /></label>
       <label class="form-field"><span>Start Date</span><input name="startedAt" type="date" value="${escapeHTML(paper.startedAt || "")}" required /></label>
+      ${paper.startDateEstimated ? `<label class="check-field"><input name="startDateConfirmed" type="checkbox" /><span>项目启动日期已核实</span></label>` : ""}
       <label class="form-field full"><span>Notes</span><textarea name="notes">${escapeHTML(paper.notes || "")}</textarea></label>
       <label class="form-field full"><span>Tags · 逗号分隔</span><input name="tags" value="${escapeHTML((paper.tags || []).join(", "))}" /></label>
       <label class="form-field full"><span>Links · 每行使用 Label | URL</span><textarea name="links" placeholder="Manuscript | https://...">${escapeHTML(linksToText(paper.links))}</textarea></label>
     </div></details>
+    <details class="panel-disclosure" ${paper.archived || paper.focusStage === "publication" ? "open" : ""}><summary>Publication Record · 发表信息</summary><div class="form-grid">
+      <label class="form-field"><span>发表年份</span><input name="publicationYear" type="number" min="1900" max="2100" value="${escapeHTML(paper.publication?.year || "")}" placeholder="例如 2026" /></label>
+      <label class="form-field"><span>DOI</span><input name="publicationDoi" value="${escapeHTML(paper.publication?.doi || "")}" placeholder="10.xxxx/xxxx" /></label>
+      <label class="form-field full"><span>正式引用信息（卷、期、页码）</span><input name="publicationCitation" value="${escapeHTML(paper.publication?.citation || "")}" placeholder="期刊名称, 卷(期): 页码 (年份)" /></label>
+      <label class="form-field full"><span>期刊 / DOI 页面 URL</span><input name="publicationUrl" type="url" value="${escapeHTML(paper.publication?.url || "")}" placeholder="https://doi.org/..." /></label>
+    </div></details>
+    <details class="panel-disclosure" ${paper.milestones?.length ? "open" : ""}><summary>Research Milestones · 研究里程碑 (${paper.milestones?.length || 0})</summary>
+      <p class="field-help">独立于投稿状态历史，可记录项目启动、数据处理、初稿形成、修订等事件。根据截图填写的日期请按实际情况确认。</p>
+      <div class="editable-history" id="milestoneRows">${milestoneRows}</div>
+      <button class="add-row-button" id="addMilestoneButton" type="button">＋ 添加研究里程碑</button>
+    </details>
     <details class="panel-disclosure"><summary>Status Timeline · 状态历史 (${paper.statusTimeline.length})</summary><p class="field-help">状态切换会自动归档；校正日期或删除错误记录后，保存时检查时间顺序。</p><div class="status-timeline">${renderStatusTimeline(paper)}</div><div class="editable-history" id="statusTimelineRows">${timelineRows || `<div class="empty-state timeline-empty">首次切换状态后将生成历史记录。</div>`}</div></details>
     <details class="panel-disclosure"><summary>Submission Threads · 投稿线程 (${paper.submissions.length})</summary><div class="editable-history" id="submissionRows">${submissionRows}</div><button class="add-row-button" id="addSubmissionButton" type="button">＋ Add Submission Thread</button></details>
     <details class="panel-disclosure"><summary>Advanced Settings · 显示与管理</summary><div class="advanced-options">
@@ -1005,6 +1140,22 @@ function collectStatusTimeline() {
   }));
 }
 
+function collectMilestones() {
+  return [...els.dialogBody.querySelectorAll("[data-milestone-row]")].map((row) => {
+    const item = {
+      id: row.dataset.milestoneId || `milestone-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`,
+      date: row.querySelector("[data-field='date']").value,
+      endDate: row.querySelector("[data-field='endDate']").value,
+      label: row.querySelector("[data-field='label']").value.trim(),
+      evidence: row.querySelector("[data-field='evidence']").value,
+      detail: row.querySelector("[data-field='detail']").value.trim()
+    };
+    if (!item.date || !item.label) throw new Error("请填写里程碑名称和日期");
+    if (item.endDate && item.endDate < item.date) throw new Error("里程碑结束日不能早于开始日");
+    return item;
+  }).sort((a, b) => a.date.localeCompare(b.date));
+}
+
 function collectSubmissionRows() {
   return [...els.dialogBody.querySelectorAll("#submissionRows .submission-item")].map((row) => ({
     ...getActivePaper()?.submissions?.[Number(row.dataset.submissionIndex)],
@@ -1058,6 +1209,7 @@ function saveFullPaper(event) {
   const effectiveAt = form.get("statusEffectiveAt") || todayISO();
   const changed = !isCreatingPaper && (previousStage !== nextStage || previousStatus !== nextStatus);
   let transition;
+  let milestones;
   try {
     transition = buildStatusTransition({
       timeline: collectStatusTimeline(), previousStage, previousStatus, previousStartedAt: paper.statusStartedAt,
@@ -1067,18 +1219,29 @@ function saveFullPaper(event) {
     for (const thread of collectSubmissionRows()) {
       if (thread.statusEndedAt && (!thread.statusStartedAt || thread.statusEndedAt < thread.statusStartedAt)) throw new Error("投稿线程结束日不能早于开始日");
     }
+    milestones = collectMilestones();
   } catch (error) { return showToast(error.message); }
 
   paper.title = title;
   paper.shortCode = shortCode;
   paper.authors = form.get("authors").trim();
   paper.startedAt = form.get("startedAt");
+  paper.startDateEstimated = Boolean(paper.startDateEstimated && form.get("startDateConfirmed") !== "on");
+  paper.milestones = milestones;
   paper.currentVenue = form.get("currentVenue").trim();
   paper.notes = form.get("notes").trim();
   paper.tags = form.get("tags").split(",").map((tag) => tag.trim()).filter(Boolean);
   paper.links = parseLinks(form.get("links"));
+  const publicationYear = String(form.get("publicationYear") || "").trim();
+  const publicationCitation = String(form.get("publicationCitation") || "").trim();
+  const publicationDoi = String(form.get("publicationDoi") || "").trim();
+  const publicationUrl = String(form.get("publicationUrl") || "").trim();
+  paper.publication = publicationYear || publicationCitation || publicationDoi || publicationUrl
+    ? { year: publicationYear ? Number(publicationYear) : null, citation: publicationCitation, doi: publicationDoi, url: publicationUrl }
+    : null;
   paper.focusStage = nextStage;
   paper.statusCode = nextStatus;
+  paper.archived = nextStage === "publication" && ["published", "archived"].includes(nextStatus);
   paper.stageLabel = statusLabel(nextStage, nextStatus);
   paper.statusStartedAt = transition.currentStartedAt;
   paper.statusTimeline = transition.timeline;
@@ -1116,6 +1279,11 @@ function deleteActivePaper() {
 function addSubmissionRow() {
   const target = els.dialogBody.querySelector("#submissionRows");
   if (target) target.insertAdjacentHTML("beforeend", renderSubmissionRow({ statusStartedAt: todayISO() }));
+}
+
+function addMilestoneRow() {
+  const target = els.dialogBody.querySelector("#milestoneRows");
+  if (target) target.insertAdjacentHTML("beforeend", renderMilestoneEditRow({ date: todayISO(), evidence: "confirmed" }));
 }
 
 function openViewOptions() {
@@ -1168,7 +1336,8 @@ async function importData(file) {
   try {
     const parsed = JSON.parse(await file.text());
     if (!isValidData(parsed)) throw new Error("数据结构不完整");
-    data = normalizePortfolio(parsed);
+    data = normalizePortfolio(Number(parsed.meta.version || 0) < publishedData.meta.version
+      ? mergePublishedFields(parsed, publishedData) : parsed);
     saveLocalDraft();
     renderAll();
     els.toolsDialog.close();
@@ -1224,6 +1393,7 @@ function handleDialogClick(event) {
   if (event.target.closest("#keepActionButton")) { if (actionAutoValue) els.dialogBody.querySelector("[name=nextAction]").value = lastRecommendationValue; actionAutoValue = ""; showActionRecommendation(false); return; }
   if (remove) return remove.closest(".editable-item")?.remove();
   if (event.target.closest("#addSubmissionButton")) addSubmissionRow();
+  if (event.target.closest("#addMilestoneButton")) addMilestoneRow();
 }
 
 function handlePipelineClick(event) {
@@ -1262,6 +1432,24 @@ function bindEvents() {
   els.searchInput.addEventListener("input", renderPaperList);
   els.stageFilter.addEventListener("change", renderPaperList);
   els.sortSelect.addEventListener("change", renderPaperList);
+  els.publicationFilters.addEventListener("click", (event) => {
+    const target = event.target.closest("[data-archive-filter]");
+    if (!target) return;
+    publicationFilter = target.dataset.archiveFilter;
+    renderPublicationArchive();
+  });
+  els.publicationArchive.addEventListener("click", async (event) => {
+    const open = event.target.closest("[data-archive-open]");
+    if (open) return openPaper(open.dataset.archiveOpen);
+    const copy = event.target.closest("[data-archive-copy]");
+    if (!copy) return;
+    const item = getPublicationRecords().find((record) => record.id === copy.dataset.archiveCopy);
+    if (!item) return;
+    try {
+      await navigator.clipboard.writeText(citationText(item));
+      showToast("引用信息已复制");
+    } catch { showToast("浏览器不允许复制，请打开论文详情查看引用信息"); }
+  });
   els.focusContent.addEventListener("click", (event) => {
     const target = event.target.closest("[data-focus-open]");
     if (target) openPaper(target.dataset.focusOpen);
