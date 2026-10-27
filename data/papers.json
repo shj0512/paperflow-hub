@@ -3,10 +3,14 @@
     "version": 7,
     "owner": "shj0512",
     "title": "论文进展台",
-    "lastUpdated": "2026-10-27T06:41:07.585Z",
+    "lastUpdated": "2026-10-27T07:46:43.299Z",
     "manualUpdatedAt": "2026-10-27",
-    "removedPaperIds": ["mic2025-success"],
-    "addedPaperIds": ["curvilinear-mediation"]
+    "removedPaperIds": [
+      "mic2025-success"
+    ],
+    "addedPaperIds": [
+      "curvilinear-mediation"
+    ]
   },
   "papers": [
     {
@@ -120,7 +124,10 @@
       ],
       "tags": [],
       "links": [],
-      "showOnRoadmap": true
+      "showOnRoadmap": true,
+      "archived": false,
+      "milestones": [],
+      "publication": null
     },
     {
       "id": "quantum-academic-entrepreneurship",
@@ -301,7 +308,10 @@
         "多案例研究"
       ],
       "links": [],
-      "showOnRoadmap": true
+      "showOnRoadmap": true,
+      "archived": false,
+      "milestones": [],
+      "publication": null
     },
     {
       "id": "ai-quality-quantity",
@@ -393,7 +403,10 @@
       ],
       "tags": [],
       "links": [],
-      "showOnRoadmap": true
+      "showOnRoadmap": true,
+      "archived": false,
+      "milestones": [],
+      "publication": null
     },
     {
       "id": "learning-pathways",
@@ -432,13 +445,13 @@
         }
       ],
       "progress": 32,
-      "priority": "medium",
+      "priority": "low",
       "pinned": false,
       "showInAttention": true,
       "startedAt": "2026-03-19",
-      "updatedAt": "2026-10-08",
+      "updatedAt": "2026-10-27T07:43:28.278Z",
       "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-10-08",
+      "lastActionAt": "2026-10-27",
       "nextAction": "等待编辑反馈",
       "nextDue": "",
       "currentVenue": "Manuscript writing",
@@ -469,7 +482,10 @@
       "submissions": [],
       "tags": [],
       "links": [],
-      "showOnRoadmap": true
+      "showOnRoadmap": true,
+      "archived": false,
+      "milestones": [],
+      "publication": null
     },
     {
       "id": "digital-contextual-abundance",
@@ -492,13 +508,13 @@
         }
       ],
       "progress": 8,
-      "priority": "medium",
+      "priority": "high",
       "pinned": false,
       "showInAttention": true,
       "startedAt": "2026-06-25",
-      "updatedAt": "2026-08-20",
+      "updatedAt": "2026-10-27T07:43:31.224Z",
       "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-08-20",
+      "lastActionAt": "2026-10-27",
       "nextAction": "明确研究问题、核心机制与可检验边界",
       "nextDue": "",
       "currentVenue": "Research question framing",
@@ -529,7 +545,10 @@
       "submissions": [],
       "tags": [],
       "links": [],
-      "showOnRoadmap": true
+      "showOnRoadmap": true,
+      "archived": false,
+      "milestones": [],
+      "publication": null
     },
     {
       "id": "digital-resource-manufacturing",
@@ -568,13 +587,13 @@
         }
       ],
       "progress": 45,
-      "priority": "medium",
+      "priority": "high",
       "pinned": false,
       "showInAttention": true,
       "startedAt": "2025-03-03",
-      "updatedAt": "2026-08-13",
+      "updatedAt": "2026-10-27T07:43:35.005Z",
       "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-08-13",
+      "lastActionAt": "2026-10-27",
       "nextAction": "完成正文 rewrite 并整合 SMS 会议反馈",
       "nextDue": "",
       "currentVenue": "Strategic Management Society Conference",
@@ -612,110 +631,14 @@
       ],
       "tags": [],
       "links": [],
-      "showOnRoadmap": true
-    },
-    {
-      "id": "curvilinear-mediation",
-      "shortCode": "Curvilinear Mediation",
-      "title": "曲线中介效应研究（暂定）",
-      "authors": "待确认",
-      "language": "zh",
-      "focusStage": "writing",
-      "statusCode": "manuscript_writing",
-      "stageLabel": "文本撰写中",
-      "statusStartedAt": "2026-09-24",
-      "statusTimeline": [
-        {
-          "id": "curvilinear-data-stage",
-          "stage": "writing",
-          "status": "data_processing",
-          "label": "数据处理中",
-          "startedAt": "2026-09-12",
-          "endedAt": "2026-09-24"
-        }
-      ],
-      "milestones": [
-        {
-          "id": "curvilinear-start",
-          "date": "2026-09-12",
-          "label": "项目开始（暂定）",
-          "detail": "最早可见线索为 .work_montecarlo_20260912 文件夹，实际立项日期有待确认。",
-          "evidence": "estimated"
-        },
-        {
-          "id": "curvilinear-data",
-          "date": "2026-09-14",
-          "endDate": "2026-09-22",
-          "label": "数据处理与 Monte Carlo 模拟",
-          "detail": "截图中分别出现 MonteCarlo_可视化_20260914 与 MonteCarlo_复现材料_20260922 文件夹；这里只记录可见的文件时间线。",
-          "evidence": "file"
-        },
-        {
-          "id": "curvilinear-draft",
-          "date": "2026-09-24",
-          "label": "最早可见初稿文件",
-          "detail": "Draft_with_HuijieSUN.docx 的截图修改日期为 2026-09-24，首次完成初稿的准确日期待确认。",
-          "evidence": "file"
-        },
-        {
-          "id": "curvilinear-october",
-          "date": "2026-10-12",
-          "label": "稿件及附录迭代",
-          "detail": "截图中出现 曲线中介_1012.docx 和 附录.docx。",
-          "evidence": "file"
-        },
-        {
-          "id": "curvilinear-latest",
-          "date": "2026-10-27",
-          "label": "最新可见文稿版本",
-          "detail": "截图中出现 曲线中介-2026.10.27.docx 与 TY(2) 版本。",
-          "evidence": "file"
-        }
-      ],
-      "startDateEstimated": true,
-      "progress": 50,
-      "priority": "medium",
-      "pinned": false,
-      "showInAttention": true,
-      "startedAt": "2026-09-12",
-      "updatedAt": "2026-10-27",
-      "manualUpdatedAt": "2026-10-27",
-      "lastActionAt": "2026-10-27",
-      "nextAction": "核对模拟结果与附录，继续完善曲线中介研究稿件",
-      "nextDue": "",
-      "currentVenue": "",
-      "venueSummary": "方法研究 · 初稿迭代中",
-      "notes": "时间线仅基于 2026-10-27 提供的文件列表截图重建。文件夹名称和修改日期不等于真实工作开始或完成日期；项目开始、数据处理和初稿完成的准确时间待本人确认。",
-      "writing": [
-        {
-          "key": "question",
-          "label": "问题提出中",
-          "status": "done"
-        },
-        {
-          "key": "data",
-          "label": "数据处理中",
-          "status": "done"
-        },
-        {
-          "key": "draft",
-          "label": "文本撰写中",
-          "status": "in_progress"
-        },
-        {
-          "key": "format",
-          "label": "格式修改中",
-          "status": "pending"
-        }
-      ],
-      "submissions": [],
-      "tags": ["曲线中介", "Monte Carlo", "研究方法"],
-      "links": [],
-      "showOnRoadmap": true
+      "showOnRoadmap": true,
+      "archived": false,
+      "milestones": [],
+      "publication": null
     },
     {
       "id": "opportunity-capability-nexus",
-      "shortCode": "Capability-Opportunity",
+      "shortCode": "Opportunity-Capability",
       "title": "Decoding the capability–opportunity nexus: causal recipes for technological innovation",
       "authors": "Huijie Sun; Chong Yang; Zhiying Liu",
       "language": "en",
@@ -785,14 +708,7 @@
       "nextDue": "",
       "currentVenue": "Asia Pacific Journal of Management",
       "venueSummary": "Asia Pacific Journal of Management · Published online 2026",
-      "notes": "已发表于 Asia Pacific Journal of Management。历史记录中首次大修日期按先后节点记为 2025-07-30，二轮小修于 2026-08-01 修回。",
-      "archived": true,
-      "publication": {
-        "year": 2026,
-        "citation": "Asia Pacific Journal of Management · Online first (2026)",
-        "doi": "10.1007/s10490-026-10179-w",
-        "url": "https://doi.org/10.1007/s10490-026-10179-w"
-      },
+      "notes": "依据节点先后关系，将输入中的“0730 第一次大修”记录为 2025-07-30；二轮小修已于 2026-08-01 修回。",
       "writing": [
         {
           "key": "question",
@@ -824,8 +740,21 @@
         }
       ],
       "tags": [],
-      "links": [{ "label": "Published article · DOI", "url": "https://doi.org/10.1007/s10490-026-10179-w" }],
-      "showOnRoadmap": true
+      "links": [
+        {
+          "label": "Published article · DOI",
+          "url": "https://doi.org/10.1007/s10490-026-10179-w"
+        }
+      ],
+      "showOnRoadmap": true,
+      "archived": true,
+      "publication": {
+        "year": 2026,
+        "citation": "Asia Pacific Journal of Management · Online first (2026)",
+        "doi": "10.1007/s10490-026-10179-w",
+        "url": "https://doi.org/10.1007/s10490-026-10179-w"
+      },
+      "milestones": []
     },
     {
       "id": "ai-transferability",
@@ -914,7 +843,10 @@
       ],
       "tags": [],
       "links": [],
-      "showOnRoadmap": true
+      "showOnRoadmap": true,
+      "archived": false,
+      "milestones": [],
+      "publication": null
     },
     {
       "id": "shadow-to-spotlight",
@@ -1035,7 +967,10 @@
       ],
       "tags": [],
       "links": [],
-      "showOnRoadmap": true
+      "showOnRoadmap": true,
+      "archived": false,
+      "milestones": [],
+      "publication": null
     },
     {
       "id": "resource-reconstruction",
@@ -1060,14 +995,7 @@
       "nextDue": "",
       "currentVenue": "IEEE Transactions on Engineering Management",
       "venueSummary": "IEEE Transactions on Engineering Management · 73: 2950–2961 (2026)",
-      "notes": "2026 年发表于 IEEE Transactions on Engineering Management，第 73 卷，2950–2961 页；已按正式检索记录补全作者。",
-      "archived": true,
-      "publication": {
-        "year": 2026,
-        "citation": "IEEE Transactions on Engineering Management, 73, 2950–2961 (2026)",
-        "doi": "10.1109/TEM.2026.3680309",
-        "url": "https://doi.org/10.1109/TEM.2026.3680309"
-      },
+      "notes": "2026 年发表于 IEEE Transactions on Engineering Management。",
       "writing": [
         {
           "key": "question",
@@ -1099,8 +1027,21 @@
         }
       ],
       "tags": [],
-      "links": [{ "label": "Published article · DOI", "url": "https://doi.org/10.1109/TEM.2026.3680309" }],
-      "showOnRoadmap": true
+      "links": [
+        {
+          "label": "Published article · DOI",
+          "url": "https://doi.org/10.1109/TEM.2026.3680309"
+        }
+      ],
+      "showOnRoadmap": true,
+      "archived": true,
+      "publication": {
+        "year": 2026,
+        "citation": "IEEE Transactions on Engineering Management, 73, 2950–2961 (2026)",
+        "doi": "10.1109/TEM.2026.3680309",
+        "url": "https://doi.org/10.1109/TEM.2026.3680309"
+      },
+      "milestones": []
     },
     {
       "id": "future-industry-technology-forecasting",
@@ -1142,14 +1083,7 @@
       "nextDue": "",
       "currentVenue": "技术经济",
       "venueSummary": "技术经济 · 45(9): 13–28 (2026)",
-      "notes": "2026 年 4 月投稿《技术经济》，2026-07-16 稿件采用，现已正式刊载于 2026 年第 45 卷第 9 期，13–28 页。孙慧杰为通讯作者。",
-      "archived": true,
-      "publication": {
-        "year": 2026,
-        "citation": "技术经济, 45(9): 13–28 (2026)",
-        "doi": "10.12404/j.issn.1002-980X.J26062610",
-        "url": "https://jsjj.ijournals.cn/technology_economics/article/abstract/J26062610"
-      },
+      "notes": "2026 年 4 月投稿《技术经济》，2026-07-16 稿件采用。孙慧杰为通讯作者。",
       "writing": [
         {
           "key": "question",
@@ -1187,8 +1121,130 @@
         "理论",
         "方法"
       ],
-      "links": [{ "label": "期刊正式页面", "url": "https://jsjj.ijournals.cn/technology_economics/article/abstract/J26062610" }],
-      "showOnRoadmap": true
+      "links": [
+        {
+          "label": "期刊正式页面",
+          "url": "https://jsjj.ijournals.cn/technology_economics/article/abstract/J26062610"
+        }
+      ],
+      "showOnRoadmap": true,
+      "archived": true,
+      "publication": {
+        "year": 2026,
+        "citation": "技术经济, 45(9): 13–28 (2026)",
+        "doi": "10.12404/j.issn.1002-980X.J26062610",
+        "url": "https://jsjj.ijournals.cn/technology_economics/article/abstract/J26062610"
+      },
+      "milestones": []
+    },
+    {
+      "id": "curvilinear-mediation",
+      "shortCode": "Curvilinear Mediation",
+      "title": "曲线中介效应研究",
+      "authors": "待确认",
+      "language": "zh",
+      "focusStage": "writing",
+      "statusCode": "manuscript_writing",
+      "stageLabel": "文本撰写中",
+      "statusStartedAt": "2026-09-24",
+      "statusTimeline": [
+        {
+          "id": "curvilinear-data-stage",
+          "stage": "writing",
+          "status": "data_processing",
+          "label": "数据处理中",
+          "startedAt": "2026-09-12",
+          "endedAt": "2026-09-24"
+        }
+      ],
+      "milestones": [
+        {
+          "id": "curvilinear-start",
+          "date": "2026-09-12",
+          "endDate": "",
+          "label": "项目开始（暂定）",
+          "evidence": "estimated",
+          "detail": ""
+        },
+        {
+          "id": "curvilinear-data",
+          "date": "2026-09-14",
+          "endDate": "2026-09-22",
+          "label": "数据处理与 Monte Carlo 模拟",
+          "evidence": "file",
+          "detail": ""
+        },
+        {
+          "id": "curvilinear-draft",
+          "date": "2026-09-24",
+          "endDate": "",
+          "label": "最早可见初稿文件",
+          "evidence": "file",
+          "detail": ""
+        },
+        {
+          "id": "curvilinear-october",
+          "date": "2026-10-12",
+          "endDate": "",
+          "label": "稿件及附录迭代",
+          "evidence": "file",
+          "detail": ""
+        },
+        {
+          "id": "curvilinear-latest",
+          "date": "2026-10-27",
+          "endDate": "",
+          "label": "最新可见文稿版本",
+          "evidence": "file",
+          "detail": "截图中出现 曲线中介-2026.10.27.docx 与 TY(2) 版本。"
+        }
+      ],
+      "startDateEstimated": true,
+      "progress": 50,
+      "priority": "high",
+      "pinned": false,
+      "showInAttention": true,
+      "startedAt": "2026-09-12",
+      "updatedAt": "2026-10-27T07:46:43.299Z",
+      "manualUpdatedAt": "2026-10-27",
+      "lastActionAt": "2026-10-27",
+      "nextAction": "核对模拟结果与附录，继续完善曲线中介研究稿件",
+      "nextDue": "",
+      "currentVenue": "",
+      "venueSummary": "方法研究 · 初稿迭代中",
+      "notes": "时间线仅基于 2026-10-27 提供的文件列表截图重建。文件夹名称和修改日期不等于真实工作开始或完成日期；项目开始、数据处理和初稿完成的准确时间待本人确认。",
+      "writing": [
+        {
+          "key": "question",
+          "label": "问题提出中",
+          "status": "done"
+        },
+        {
+          "key": "data",
+          "label": "数据处理中",
+          "status": "done"
+        },
+        {
+          "key": "draft",
+          "label": "文本撰写中",
+          "status": "in_progress"
+        },
+        {
+          "key": "format",
+          "label": "格式修改中",
+          "status": "pending"
+        }
+      ],
+      "submissions": [],
+      "tags": [
+        "曲线中介",
+        "Monte Carlo",
+        "研究方法"
+      ],
+      "links": [],
+      "showOnRoadmap": true,
+      "archived": false,
+      "publication": null
     }
   ],
   "otherProjects": [
