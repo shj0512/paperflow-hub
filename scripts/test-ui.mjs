@@ -133,8 +133,8 @@ try {
   await open('test-0');
   assert.equal(await field('nextAction').inputValue(),recommendNextAction('writing','manuscript_writing'));
   await field('focusStage').selectOption('submission');
-  assert.equal(await field('statusCode').inputValue(),'under_review');
-  assert.equal(await field('nextAction').inputValue(),recommendNextAction('submission','under_review'));
+  assert.equal(await field('statusCode').inputValue(),'submitted');
+  assert.equal(await field('nextAction').inputValue(),recommendNextAction('submission','submitted'));
   assert.equal(await field('nextDue').inputValue(),'2026-10-01','Recommendation must leave deadline unchanged');
   await field('priority').selectOption('high'); await field('progress').fill('60'); await save();
   let stored=(await draft()).papers.find(p=>p.id==='test-0');
@@ -151,7 +151,7 @@ try {
   assert.equal((await draft()).papers.find(p=>p.id==='test-0').nextActionAuto,undefined);
   await open('test-1'); await field('focusStage').selectOption('submission');
   assert.equal(await field('nextAction').inputValue(),'我的自定义行动');
-  await page.locator('#applyActionButton').click(); assert.equal(await field('nextAction').inputValue(),recommendNextAction('submission','under_review'));
+  await page.locator('#applyActionButton').click(); assert.equal(await field('nextAction').inputValue(),recommendNextAction('submission','submitted'));
   await field('statusEffectiveAt').fill('2026-07-01'); await save();
   assert.equal(await page.locator('#paperDialog').isVisible(),true);
   assert.equal((await draft()).papers.find(p=>p.id==='test-1').focusStage,'writing');
