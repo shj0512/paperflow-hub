@@ -561,14 +561,14 @@ function renderOverview() {
     ["撰写中", "WRITING", counts.writing, "writing"],
     ["投稿 / 审稿中", "SUBMITTED", counts.submitted, "submitted"],
     ["返修中", "REVISION", counts.revision, "revision"],
-    ["已发表", "PUBLISHED", counts.published, "published"]
+    ["已录用 / 已发表", "PUBLICATION", counts.published, "published"]
   ];
   els.metrics.innerHTML = metrics.map(([label, english, value, tone]) => `
     <button class="metric metric-${tone} ${selectedPipelineBucket === tone ? "active" : ""}" type="button" data-pipeline-bucket="${tone}" aria-expanded="${selectedPipelineBucket === tone}"><span>${label}</span><strong>${value}</strong><small>${english}</small></button>
   `).join("");
 
   const distribution = [
-    ["Writing", counts.writing, "writing"], ["Submitted", counts.submitted, "submitted"], ["Revision", counts.revision, "revision"], ["Published", counts.published, "published"]
+    ["Writing", counts.writing, "writing"], ["Submitted", counts.submitted, "submitted"], ["Revision", counts.revision, "revision"], ["Publication", counts.published, "published"]
   ];
   const projectTotal = distribution.reduce((sum, [, value]) => sum + value, 0);
   const distributionBase = projectTotal || 1;
@@ -613,7 +613,7 @@ function renderAttention() {
 
 function renderPipelineSelection() {
   const buckets = getPipelineBuckets();
-  const labels = { writing: ["Writing", "撰写阶段"], submitted: ["Submitted", "投稿 / 审稿阶段"], revision: ["Revision", "返修阶段"], published: ["Published", "已发表 / 已完成"] };
+  const labels = { writing: ["Writing", "撰写阶段"], submitted: ["Submitted", "投稿 / 审稿阶段"], revision: ["Revision", "返修阶段"], published: ["Publication", "录用 / 发表阶段"] };
   const target = els.overviewPipelineSelection;
   const visible = Boolean(selectedPipelineBucket);
   target.hidden = !visible;
