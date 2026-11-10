@@ -1,5 +1,5 @@
 import { selectProjects, moveProject } from "./scripts/project-order.mjs";
-import { recommendNextAction, resolveActionRecommendation } from "./scripts/action-rules.mjs";
+import { recommendNextAction, resolveActionRecommendation } from "./scripts/action-rules.mjs?v=20261110-submitted";
 import { buildStatusTransition } from "./scripts/status-engine.mjs";
 import { initTodoBoard } from "./scripts/todo-board.mjs";
 
