@@ -16,4 +16,4 @@ const restored=JSON.parse(JSON.stringify(paper));
 const result=resolveActionRecommendation({value:restored.nextAction,previousAuto:restored.nextActionAuto,stage:'submission',status:'revision_1'});
 assert.equal(result.value,recommendNextAction('submission','revision_1'));
 assert.equal(paper.nextDue,'2026-11-01');
-console.log('Action rules: all 15 states, auto replacement, legacy/manual protection, unknown states and JSON round-trip passed.');
+console.log('Action rules: all 16 states, auto replacement, legacy/manual protection, unknown states and JSON round-trip passed.');

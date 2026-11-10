@@ -1,15 +1,19 @@
 {
   "meta": {
-    "version": 7,
+    "version": 8,
     "owner": "shj0512",
     "title": "论文进展台",
-    "lastUpdated": "2026-10-27T07:46:43.299Z",
-    "manualUpdatedAt": "2026-10-27",
+    "lastUpdated": "2026-11-10",
+    "manualUpdatedAt": "2026-11-10",
     "removedPaperIds": [
       "mic2025-success"
     ],
     "addedPaperIds": [
       "curvilinear-mediation"
+    ],
+    "statusSyncPaperIds": [
+      "ai-quality-quantity",
+      "quantum-academic-entrepreneurship"
     ]
   },
   "papers": [
@@ -135,10 +139,10 @@
       "title": "围绕创新链布局产业链的学术创业路径及机制——基于量子技术企业的多案例研究",
       "authors": "刘志迎; 孙慧杰; 张晓凤; 徐毅",
       "language": "zh",
-      "focusStage": "submission",
-      "statusCode": "revision_resubmitted",
-      "stageLabel": "已修回",
-      "statusStartedAt": "2026-09-09",
+      "focusStage": "publication",
+      "statusCode": "forthcoming",
+      "stageLabel": "已录用（待发表）",
+      "statusStartedAt": "2026-11-10",
       "statusTimeline": [
         {
           "id": "quantum-data",
@@ -243,21 +247,29 @@
           "label": "2nd Revision",
           "startedAt": "2026-08-13",
           "endedAt": "2026-09-09"
+        },
+        {
+          "id": "quantum-accepted-transition",
+          "stage": "submission",
+          "status": "revision_resubmitted",
+          "label": "已修回",
+          "startedAt": "2026-09-09",
+          "endedAt": "2026-11-10"
         }
       ],
-      "progress": 84,
+      "progress": 95,
       "priority": "low",
       "pinned": false,
       "showInAttention": false,
       "startedAt": "2022-08-01",
-      "updatedAt": "2026-10-04",
-      "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-10-04",
-      "nextAction": "已修回，等待编辑反馈",
-      "nextDue": "2026-10-25",
+      "updatedAt": "2026-11-10",
+      "manualUpdatedAt": "2026-11-10",
+      "lastActionAt": "2026-11-10",
+      "nextAction": "等待校样与正式出版通知",
+      "nextDue": "",
       "currentVenue": "管理案例研究与评论",
-      "venueSummary": "管理案例研究与评论 · 二轮小修",
-      "notes": "2022 年 8 月启动。两次投稿《管理世界》均被拒；2026-04-11 投稿《管理案例研究与评论》，当前为二轮小修。",
+      "venueSummary": "管理案例研究与评论 · 已录用（待发表）",
+      "notes": "2022 年 8 月启动。两次投稿《管理世界》均被拒；2026-04-11 投稿《管理案例研究与评论》，经历返修后已录用。2026-11-10 为状态登记及主页公告日期，确切录用日期待补。",
       "writing": [
         {
           "key": "question",
@@ -297,7 +309,14 @@
           "journal": "管理案例研究与评论",
           "status": "revision_resubmitted",
           "statusStartedAt": "2026-08-13",
-          "statusEndedAt": ""
+          "statusEndedAt": "2026-11-10"
+        },
+        {
+          "journal": "管理案例研究与评论",
+          "status": "accepted",
+          "statusStartedAt": "2026-11-10",
+          "statusEndedAt": "",
+          "note": "已录用；2026-11-10 为登记日，正式录用日期待确认"
         }
       ],
       "tags": [
@@ -319,10 +338,10 @@
       "title": "Data Analytics, AI-capable Employees, and the Innovation Quality–Quantity Paradox in Manufacturing Industries",
       "authors": "SUN Huijie; HOU Tianyu; CHEN Yubo",
       "language": "en",
-      "focusStage": "writing",
-      "statusCode": "formatting",
-      "stageLabel": "格式修改中",
-      "statusStartedAt": "2026-04-26",
+      "focusStage": "submission",
+      "statusCode": "submitted",
+      "stageLabel": "已投稿",
+      "statusStartedAt": "2026-11-09",
       "statusTimeline": [
         {
           "id": "data-analytics-data",
@@ -355,6 +374,14 @@
           "label": "拒稿",
           "startedAt": "2026-04-26",
           "endedAt": "2026-04-26"
+        },
+        {
+          "id": "data-analytics-pre-jmis-formatting",
+          "stage": "writing",
+          "status": "formatting",
+          "label": "格式修改中",
+          "startedAt": "2026-04-26",
+          "endedAt": "2026-11-09"
         }
       ],
       "progress": 40,
@@ -362,14 +389,14 @@
       "pinned": true,
       "showInAttention": true,
       "startedAt": "2025-08-26",
-      "updatedAt": "2026-10-08T05:29:39.370Z",
-      "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-10-08",
-      "nextAction": "完成语言与格式润色，确定下一投稿期刊",
+      "updatedAt": "2026-11-09",
+      "manualUpdatedAt": "2026-11-09",
+      "lastActionAt": "2026-11-09",
+      "nextAction": "等待 JMIS 编辑部初步处理并跟踪稿件状态",
       "nextDue": "",
-      "currentVenue": "Manuscript polishing",
-      "venueSummary": "POM rejected · manuscript polishing",
-      "notes": "2026-03-14 投稿 POM，2026-04-26 被拒；当前继续润色并准备转投。",
+      "currentVenue": "Journal of Management Information Systems (JMIS)",
+      "venueSummary": "JMIS · Submitted 2026-11-09",
+      "notes": "2026-03-14 投稿 POM，2026-04-26 被拒；2026-11-09 正式向 Journal of Management Information Systems (JMIS) 投稿，尚未确认进入同行评审。",
       "writing": [
         {
           "key": "question",
@@ -389,7 +416,7 @@
         {
           "key": "format",
           "label": "格式修改中",
-          "status": "in_progress"
+          "status": "done"
         }
       ],
       "submissions": [
@@ -399,6 +426,13 @@
           "statusStartedAt": "2026-03-14",
           "statusEndedAt": "2026-04-26",
           "note": "POM rejected"
+        },
+        {
+          "journal": "Journal of Management Information Systems (JMIS)",
+          "status": "submitted",
+          "statusStartedAt": "2026-11-09",
+          "statusEndedAt": "",
+          "note": "Submitted 2026-11-09; editorial screening pending"
         }
       ],
       "tags": [],

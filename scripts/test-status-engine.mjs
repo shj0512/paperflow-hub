@@ -43,5 +43,6 @@ assert.throws(()=>buildStatusTransition({...base,nextStage:'writing',nextStatus:
 assert.equal(buildStatusTransition({...base,archivePrevious:false}).timeline.length,0,'New projects do not archive a placeholder state');
 const {readFile}=await import('node:fs/promises');
 const {validateStatusDates}=await import('./status-engine.mjs');
-for (const p of JSON.parse(await readFile(new URL('../data/papers.json',import.meta.url),'utf8')).papers) validateStatusDates({timeline:p.statusTimeline,currentStartedAt:p.statusStartedAt,projectStartedAt:p.startedAt,today:'2026-10-08'});
+const portfolio=JSON.parse(await readFile(new URL('../data/papers.json',import.meta.url),'utf8'));
+for (const p of portfolio.papers) validateStatusDates({timeline:p.statusTimeline,currentStartedAt:p.statusStartedAt,projectStartedAt:p.startedAt,today:portfolio.meta.manualUpdatedAt});
 console.log('Timeline: cross-stage, duplicate-save prevention, invalid/overlapping/future dates, new projects and real-data compatibility passed.');

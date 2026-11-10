@@ -5,7 +5,7 @@ import { initTodoBoard } from "./scripts/todo-board.mjs";
 
 const DATA_URL = "./data/papers.json";
 const STORAGE_KEY = "paperflow-draft-v1";
-const MIGRATION_BACKUP_KEY = "paperflow-draft-pre-20261027-backup";
+const MIGRATION_BACKUP_KEY = "paperflow-draft-pre-20261110-backup";
 const REPO_EDIT_URL = "https://github.com/shj0512/paperflow-hub/edit/main/data/papers.json";
 
 const defaultWritingSteps = [
@@ -29,6 +29,7 @@ const stageStatuses = {
     ["formatting", "格式修改中"]
   ],
   submission: [
+    ["submitted", "已投稿"],
     ["under_review", "Under Review"],
     ["revision_1", "1st Revision"],
     ["revision_2", "2nd Revision"],
@@ -38,7 +39,7 @@ const stageStatuses = {
     ["rejected", "拒稿"]
   ],
   publication: [
-    ["forthcoming", "Forthcoming"],
+    ["forthcoming", "已录用（待发表）"],
     ["online_first", "Online First"],
     ["published", "已发表"],
     ["archived", "已归档"]
@@ -48,7 +49,7 @@ const stageStatuses = {
 const priorityNames = { high: "High Priority", medium: "Medium Priority", low: "Low Priority" };
 const revisionStatuses = new Set(["revision_1", "revision_2", "revision_3", "revision_resubmitted"]);
 const reviewStatuses = new Set(["under_review", "decision_pending"]);
-const externalWaitingStatuses = new Set(["under_review", "decision_pending", "revision_resubmitted"]);
+const externalWaitingStatuses = new Set(["submitted", "under_review", "decision_pending", "revision_resubmitted"]);
 
 const els = {
   lastUpdatedLabel: document.querySelector("#lastUpdatedLabel"),
@@ -309,6 +310,7 @@ function normalizePortfolio(value) {
 function mergePublishedFields(draft, published) {
   const publishedById = new Map((published.papers || []).map((paper) => [paper.id, paper]));
   const removedIds = new Set(published.meta?.removedPaperIds || []);
+  const statusSyncIds = new Set(published.meta?.statusSyncPaperIds || []);
   const existing = (draft.papers || []).filter((paper) => !removedIds.has(paper.id));
   const existingIds = new Set(existing.map((paper) => paper.id));
   // 旧版本草稿不丢弃：保留工作进度，只补入这一版正式新增的项目。
@@ -321,16 +323,25 @@ function mergePublishedFields(draft, published) {
     meta: { ...draft.meta, ...published.meta, lastUpdated: draft.meta?.lastUpdated || published.meta.lastUpdated },
     papers: existing.map((paper) => {
       const source = publishedById.get(paper.id) || {};
+      // 发布时明确更新的论文状态，应在版本迁移后覆盖旧设备中的过期草稿。
+      // 其他论文及未涉及的优先级、排序等本地设置仍保持不变。
+      const syncStatus = statusSyncIds.has(paper.id);
       return {
         ...paper,
+        ...(syncStatus ? {
+          focusStage: source.focusStage, statusCode: source.statusCode, stageLabel: source.stageLabel,
+          statusStartedAt: source.statusStartedAt, statusTimeline: source.statusTimeline,
+          submissions: source.submissions, progress: source.progress, writing: source.writing,
+          updatedAt: source.updatedAt, lastActionAt: source.lastActionAt
+        } : {}),
         // 正式出版信息以核实过的站点数据为准，其余本机工作记录仍然保留。
         ...(source.archived ? { title: source.title, authors: source.authors, archived: true, publication: source.publication,
           links: source.links, currentVenue: source.currentVenue, venueSummary: source.venueSummary } : {}),
-        nextAction: source.archived ? "" : paper.nextAction ?? source.nextAction ?? "",
-        nextDue: paper.nextDue ?? source.nextDue ?? "",
-        venueSummary: source.archived ? source.venueSummary : paper.venueSummary ?? source.venueSummary ?? "",
-        currentVenue: source.archived ? source.currentVenue : paper.currentVenue ?? venueFromLegacy(source),
-        notes: paper.notes ?? source.notes ?? ""
+        nextAction: source.archived ? "" : syncStatus ? source.nextAction : paper.nextAction ?? source.nextAction ?? "",
+        nextDue: syncStatus ? source.nextDue : paper.nextDue ?? source.nextDue ?? "",
+        venueSummary: source.archived || syncStatus ? source.venueSummary : paper.venueSummary ?? source.venueSummary ?? "",
+        currentVenue: source.archived || syncStatus ? source.currentVenue : paper.currentVenue ?? venueFromLegacy(source),
+        notes: syncStatus ? source.notes : paper.notes ?? source.notes ?? ""
       };
     }),
     otherProjects: [...(published.otherProjects || []).map((project) => project.archived ? project : originalOther.get(project.id) || project),
@@ -643,6 +654,7 @@ function getFilteredPapers() {
 function statusTone(paper) {
   if (paper.statusCode === "rejected") return "rejected";
   if (paper.focusStage === "publication" || paper.statusCode === "accepted") return "published";
+  if (paper.focusStage === "submission" && paper.statusCode === "submitted") return "review";
   if (isRevisionPaper(paper)) return "revision";
   if (isReviewPaper(paper)) return "review";
   return "writing";

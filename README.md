@@ -15,7 +15,7 @@
 - Project Card 重点显示 Next Action、Due Date、Reference Progress 与 Priority
 - 点击卡片、标题或其他区域的项目入口，打开同一个详情/管理 Drawer；常用字段直接编辑，资料、历史、投稿线程与 Advanced Settings 折叠展示
 - 在一个流程中切换 Current Stage / Current Status，编辑 Next Action、Deadline、Priority、Current Venue 和 Reference Progress
-- 状态行动规则覆盖全部 15 个可选状态：空内容或此前自动填入的内容随状态更新；手动内容保持不变，使用“应用推荐”后仍可修改
+- 状态行动规则覆盖全部 16 个可选状态（包含“已投稿”）：空内容或此前自动填入的内容随状态更新；手动内容保持不变，使用“应用推荐”后仍可修改
 - 状态变化时自动结束上一状态并保存起止日期
 - Projects 的五种排序独立于 Current Focus / Needs Attention：Priority 按 High → Medium → Low；Deadline 日期升序且无日期最后；Last Updated / Start Date 降序；同值均按保存的 Custom Order
 - 可增减项目；在 Manage Mode 的 Custom Order 下拖动项目保存顺序，↑ ↓ 按钮同时支持触屏和键盘；卡片可直接修改 Priority
@@ -34,6 +34,8 @@
 2026-10-27 更新：删除 MIC2025，新增暂名“曲线中介效应研究”的项目。其时间线来自用户提供的文件列表截图：2026-09-12 是最早可见文件夹命名日期，数据 / Monte Carlo 文件出现在 9 月中下旬，9 月 24 日有可见初稿文件。**这些日期是文件证据或暂定线索，不等同于正式立项日、数据处理完成日或初稿首次完成日。**
 
 数据版本升级至 v7 时，会先把旧版浏览器草稿备份到 `paperflow-draft-pre-20261027-backup`，再保留既有研究进度、移除 MIC2025、补充新的曲线中介项目及正式出版信息，避免旧草稿把已移除项目重新带回页面。
+
+2026-11-10 更新至 v8：`Data Analytics, AI-capable Employees, and the Innovation Quality–Quantity Paradox in Manufacturing Industries` 于 2026-11-09 投稿 JMIS（投稿不等于进入外审）；`围绕创新链布局产业链的学术创业路径及机制——基于量子技术企业的多案例研究` 已获《管理案例研究与评论》录用，确切录用日期尚待补充。版本迁移将这两篇的公开状态同步至旧设备草稿，同时保留其他项目和本地设置；旧草稿另存至 `paperflow-draft-pre-20261110-backup`。
 
 ## 修改与发布
 

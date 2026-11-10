@@ -7,6 +7,7 @@ export const actionRules = Object.freeze({
     formatting: "检查目标期刊格式与投稿材料"
   }),
   submission: Object.freeze({
+    submitted: "等待编辑部初审并跟踪稿件状态",
     under_review: "跟踪审稿进度，等待审稿结果",
     revision_1: "根据审稿意见修改论文并准备回复信",
     revision_2: "根据第二轮审稿意见修改论文并准备回复信",
