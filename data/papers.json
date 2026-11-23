@@ -3,7 +3,7 @@
     "version": 8,
     "owner": "shj0512",
     "title": "论文进展台",
-    "lastUpdated": "2026-11-10",
+    "lastUpdated": "2026-11-23T02:51:37.795Z",
     "manualUpdatedAt": "2026-11-10",
     "removedPaperIds": [
       "mic2025-success"
@@ -24,9 +24,9 @@
       "authors": "SUN Huijie; HOU Tianyu; LI Juan",
       "language": "en",
       "focusStage": "submission",
-      "statusCode": "revision_resubmitted",
-      "stageLabel": "已修回",
-      "statusStartedAt": "2026-10-04",
+      "statusCode": "revision_2",
+      "stageLabel": "2nd Revision",
+      "statusStartedAt": "2026-11-23",
       "statusTimeline": [
         {
           "id": "human-capital-data",
@@ -75,18 +75,26 @@
           "label": "1st Revision",
           "startedAt": "2026-08-04",
           "endedAt": "2026-09-30"
+        },
+        {
+          "id": "timeline-mwso61ui-xmvhe",
+          "stage": "submission",
+          "status": "revision_resubmitted",
+          "label": "已修回",
+          "startedAt": "2026-10-04",
+          "endedAt": "2026-11-23"
         }
       ],
       "progress": 72,
-      "priority": "low",
+      "priority": "high",
       "pinned": false,
       "showInAttention": false,
       "startedAt": "2025-11-05",
-      "updatedAt": "2026-10-04",
+      "updatedAt": "2026-11-23T02:51:30.907Z",
       "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-10-04",
-      "nextAction": "已修回，等到审稿人反馈",
-      "nextDue": "2026-10-25",
+      "lastActionAt": "2026-11-23",
+      "nextAction": "小修",
+      "nextDue": "2026-12-11",
       "currentVenue": "International Journal of Operations & Production Management",
       "venueSummary": "IJOPM · R1 Major Revision",
       "notes": "JOM 拒稿后于 2026-05-22 转投 IJOPM；2026-08-04 收到一轮大修，10 月 2 日前修回。",
@@ -124,6 +132,117 @@
           "status": "revision_1",
           "statusStartedAt": "2026-08-04",
           "statusEndedAt": ""
+        }
+      ],
+      "tags": [],
+      "links": [],
+      "showOnRoadmap": true,
+      "archived": false,
+      "milestones": [],
+      "publication": null,
+      "startDateEstimated": false
+    },
+    {
+      "id": "ai-quality-quantity",
+      "shortCode": "Data Analytics",
+      "title": "Data Analytics, AI-capable Employees, and the Innovation Quality–Quantity Paradox in Manufacturing Industries",
+      "authors": "SUN Huijie; HOU Tianyu; CHEN Yubo",
+      "language": "en",
+      "focusStage": "submission",
+      "statusCode": "submitted",
+      "stageLabel": "已投稿",
+      "statusStartedAt": "2026-11-09",
+      "statusTimeline": [
+        {
+          "id": "data-analytics-data",
+          "stage": "writing",
+          "status": "data_processing",
+          "label": "数据处理中",
+          "startedAt": "2025-08-26",
+          "endedAt": "2025-09-16"
+        },
+        {
+          "id": "data-analytics-question",
+          "stage": "writing",
+          "status": "research_question",
+          "label": "问题提出中",
+          "startedAt": "2025-09-16",
+          "endedAt": "2026-03-14"
+        },
+        {
+          "id": "data-analytics-pom-review",
+          "stage": "submission",
+          "status": "under_review",
+          "label": "Under Review",
+          "startedAt": "2026-03-14",
+          "endedAt": "2026-04-26"
+        },
+        {
+          "id": "data-analytics-pom-rejected",
+          "stage": "submission",
+          "status": "rejected",
+          "label": "拒稿",
+          "startedAt": "2026-04-26",
+          "endedAt": "2026-04-26"
+        },
+        {
+          "id": "data-analytics-pre-jmis-formatting",
+          "stage": "writing",
+          "status": "formatting",
+          "label": "格式修改中",
+          "startedAt": "2026-04-26",
+          "endedAt": "2026-11-09"
+        }
+      ],
+      "progress": 40,
+      "priority": "medium",
+      "pinned": true,
+      "showInAttention": true,
+      "startedAt": "2025-08-26",
+      "updatedAt": "2026-11-09",
+      "manualUpdatedAt": "2026-08-13",
+      "lastActionAt": "2026-11-09",
+      "nextAction": "等待 JMIS 编辑部初步处理并跟踪稿件状态",
+      "nextDue": "",
+      "currentVenue": "Journal of Management Information Systems (JMIS)",
+      "venueSummary": "JMIS · Submitted 2026-11-09",
+      "notes": "2026-03-14 投稿 POM，2026-04-26 被拒；2026-11-09 正式向 Journal of Management Information Systems (JMIS) 投稿，尚未确认进入同行评审。",
+      "writing": [
+        {
+          "key": "question",
+          "label": "问题提出中",
+          "status": "done"
+        },
+        {
+          "key": "data",
+          "label": "数据处理中",
+          "status": "done"
+        },
+        {
+          "key": "draft",
+          "label": "文本撰写中",
+          "status": "done"
+        },
+        {
+          "key": "format",
+          "label": "格式修改中",
+          "status": "done"
+        }
+      ],
+      "submissions": [
+        {
+          "journal": "Production and Operations Management",
+          "status": "rejected",
+          "statusStartedAt": "2026-03-14",
+          "statusEndedAt": "2026-04-26",
+          "note": "POM rejected"
+        },
+        {
+          "journal": "Journal of Management Information Systems (JMIS)",
+          "status": "submitted",
+          "statusStartedAt": "2026-11-09",
+          "statusEndedAt": "",
+          "note": "Submitted 2026-11-09; editorial screening pending"
         }
       ],
       "tags": [],
@@ -263,7 +382,7 @@
       "showInAttention": false,
       "startedAt": "2022-08-01",
       "updatedAt": "2026-11-10",
-      "manualUpdatedAt": "2026-11-10",
+      "manualUpdatedAt": "2026-08-13",
       "lastActionAt": "2026-11-10",
       "nextAction": "等待校样与正式出版通知",
       "nextDue": "",
@@ -326,116 +445,6 @@
         "量子技术",
         "多案例研究"
       ],
-      "links": [],
-      "showOnRoadmap": true,
-      "archived": false,
-      "milestones": [],
-      "publication": null
-    },
-    {
-      "id": "ai-quality-quantity",
-      "shortCode": "Data Analytics",
-      "title": "Data Analytics, AI-capable Employees, and the Innovation Quality–Quantity Paradox in Manufacturing Industries",
-      "authors": "SUN Huijie; HOU Tianyu; CHEN Yubo",
-      "language": "en",
-      "focusStage": "submission",
-      "statusCode": "submitted",
-      "stageLabel": "已投稿",
-      "statusStartedAt": "2026-11-09",
-      "statusTimeline": [
-        {
-          "id": "data-analytics-data",
-          "stage": "writing",
-          "status": "data_processing",
-          "label": "数据处理中",
-          "startedAt": "2025-08-26",
-          "endedAt": "2025-09-16"
-        },
-        {
-          "id": "data-analytics-question",
-          "stage": "writing",
-          "status": "research_question",
-          "label": "问题提出中",
-          "startedAt": "2025-09-16",
-          "endedAt": "2026-03-14"
-        },
-        {
-          "id": "data-analytics-pom-review",
-          "stage": "submission",
-          "status": "under_review",
-          "label": "Under Review",
-          "startedAt": "2026-03-14",
-          "endedAt": "2026-04-26"
-        },
-        {
-          "id": "data-analytics-pom-rejected",
-          "stage": "submission",
-          "status": "rejected",
-          "label": "拒稿",
-          "startedAt": "2026-04-26",
-          "endedAt": "2026-04-26"
-        },
-        {
-          "id": "data-analytics-pre-jmis-formatting",
-          "stage": "writing",
-          "status": "formatting",
-          "label": "格式修改中",
-          "startedAt": "2026-04-26",
-          "endedAt": "2026-11-09"
-        }
-      ],
-      "progress": 40,
-      "priority": "medium",
-      "pinned": true,
-      "showInAttention": true,
-      "startedAt": "2025-08-26",
-      "updatedAt": "2026-11-09",
-      "manualUpdatedAt": "2026-11-09",
-      "lastActionAt": "2026-11-09",
-      "nextAction": "等待 JMIS 编辑部初步处理并跟踪稿件状态",
-      "nextDue": "",
-      "currentVenue": "Journal of Management Information Systems (JMIS)",
-      "venueSummary": "JMIS · Submitted 2026-11-09",
-      "notes": "2026-03-14 投稿 POM，2026-04-26 被拒；2026-11-09 正式向 Journal of Management Information Systems (JMIS) 投稿，尚未确认进入同行评审。",
-      "writing": [
-        {
-          "key": "question",
-          "label": "问题提出中",
-          "status": "done"
-        },
-        {
-          "key": "data",
-          "label": "数据处理中",
-          "status": "done"
-        },
-        {
-          "key": "draft",
-          "label": "文本撰写中",
-          "status": "done"
-        },
-        {
-          "key": "format",
-          "label": "格式修改中",
-          "status": "done"
-        }
-      ],
-      "submissions": [
-        {
-          "journal": "Production and Operations Management",
-          "status": "rejected",
-          "statusStartedAt": "2026-03-14",
-          "statusEndedAt": "2026-04-26",
-          "note": "POM rejected"
-        },
-        {
-          "journal": "Journal of Management Information Systems (JMIS)",
-          "status": "submitted",
-          "statusStartedAt": "2026-11-09",
-          "statusEndedAt": "",
-          "note": "Submitted 2026-11-09; editorial screening pending"
-        }
-      ],
-      "tags": [],
       "links": [],
       "showOnRoadmap": true,
       "archived": false,
@@ -725,7 +734,7 @@
           "id": "timeline-mttu1i6n-u3sfs",
           "stage": "publication",
           "status": "forthcoming",
-          "label": "Forthcoming",
+          "label": "已录用（待发表）",
           "startedAt": "2026-08-24",
           "endedAt": "2026-09-09"
         }
@@ -1100,7 +1109,7 @@
           "id": "timeline-mutfltaq-2r39m",
           "stage": "publication",
           "status": "forthcoming",
-          "label": "Forthcoming",
+          "label": "已录用（待发表）",
           "startedAt": "2026-07-16",
           "endedAt": "2026-10-04"
         }
@@ -1246,7 +1255,7 @@
       "nextDue": "",
       "currentVenue": "",
       "venueSummary": "方法研究 · 初稿迭代中",
-      "notes": "时间线仅基于 2026-10-27 提供的文件列表截图重建。文件夹名称和修改日期不等于真实工作开始或完成日期；项目开始、数据处理和初稿完成的准确时间待本人确认。",
+      "notes": "",
       "writing": [
         {
           "key": "question",
