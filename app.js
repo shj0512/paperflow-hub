@@ -476,11 +476,16 @@ function compareScore(a, b) {
 }
 
 function getFocusPaper() {
-  return data.papers.filter((paper) => !isArchivedPaper(paper)).sort(compareScore)[0] || null;
+  return data.papers.filter((paper) => !isPublicationPaper(paper)).sort(compareScore)[0] || null;
 }
 
 function isArchivedPaper(paper) {
   return paper.archived === true || (paper.focusStage === "publication" && ["published", "archived"].includes(paper.statusCode));
+}
+
+// Accepted and published papers share the results view without changing their archival status.
+function isPublicationPaper(paper) {
+  return isArchivedPaper(paper) || paper.focusStage === "publication" || paper.statusCode === "accepted";
 }
 
 // Needs Attention retains its own ranking; Projects uses project-order.mjs.
@@ -597,7 +602,7 @@ function attentionReason(paper) {
 function renderAttention() {
   const order = new Map(data.papers.map((paper, index) => [paper.id, index]));
   const items = data.papers
-    .filter((paper) => paper.showInAttention !== false && paper.focusStage !== "publication")
+    .filter((paper) => paper.showInAttention !== false && !isPublicationPaper(paper))
     .sort((a, b) => priorityWeight(b.priority) - priorityWeight(a.priority) || compareDeadline(a, b) || order.get(a.id) - order.get(b.id))
     .map((paper) => ({ paper, reason: attentionReason(paper) }))
     .slice(0, 4);
@@ -649,7 +654,7 @@ function togglePipelineSelection(bucket) {
 }
 
 function getFilteredPapers() {
-  const source = data.papers.filter((paper) => els.stageFilter.value === "publication" ? paper.focusStage === "publication" : !isArchivedPaper(paper));
+  const source = data.papers.filter((paper) => !isPublicationPaper(paper));
   return selectProjects(source, {
     query: els.searchInput.value, stage: els.stageFilter.value, sort: els.sortSelect.value, statusLabel
   });
@@ -679,8 +684,8 @@ function deadlineText(paper, withHint = false) {
 
 function renderPaperList() {
   const papers = getFilteredPapers();
-  const activeCount = data.papers.filter((paper) => !isArchivedPaper(paper)).length;
-  document.querySelector("#projectListHint").textContent = `${papers.length} / ${els.stageFilter.value === "publication" ? data.papers.filter((paper) => paper.focusStage === "publication").length : activeCount} projects · 已发表论文收录于 Publications；Sort 仅影响 Projects。${isManageMode && els.sortSelect.value === "custom" ? " 拖动卡片或使用 ↑ ↓ 保存自定义顺序。" : ""}`;
+  const activeCount = data.papers.filter((paper) => !isPublicationPaper(paper)).length;
+  document.querySelector("#projectListHint").textContent = `${papers.length} / ${activeCount} projects · 已录用及已发表论文收录于 Publications；Sort 仅影响 Projects。${isManageMode && els.sortSelect.value === "custom" ? " 拖动卡片或使用 ↑ ↓ 保存自定义顺序。" : ""}`;
   if (!papers.length) {
     els.paperList.innerHTML = `<div class="empty-state">没有找到匹配的论文项目。</div>`;
     return;
@@ -735,12 +740,17 @@ function otherProjectStatus(project) {
 }
 
 function getPublicationRecords() {
-  const leads = data.papers.filter(isArchivedPaper).map((paper) => ({
-    id: paper.id, role: "lead", year: Number(paper.publication?.year) || 0,
-    title: paper.title, authors: paper.authors, venue: paper.currentVenue,
-    citation: paper.publication?.citation || paper.venueSummary || "出版信息待补充",
-    doi: paper.publication?.doi || "", url: paper.publication?.url || ""
-  }));
+  const leads = data.papers.filter(isPublicationPaper).map((paper) => {
+    const forthcoming = paper.statusCode === "forthcoming" || paper.statusCode === "accepted";
+    const onlineFirst = paper.statusCode === "online_first";
+    const year = Number(paper.publication?.year) || ((forthcoming || onlineFirst) ? Number(String(paper.statusStartedAt || "").slice(0, 4)) : 0) || 0;
+    return {
+      id: paper.id, role: "lead", year, forthcoming, onlineFirst,
+      title: paper.title, authors: paper.authors, venue: paper.currentVenue,
+      citation: forthcoming ? "已录用（待发表）" : paper.publication?.citation || paper.venueSummary || (onlineFirst ? "Online First" : "出版信息待补充"),
+      doi: paper.publication?.doi || "", url: paper.publication?.url || ""
+    };
+  });
   const collaborations = (data.otherProjects || []).filter((project) => project.status === "published").map((project) => ({
     id: project.id, role: "collaboration", year: Number(project.year) || 0,
     title: project.title, authors: project.authors, venue: project.venue,
@@ -772,7 +782,7 @@ function renderPublicationArchive() {
   `).join("");
   const visible = all.filter((item) => publicationFilter === "all" || item.role === publicationFilter);
   if (!visible.length) {
-    els.publicationArchive.innerHTML = `<div class="empty-state">此分类暂无已发表成果。</div>`;
+    els.publicationArchive.innerHTML = `<div class="empty-state">此分类暂无已录用或已发表成果。</div>`;
     return;
   }
   const years = [...new Set(visible.map((item) => item.year))];
@@ -784,11 +794,11 @@ function renderPublicationArchive() {
         const url = safeExternalUrl(item.url);
         const articleLink = url ? `<a class="publication-link" href="${url}" target="_blank" rel="noopener noreferrer">${item.doi ? "查看 DOI / 原文" : "期刊页面"} <span aria-hidden="true">↗</span></a>` : "";
         return `<article class="publication-card">
-          <div class="publication-card-top"><span class="publication-role ${item.role}">${item.role === "lead" ? "主导研究" : "合作研究"}</span><span class="publication-card-year">${year || "—"}</span></div>
+          <div class="publication-card-top"><span class="publication-role ${item.role}">${item.role === "lead" ? "主导研究" : "合作研究"}</span><span class="publication-card-year">${year || "—"}${item.forthcoming ? " · 已录用" : item.onlineFirst ? " · Online First" : ""}</span></div>
           <h4>${escapeHTML(item.title)}</h4>
           <p class="publication-authors">${escapeHTML(item.authors)}</p>
           <div class="publication-bibliography"><strong>${escapeHTML(item.venue || "期刊待补充")}</strong><span>${escapeHTML(item.citation)}</span>${item.doi ? `<small>DOI: ${escapeHTML(item.doi)}</small>` : ""}</div>
-          <div class="publication-actions">${articleLink}${item.role === "lead" ? `<button type="button" data-archive-open="${escapeHTML(item.id)}">研究历程</button>` : ""}<button type="button" data-archive-copy="${escapeHTML(item.id)}">复制引用</button></div>
+          <div class="publication-actions">${articleLink}${item.role === "lead" ? `<button type="button" data-archive-open="${escapeHTML(item.id)}">研究历程</button>` : ""}<button type="button" data-archive-copy="${escapeHTML(item.id)}">${item.forthcoming ? "复制录用信息" : "复制引用"}</button></div>
         </article>`;
       }).join("")}</div>
     </section>`;
