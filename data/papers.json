@@ -1,19 +1,23 @@
 {
   "meta": {
-    "version": 8,
+    "version": 9,
     "owner": "shj0512",
     "title": "论文进展台",
-    "lastUpdated": "2026-11-23T02:51:37.795Z",
-    "manualUpdatedAt": "2026-11-10",
+    "lastUpdated": "2026-11-26T00:48:00.000Z",
+    "manualUpdatedAt": "2026-11-26",
     "removedPaperIds": [
       "mic2025-success"
     ],
     "addedPaperIds": [
-      "curvilinear-mediation"
+      "curvilinear-mediation",
+      "when-to-let-go"
     ],
     "statusSyncPaperIds": [
       "ai-quality-quantity",
-      "quantum-academic-entrepreneurship"
+      "ai-transferability"
+    ],
+    "otherStatusSyncProjectIds": [
+      "cto-general-ability"
     ]
   },
   "papers": [
@@ -148,10 +152,10 @@
       "title": "Data Analytics, AI-capable Employees, and the Innovation Quality–Quantity Paradox in Manufacturing Industries",
       "authors": "SUN Huijie; HOU Tianyu; CHEN Yubo",
       "language": "en",
-      "focusStage": "submission",
-      "statusCode": "submitted",
-      "stageLabel": "已投稿",
-      "statusStartedAt": "2026-11-09",
+      "focusStage": "writing",
+      "statusCode": "formatting",
+      "stageLabel": "格式修改中",
+      "statusStartedAt": "2026-04-26",
       "statusTimeline": [
         {
           "id": "data-analytics-data",
@@ -184,14 +188,6 @@
           "label": "拒稿",
           "startedAt": "2026-04-26",
           "endedAt": "2026-04-26"
-        },
-        {
-          "id": "data-analytics-pre-jmis-formatting",
-          "stage": "writing",
-          "status": "formatting",
-          "label": "格式修改中",
-          "startedAt": "2026-04-26",
-          "endedAt": "2026-11-09"
         }
       ],
       "progress": 40,
@@ -199,14 +195,14 @@
       "pinned": true,
       "showInAttention": true,
       "startedAt": "2025-08-26",
-      "updatedAt": "2026-11-09",
-      "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-11-09",
-      "nextAction": "等待 JMIS 编辑部初步处理并跟踪稿件状态",
+      "updatedAt": "2026-11-26T00:48:00.000Z",
+      "manualUpdatedAt": "2026-11-26",
+      "lastActionAt": "2026-11-26",
+      "nextAction": "完成稿件格式修改，确认投稿期刊及投稿材料",
       "nextDue": "",
-      "currentVenue": "Journal of Management Information Systems (JMIS)",
-      "venueSummary": "JMIS · Submitted 2026-11-09",
-      "notes": "2026-03-14 投稿 POM，2026-04-26 被拒；2026-11-09 正式向 Journal of Management Information Systems (JMIS) 投稿，尚未确认进入同行评审。",
+      "currentVenue": "",
+      "venueSummary": "格式修改中 · 尚未再次投稿",
+      "notes": "2026-03-14 投稿 POM，2026-04-26 被拒；2026-11-26 更正此前 JMIS 已投稿的记录，目前尚未再次投稿，处于格式修改阶段。后续目标期刊待确认。",
       "writing": [
         {
           "key": "question",
@@ -226,7 +222,7 @@
         {
           "key": "format",
           "label": "格式修改中",
-          "status": "done"
+          "status": "in_progress"
         }
       ],
       "submissions": [
@@ -236,13 +232,6 @@
           "statusStartedAt": "2026-03-14",
           "statusEndedAt": "2026-04-26",
           "note": "POM rejected"
-        },
-        {
-          "journal": "Journal of Management Information Systems (JMIS)",
-          "status": "submitted",
-          "statusStartedAt": "2026-11-09",
-          "statusEndedAt": "",
-          "note": "Submitted 2026-11-09; editorial screening pending"
         }
       ],
       "tags": [],
@@ -806,9 +795,9 @@
       "authors": "HOU Tianyu; SUN Huijie; XIAO Fenglong",
       "language": "en",
       "focusStage": "submission",
-      "statusCode": "under_review",
-      "stageLabel": "Under Review",
-      "statusStartedAt": "2026-08-13",
+      "statusCode": "rejected",
+      "stageLabel": "拒稿",
+      "statusStartedAt": "2026-11-26",
       "statusTimeline": [
         {
           "id": "interdisciplinarity-data",
@@ -833,6 +822,14 @@
           "label": "拒稿",
           "startedAt": "2025-12-11",
           "endedAt": "2026-08-13"
+        },
+        {
+          "id": "interdisciplinarity-smj-review",
+          "stage": "submission",
+          "status": "under_review",
+          "label": "Under Review",
+          "startedAt": "2026-08-13",
+          "endedAt": "2026-11-26"
         }
       ],
       "progress": 56,
@@ -840,14 +837,14 @@
       "pinned": false,
       "showInAttention": false,
       "startedAt": "2025-06-13",
-      "updatedAt": "2026-08-13",
-      "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-08-13",
-      "nextAction": "跟踪 SMJ 审稿进度",
+      "updatedAt": "2026-11-26T00:48:00.000Z",
+      "manualUpdatedAt": "2026-11-26",
+      "lastActionAt": "2026-11-26",
+      "nextAction": "整理 SMJ 拒稿意见，确定后续修改与转投计划",
       "nextDue": "",
       "currentVenue": "Strategic Management Journal",
-      "venueSummary": "Strategic Management Journal · Submitted 2026-08-13",
-      "notes": "2025-09-23 投稿 Organization Science，2025-12-11 被拒；2026-08-13 转投 SMJ。",
+      "venueSummary": "Strategic Management Journal · Rejected",
+      "notes": "2025-09-23 投稿 Organization Science，2025-12-11 被拒；2026-08-13 转投 SMJ，已被拒稿。2026-11-26 为状态登记日期，具体拒稿日期待确认。",
       "writing": [
         {
           "key": "question",
@@ -879,9 +876,10 @@
         },
         {
           "journal": "Strategic Management Journal",
-          "status": "under_review",
+          "status": "rejected",
           "statusStartedAt": "2026-08-13",
-          "statusEndedAt": ""
+          "statusEndedAt": "2026-11-26",
+          "note": "已拒稿；2026-11-26 为登记日期，实际拒稿日期待确认。"
         }
       ],
       "tags": [],
@@ -1288,6 +1286,61 @@
       "showOnRoadmap": true,
       "archived": false,
       "publication": null
+    },
+    {
+      "id": "when-to-let-go",
+      "shortCode": "When to Let Go",
+      "title": "When to Let Go",
+      "authors": "待确认",
+      "language": "en",
+      "focusStage": "writing",
+      "statusCode": "formatting",
+      "stageLabel": "格式修改中",
+      "statusStartedAt": "2026-11-26",
+      "statusTimeline": [],
+      "progress": 0,
+      "priority": "medium",
+      "pinned": false,
+      "showInAttention": true,
+      "startedAt": "2026-11-20",
+      "startDateEstimated": false,
+      "updatedAt": "2026-11-26T00:48:00.000Z",
+      "manualUpdatedAt": "2026-11-26",
+      "lastActionAt": "2026-11-26",
+      "nextAction": "完成格式修改并确认投稿计划",
+      "nextDue": "",
+      "currentVenue": "",
+      "venueSummary": "格式修改中 · 尚未投稿",
+      "notes": "项目开始日期为 2026-11-20；2026-11-26 登记为格式修改阶段，实际进入该阶段的日期待确认。当前进度百分比为系统默认值，尚未评估；正式标题、作者及目标期刊待补充。",
+      "writing": [
+        {
+          "key": "question",
+          "label": "问题提出中",
+          "status": "done"
+        },
+        {
+          "key": "data",
+          "label": "数据处理中",
+          "status": "done"
+        },
+        {
+          "key": "draft",
+          "label": "文本撰写中",
+          "status": "done"
+        },
+        {
+          "key": "format",
+          "label": "格式修改中",
+          "status": "in_progress"
+        }
+      ],
+      "submissions": [],
+      "tags": [],
+      "links": [],
+      "showOnRoadmap": true,
+      "archived": false,
+      "milestones": [],
+      "publication": null
     }
   ],
   "otherProjects": [
@@ -1326,9 +1379,10 @@
       "id": "cto-general-ability",
       "title": "Too Much of a Good Thing? Chief Technology Officers’ General Ability and Firm Innovation: Moderating Effects of AI and Gender Diversity",
       "authors": "Hang Yang; Huijie Sun; Zhiying Liu; Jialing Liu*",
-      "status": "under_review",
-      "venue": "Journal under review",
-      "citation": "Under Review"
+      "status": "major_revision",
+      "venue": "Journal of Business Research (JBR)",
+      "citation": "Major Revision",
+      "updatedAt": "2026-11-26"
     }
   ]
 }

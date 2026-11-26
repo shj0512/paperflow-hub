@@ -311,6 +311,8 @@ function mergePublishedFields(draft, published) {
   const publishedById = new Map((published.papers || []).map((paper) => [paper.id, paper]));
   const removedIds = new Set(published.meta?.removedPaperIds || []);
   const statusSyncIds = new Set(published.meta?.statusSyncPaperIds || []);
+  if (Number(draft.meta?.version || 0) < 8 && Number(published.meta?.version || 0) >= 8) statusSyncIds.add("quantum-academic-entrepreneurship");
+  const otherStatusSyncIds = new Set(published.meta?.otherStatusSyncProjectIds || []);
   const existing = (draft.papers || []).filter((paper) => !removedIds.has(paper.id));
   const existingIds = new Set(existing.map((paper) => paper.id));
   // 旧版本草稿不丢弃：保留工作进度，只补入这一版正式新增的项目。
@@ -344,7 +346,9 @@ function mergePublishedFields(draft, published) {
         notes: syncStatus ? source.notes : paper.notes ?? source.notes ?? ""
       };
     }),
-    otherProjects: [...(published.otherProjects || []).map((project) => project.archived ? project : originalOther.get(project.id) || project),
+    otherProjects: [...(published.otherProjects || []).map((project) => project.archived ? project : otherStatusSyncIds.has(project.id) ? {
+      ...project, ...(originalOther.get(project.id) || {}), status: project.status, venue: project.venue, citation: project.citation, updatedAt: project.updatedAt
+    } : originalOther.get(project.id) || project),
       ...(draft.otherProjects || []).filter((project) => !(published.otherProjects || []).some((source) => source.id === project.id))]
   };
 }
@@ -722,12 +726,12 @@ function renderPaperCard(paper) {
 
 function otherProjectTone(project) {
   if (project.status === "published") return "published";
-  if (project.status === "minor_revision") return "revision";
+  if (["minor_revision", "major_revision"].includes(project.status)) return "revision";
   return "review";
 }
 
 function otherProjectStatus(project) {
-  return { published: "Published", minor_revision: "Minor Revision", under_review: "Under Review" }[project.status] || "In Progress";
+  return { published: "Published", minor_revision: "Minor Revision", major_revision: "Major Revision", under_review: "Under Review" }[project.status] || "In Progress";
 }
 
 function getPublicationRecords() {
