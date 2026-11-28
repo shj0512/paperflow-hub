@@ -1,10 +1,10 @@
 {
   "meta": {
-    "version": 10,
+    "version": 9,
     "owner": "shj0512",
     "title": "论文进展台",
-    "lastUpdated": "2026-11-28T01:40:00.000Z",
-    "manualUpdatedAt": "2026-11-28",
+    "lastUpdated": "2026-11-28T05:40:36.167Z",
+    "manualUpdatedAt": "2026-11-26",
     "removedPaperIds": [
       "mic2025-success"
     ],
@@ -14,8 +14,7 @@
     ],
     "statusSyncPaperIds": [
       "ai-quality-quantity",
-      "ai-transferability",
-      "shadow-to-spotlight"
+      "ai-transferability"
     ],
     "otherStatusSyncProjectIds": [
       "cto-general-ability"
@@ -197,7 +196,7 @@
       "showInAttention": true,
       "startedAt": "2025-08-26",
       "updatedAt": "2026-11-26T00:48:00.000Z",
-      "manualUpdatedAt": "2026-11-26",
+      "manualUpdatedAt": "2026-08-13",
       "lastActionAt": "2026-11-26",
       "nextAction": "完成稿件格式修改，确认投稿期刊及投稿材料",
       "nextDue": "",
@@ -839,7 +838,7 @@
       "showInAttention": false,
       "startedAt": "2025-06-13",
       "updatedAt": "2026-11-26T00:48:00.000Z",
-      "manualUpdatedAt": "2026-11-26",
+      "manualUpdatedAt": "2026-08-13",
       "lastActionAt": "2026-11-26",
       "nextAction": "整理 SMJ 拒稿意见，确定后续修改与转投计划",
       "nextDue": "",
@@ -958,35 +957,27 @@
           "endedAt": "2026-07-02"
         },
         {
-          "id": "shadow-r2-resubmitted",
+          "id": "timeline-mwzzerbb-latav",
           "stage": "submission",
           "status": "revision_resubmitted",
           "label": "已修回",
           "startedAt": "2026-07-02",
           "endedAt": "2026-11-28"
-        },
-        {
-          "id": "shadow-accepted",
-          "stage": "publication",
-          "status": "forthcoming",
-          "label": "已录用（待发表）",
-          "startedAt": "2026-11-28",
-          "endedAt": ""
         }
       ],
-      "progress": 95,
+      "progress": 92,
       "priority": "low",
       "pinned": false,
       "showInAttention": false,
       "startedAt": "2023-07-01",
-      "updatedAt": "2026-11-28T01:40:00.000Z",
-      "manualUpdatedAt": "2026-11-28",
+      "updatedAt": "2026-11-28T05:40:36.167Z",
+      "manualUpdatedAt": "2026-08-13",
       "lastActionAt": "2026-11-28",
-      "nextAction": "等待校样与正式出版通知",
+      "nextAction": "跟踪校样和出版流程",
       "nextDue": "",
       "currentVenue": "Technology Analysis & Strategic Management",
-      "venueSummary": "Technology Analysis & Strategic Management · 已录用（待发表）",
-      "notes": "2023-11-23 形成初稿；Technovation 拒稿后转投 TASM，2026-07-02 修回第二轮小修；现已获 Technology Analysis & Strategic Management 录用。2026-11-28 为状态登记日，确切录用日期待确认。",
+      "venueSummary": "Technology Analysis & Strategic Management · R2 returned",
+      "notes": "2023-11-23 形成初稿；Technovation 拒稿后转投 TASM，已于 2026-07-02 修回第二轮小修。",
       "writing": [
         {
           "key": "question",
@@ -1020,14 +1011,7 @@
           "journal": "Technology Analysis & Strategic Management",
           "status": "revision_resubmitted",
           "statusStartedAt": "2026-07-02",
-          "statusEndedAt": "2026-11-28"
-        },
-        {
-          "journal": "Technology Analysis & Strategic Management",
-          "status": "accepted",
-          "statusStartedAt": "2026-11-28",
-          "statusEndedAt": "",
-          "note": "已录用；2026-11-28 为状态登记日，确切录用日期待确认"
+          "statusEndedAt": ""
         }
       ],
       "tags": [],
@@ -1035,7 +1019,9 @@
       "showOnRoadmap": true,
       "archived": false,
       "milestones": [],
-      "publication": null
+      "publication": null,
+      "startDateEstimated": false,
+      "nextActionAuto": "跟踪校样和出版流程"
     },
     {
       "id": "resource-reconstruction",
@@ -1277,7 +1263,7 @@
       "nextDue": "",
       "currentVenue": "",
       "venueSummary": "方法研究 · 初稿迭代中",
-      "notes": "",
+      "notes": "时间线仅基于 2026-10-27 提供的文件列表截图重建。文件夹名称和修改日期不等于真实工作开始或完成日期；项目开始、数据处理和初稿完成的准确时间待本人确认。",
       "writing": [
         {
           "key": "question",
