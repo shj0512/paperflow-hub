@@ -331,6 +331,7 @@ function mergePublishedFields(draft, published) {
       return {
         ...paper,
         ...(syncStatus ? {
+          title: source.title, shortCode: source.shortCode,
           focusStage: source.focusStage, statusCode: source.statusCode, stageLabel: source.stageLabel,
           statusStartedAt: source.statusStartedAt, statusTimeline: source.statusTimeline,
           submissions: source.submissions, progress: source.progress, writing: source.writing,
