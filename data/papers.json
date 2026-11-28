@@ -1,10 +1,10 @@
 {
   "meta": {
-    "version": 9,
+    "version": 10,
     "owner": "shj0512",
     "title": "论文进展台",
-    "lastUpdated": "2026-11-26T00:48:00.000Z",
-    "manualUpdatedAt": "2026-11-26",
+    "lastUpdated": "2026-11-28T01:40:00.000Z",
+    "manualUpdatedAt": "2026-11-28",
     "removedPaperIds": [
       "mic2025-success"
     ],
@@ -14,7 +14,8 @@
     ],
     "statusSyncPaperIds": [
       "ai-quality-quantity",
-      "ai-transferability"
+      "ai-transferability",
+      "shadow-to-spotlight"
     ],
     "otherStatusSyncProjectIds": [
       "cto-general-ability"
@@ -895,10 +896,10 @@
       "title": "From Shadow to Spotlight: How Technological, Geographical, and Market Overlaps with Leading Firms Influence Non-Leading Firms’ Innovation",
       "authors": "SUN Huijie; GONG Lei; LIU Zhiying; ZHOU Ziyu*",
       "language": "en",
-      "focusStage": "submission",
-      "statusCode": "revision_resubmitted",
-      "stageLabel": "已修回",
-      "statusStartedAt": "2026-07-02",
+      "focusStage": "publication",
+      "statusCode": "forthcoming",
+      "stageLabel": "已录用（待发表）",
+      "statusStartedAt": "2026-11-28",
       "statusTimeline": [
         {
           "id": "shadow-draft",
@@ -955,21 +956,37 @@
           "label": "2nd Revision",
           "startedAt": "2026-06-16",
           "endedAt": "2026-07-02"
+        },
+        {
+          "id": "shadow-r2-resubmitted",
+          "stage": "submission",
+          "status": "revision_resubmitted",
+          "label": "已修回",
+          "startedAt": "2026-07-02",
+          "endedAt": "2026-11-28"
+        },
+        {
+          "id": "shadow-accepted",
+          "stage": "publication",
+          "status": "forthcoming",
+          "label": "已录用（待发表）",
+          "startedAt": "2026-11-28",
+          "endedAt": ""
         }
       ],
-      "progress": 92,
+      "progress": 95,
       "priority": "low",
       "pinned": false,
       "showInAttention": false,
       "startedAt": "2023-07-01",
-      "updatedAt": "2026-08-13",
-      "manualUpdatedAt": "2026-08-13",
-      "lastActionAt": "2026-08-13",
-      "nextAction": "等待 TASM 编辑决定",
+      "updatedAt": "2026-11-28T01:40:00.000Z",
+      "manualUpdatedAt": "2026-11-28",
+      "lastActionAt": "2026-11-28",
+      "nextAction": "等待校样与正式出版通知",
       "nextDue": "",
       "currentVenue": "Technology Analysis & Strategic Management",
-      "venueSummary": "Technology Analysis & Strategic Management · R2 returned",
-      "notes": "2023-11-23 形成初稿；Technovation 拒稿后转投 TASM，已于 2026-07-02 修回第二轮小修。",
+      "venueSummary": "Technology Analysis & Strategic Management · 已录用（待发表）",
+      "notes": "2023-11-23 形成初稿；Technovation 拒稿后转投 TASM，2026-07-02 修回第二轮小修；现已获 Technology Analysis & Strategic Management 录用。2026-11-28 为状态登记日，确切录用日期待确认。",
       "writing": [
         {
           "key": "question",
@@ -1003,7 +1020,14 @@
           "journal": "Technology Analysis & Strategic Management",
           "status": "revision_resubmitted",
           "statusStartedAt": "2026-07-02",
-          "statusEndedAt": ""
+          "statusEndedAt": "2026-11-28"
+        },
+        {
+          "journal": "Technology Analysis & Strategic Management",
+          "status": "accepted",
+          "statusStartedAt": "2026-11-28",
+          "statusEndedAt": "",
+          "note": "已录用；2026-11-28 为状态登记日，确切录用日期待确认"
         }
       ],
       "tags": [],
