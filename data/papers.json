@@ -1,10 +1,10 @@
 {
   "meta": {
-    "version": 9,
+    "version": 11,
     "owner": "shj0512",
     "title": "论文进展台",
-    "lastUpdated": "2026-11-28T05:40:36.167Z",
-    "manualUpdatedAt": "2026-11-26",
+    "lastUpdated": "2026-11-28T06:12:00.000Z",
+    "manualUpdatedAt": "2026-11-28",
     "removedPaperIds": [
       "mic2025-success"
     ],
@@ -14,7 +14,8 @@
     ],
     "statusSyncPaperIds": [
       "ai-quality-quantity",
-      "ai-transferability"
+      "ai-transferability",
+      "when-to-let-go"
     ],
     "otherStatusSyncProjectIds": [
       "cto-general-ability"
@@ -1299,29 +1300,38 @@
     },
     {
       "id": "when-to-let-go",
-      "shortCode": "When to Let Go",
-      "title": "When to Let Go",
+      "shortCode": "Letting Go of Obsolete Patents",
+      "title": "Letting go of obsolete patents selectively: The moderating role of knowledge network nonredundancy and implications for firm performance",
       "authors": "待确认",
       "language": "en",
-      "focusStage": "writing",
-      "statusCode": "formatting",
-      "stageLabel": "格式修改中",
-      "statusStartedAt": "2026-11-26",
-      "statusTimeline": [],
+      "focusStage": "submission",
+      "statusCode": "submitted",
+      "stageLabel": "已投稿",
+      "statusStartedAt": "2026-11-28",
+      "statusTimeline": [
+        {
+          "id": "when-to-let-go-formatting",
+          "stage": "writing",
+          "status": "formatting",
+          "label": "格式修改中",
+          "startedAt": "2026-11-26",
+          "endedAt": "2026-11-28"
+        }
+      ],
       "progress": 0,
       "priority": "medium",
       "pinned": false,
       "showInAttention": true,
       "startedAt": "2026-11-20",
       "startDateEstimated": false,
-      "updatedAt": "2026-11-26T00:48:00.000Z",
-      "manualUpdatedAt": "2026-11-26",
-      "lastActionAt": "2026-11-26",
-      "nextAction": "完成格式修改并确认投稿计划",
+      "updatedAt": "2026-11-28T06:12:00.000Z",
+      "manualUpdatedAt": "2026-11-28",
+      "lastActionAt": "2026-11-28",
+      "nextAction": "等待编辑部初审并跟踪稿件状态",
       "nextDue": "",
-      "currentVenue": "",
-      "venueSummary": "格式修改中 · 尚未投稿",
-      "notes": "项目开始日期为 2026-11-20；2026-11-26 登记为格式修改阶段，实际进入该阶段的日期待确认。当前进度百分比为系统默认值，尚未评估；正式标题、作者及目标期刊待补充。",
+      "currentVenue": "Technovation",
+      "venueSummary": "Technovation · 已投稿",
+      "notes": "已投稿至 Technovation；2026-11-28 为状态登记日期，实际投稿日期待补充。",
       "writing": [
         {
           "key": "question",
@@ -1341,16 +1351,25 @@
         {
           "key": "format",
           "label": "格式修改中",
-          "status": "in_progress"
+          "status": "done"
         }
       ],
-      "submissions": [],
+      "submissions": [
+        {
+          "journal": "Technovation",
+          "status": "submitted",
+          "statusStartedAt": "2026-11-28",
+          "statusEndedAt": "",
+          "note": "已投稿；2026-11-28 为状态登记日期，实际投稿日期待补充"
+        }
+      ],
       "tags": [],
       "links": [],
       "showOnRoadmap": true,
       "archived": false,
       "milestones": [],
-      "publication": null
+      "publication": null,
+      "nextActionAuto": "等待编辑部初审并跟踪稿件状态"
     }
   ],
   "otherProjects": [
